@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Getter;
@@ -34,5 +35,6 @@ public class Community {
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	private Date b_date;
+	@ColumnDefault("0")
 	private int b_like;
 }

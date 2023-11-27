@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,4 +29,6 @@ public class Member {
 	private String address;
 	@NotNull
 	private String email;
+	@ColumnDefault("0")
+	private int auth;
 }
