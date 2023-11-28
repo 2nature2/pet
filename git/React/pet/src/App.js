@@ -1,18 +1,17 @@
-import { React, useEffect, useState } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import MainPage from "./components/pages/Main/MainPage";
+import CommunityPage from "./components/pages/Community/CommunityPage";
 
 function App() {
-  const [data, setData] = useState('');
-
-  useEffect(() => {
-    fetch('/api/main')
-      .then(response => response.text())
-      .then(data => setData(data))
-      .catch(error => console.error(error));
-  }, []);
   return (
-    <p>{data}</p>
+    <BrowserRouter>
+      <Routes>
+        <Route path = "/" element={<MainPage/>}/>
+        <Route path = "/community" element={<CommunityPage/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
