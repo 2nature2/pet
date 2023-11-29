@@ -1,4 +1,4 @@
-package com.wproject.pet.dto;
+package com.wproject.pet.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,12 +8,14 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
-@Getter
-@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int member_id;

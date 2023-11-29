@@ -1,4 +1,4 @@
-package com.wproject.pet.dto;
+package com.wproject.pet.entity;
 
 import java.util.Date;
 
@@ -14,27 +14,27 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
 @Entity
-@Setter
-@Getter
 public class Community {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int b_id;
 	@NotNull
-	private String b_title;
-	@Column(length = 2000)
+	@Column(name="b_title")
+	private String bTitle;
+	@Column(name="b_content", length = 2000)
 	@NotNull
-	private String b_content;
+	private String bContent;
 	@NotNull
 	private String b_writer;
-
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	private Date b_date;
 	@ColumnDefault("0")
 	private int b_like;
+	@ColumnDefault("0")
+	private int hitcount;
 }
