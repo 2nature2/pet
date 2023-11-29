@@ -1,4 +1,4 @@
-package com.wproject.pet.dto;
+package com.wproject.pet.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,27 +8,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
-@Setter
-@Getter
-public class CommentReport {
+@AllArgsConstructor
+@NoArgsConstructor
+public class BoardReport {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int cr_id;
+	private int br_id;
 	@NotNull
-	private String c_reason;
+	private String b_reason;
 	@NotNull
-	private String c_reporter;
-	
+	private String b_reporter;
 	@ManyToOne
 	@JoinColumn(name="b_id")
 	@NotNull
 	private Community community;
-	
-	@ManyToOne
-	@JoinColumn(name="c_id")
-	@NotNull
-	private Comment comment;
 }

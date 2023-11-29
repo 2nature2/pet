@@ -1,4 +1,4 @@
-package com.wproject.pet.dto;
+package com.wproject.pet.entity;
 
 import java.util.Date;
 
@@ -15,12 +15,14 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
-@Setter
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Comment {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int c_id;

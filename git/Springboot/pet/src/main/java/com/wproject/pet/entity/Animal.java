@@ -1,4 +1,4 @@
-package com.wproject.pet.dto;
+package com.wproject.pet.entity;
 
 import java.util.Date;
 
@@ -13,12 +13,14 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
 @Entity
-@Setter
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Animal {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int animal_id;
@@ -49,5 +51,4 @@ public class Animal {
 	private String c_address;
 	@NotNull
 	private String c_tel;
-	
 }

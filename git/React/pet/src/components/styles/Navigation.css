@@ -1,0 +1,12 @@
+@charset "utf-8";
+.nav {
+    background-color: #333; 
+    padding: 10px; 
+    display: flex;
+  }
+  
+  .navmenu {
+    color: white; 
+    margin-right: 10px; 
+    text-decoration: none; 
+  }
