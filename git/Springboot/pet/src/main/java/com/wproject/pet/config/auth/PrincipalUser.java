@@ -6,7 +6,9 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.wproject.pet.dto.Member;
+
+import com.wproject.pet.dto.MemberDTO;
+import com.wproject.pet.entity.Member;
 
 import lombok.Getter;
 

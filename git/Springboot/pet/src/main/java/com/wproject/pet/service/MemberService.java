@@ -3,7 +3,9 @@ package com.wproject.pet.service;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.wproject.pet.dto.Member;
+
+import com.wproject.pet.dto.MemberDTO;
+import com.wproject.pet.entity.Member;
 import com.wproject.pet.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;

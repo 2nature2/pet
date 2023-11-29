@@ -8,27 +8,33 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.wproject.pet.entity.Member;
+
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+
 @Getter
 @Setter
-public class Member {
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MemberDTO {
+	
 	private int member_id;
-	@NotNull
 	private String userid;
-	@NotNull
 	private String password;
-	@NotNull
 	private String name;
-	@NotNull
 	private int tel;
-	@NotNull
 	private String address;
-	@NotNull
 	private String email;
-	@ColumnDefault("0")
 	private String auth;
+	
+	public MemberDTO(Member memberDAO) {
+		member_id=memberDAO.getMember_id();
+		userid=memberDAO.getUserid();
+		password=memberDAO.getPassword();
+		name=memberDAO.getName();
+		tel=memberDAO.getTel();
+		address=memberDAO.getAddress();
+		email=memberDAO.getEmail();
+		auth=memberDAO.getAuth();
+	}
 }

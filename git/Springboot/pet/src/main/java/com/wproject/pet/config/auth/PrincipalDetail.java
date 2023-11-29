@@ -6,7 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.wproject.pet.dto.Member;
+import com.wproject.pet.dto.MemberDTO;
+import com.wproject.pet.entity.Member;
 import com.wproject.pet.repository.MemberRepository;
 
 

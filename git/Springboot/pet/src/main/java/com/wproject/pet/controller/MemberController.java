@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wproject.pet.dto.Member;
+
+import com.wproject.pet.dto.MemberDTO;
+import com.wproject.pet.entity.Member;
 import com.wproject.pet.repository.MemberRepository;
 import com.wproject.pet.service.MemberService;
 
@@ -43,5 +45,17 @@ public class MemberController {
 			return "/login";
 		}
 	
-	
+	//회원가입시 아이디 중복확인
+	 @PostMapping("/member/checkId")
+	 @ResponseBody
+	 public String checkId(@RequestBody Member member) {
+		
+		 if (memberRepository.findByUserid(member.getUserid()) != null) {
+			 System.out.println("fail");
+	            return "fail";
+	        } else {
+	        	System.out.println("success"+member.getUserid());
+	            return "success";
+	        }
+	 }
 }
