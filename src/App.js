@@ -35,11 +35,17 @@ function App() {
        tel:member.tel
       })
     })
-    .then((resp)=>{
-      console.log("resp",resp)
-      alert("등록완료")
-      
-    }) 
+    .then((resp) => resp.text())
+    .then((result) => {
+      if (result === 'success') {
+        alert('등록완료');
+      } else {
+        alert('등록실패');
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
 
   return (
