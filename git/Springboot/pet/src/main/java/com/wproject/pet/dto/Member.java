@@ -30,5 +30,5 @@ public class Member {
 	@NotNull
 	private String email;
 	@ColumnDefault("0")
-	private int auth;
+	private String auth;
 }
