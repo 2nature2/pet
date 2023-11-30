@@ -7,7 +7,6 @@ const Navigation = () => {
             <NavLink className='navmenu' to="/">MAIN</NavLink>
             <NavLink className='navmenu' to="/pet">PET</NavLink>
             <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
-            <NavLink className='navmenu' to="/patlist">PAT</NavLink>
         </div>
     );
 };
