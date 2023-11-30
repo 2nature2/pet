@@ -23,9 +23,9 @@ public class CommunityService {
 	@Transactional
 	public void insert(CommunityDTO communityDTO) {
 		Community community = new Community();
-		community.setBTitle(communityDTO.getB_title());
 		community.setBContent(communityDTO.getB_content());
-		community.setB_date(new Date());
+		community.setBTitle(communityDTO.getB_title());
+		community.setB_writer(communityDTO.getB_writer());
 		communityRepository.save(community);
 	}
 	
