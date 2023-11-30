@@ -6,6 +6,7 @@ import CommunityPage from "./components/pages/Community/CommunityPage";
 import Navigation from './components/pages/Navigation/Navigation';
 import WritePage from "./components/pages/Community/WritePage";
 import { useEffect, useState } from "react";
+import PatMain from "./components/pages/Pat/PatMain";
 
 function App() {
 
@@ -75,6 +76,7 @@ function App() {
             <Route path="/" element={<MainPage/>} />
             <Route path="/community" element={<CommunityPage lists={communityList}/>} />
             <Route path="/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
+            <Route path="/patlist" element={<PatMain/>} />
           </Routes>
       </BrowserRouter>
   );
