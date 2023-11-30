@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class CommunityDTO {
 	
-	private int b_id;
+	private Long bnum;
 	private String b_title;
 	private String b_content;
 	private String b_writer;

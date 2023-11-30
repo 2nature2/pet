@@ -22,7 +22,7 @@ import lombok.Data;
 @Entity
 public class Community {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	private int b_id;
+	private Long bnum;
 	
 	@NotNull
 	@Column(name="b_title")

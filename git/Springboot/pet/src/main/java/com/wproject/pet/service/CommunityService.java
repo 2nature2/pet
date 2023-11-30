@@ -32,15 +32,13 @@ public class CommunityService {
 	//전체보기(페이징, 검색)
 	public Page<CommunityDTO> findAll(String field, String word, Pageable pageable){
 		Page<Community> lists = communityRepository.findAll(pageable);
-		if("b_title".equals(field)){
+		if("bTitle".equals(field)){
 			lists = communityRepository.findByBTitleContaining(word, pageable);
-		}else if("b_content".equals(field)) {
+		}else if("bContent".equals(field)) {
 			lists = communityRepository.findByBContentContaining(word, pageable);
-		}else {
-	        lists = communityRepository.findAll(pageable);
-	    }
+		}
 		return lists.map(community -> new CommunityDTO(
-				community.getB_id(),
+				community.getBnum(),
 	            community.getBTitle(),
 	            community.getBContent(),
 	            community.getB_writer(),
@@ -48,17 +46,17 @@ public class CommunityService {
 	            community.getB_like(),
 	            community.getHitcount()
 				));
-	}
+		}
 
 	//상세보기
 	@Transactional
-	public CommunityDTO view(int b_id) {
-		Optional<Community> communityOptional = communityRepository.findById(b_id);
+	public CommunityDTO view(Long bnum) {
+		Optional<Community> communityOptional = communityRepository.findById(bnum);
 		if(communityOptional.isPresent()) {
 			Community community = communityOptional.get();
 			community.setHitcount(community.getHitcount()+1);
 			return new CommunityDTO(
-					community.getB_id(),
+					community.getBnum(),
 	                community.getBTitle(),
 	                community.getBContent(),
 	                community.getB_writer(),
@@ -74,7 +72,7 @@ public class CommunityService {
 	//수정
 	@Transactional
 	public void update(CommunityDTO communityDTO) {
-		Community community = communityRepository.findById(communityDTO.getB_id()).get();
+		Community community = communityRepository.findById(communityDTO.getBnum()).get();
 		community.setBTitle(communityDTO.getB_title());
 		community.setBContent(communityDTO.getB_content());
 		community.setB_date(new Date());
@@ -82,7 +80,7 @@ public class CommunityService {
 	}
 	
 	//삭제 
-	public void delete(int b_id) {
-		communityRepository.deleteById(b_id);
+	public void delete(Long bnum) {
+		communityRepository.deleteById(bnum);
 	}
 }
