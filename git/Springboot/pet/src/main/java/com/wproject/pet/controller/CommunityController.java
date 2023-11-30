@@ -35,26 +35,26 @@ public class CommunityController {
 	
 	@GetMapping("/")
 	public Page<CommunityDTO> getPosts(
-            @PageableDefault(size = 20, sort = "b_id", direction = Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 20, sort = "bnum", direction = Direction.DESC) Pageable pageable,
             @RequestParam(required = false, defaultValue = "") String field,
             @RequestParam(required = false, defaultValue = "") String word) {
         return communityService.findAll(field, word, pageable);
     }
 	
-	@GetMapping("/view/{b_id}")
-	public CommunityDTO view(@PathVariable int b_id) {
-		return communityService.view(b_id);
+	@GetMapping("/view/{bnum}")
+	public CommunityDTO view(@PathVariable Long bnum) {
+		return communityService.view(bnum);
 	}
 	
-	@PutMapping("/update/{b_id}")
-	public void updatePost(@PathVariable int b_id, @RequestBody CommunityDTO communityDTO) {
-        communityDTO.setB_id(b_id); // 경로 변수로 전달된 b_id를 사용하여 업데이트
+	@PutMapping("/update/{bnum}")
+	public void updatePost(@PathVariable Long bnum, @RequestBody CommunityDTO communityDTO) {
+        communityDTO.setBnum(bnum);
         communityService.update(communityDTO);
     }
 	
-	@DeleteMapping("/delete/{b_id}")
-	public int delete(@PathVariable int b_id) {
-		communityService.delete(b_id);
-		return b_id;
+	@DeleteMapping("/delete/{bnum}")
+	public Long delete(@PathVariable Long bnum) {
+		communityService.delete(bnum);
+		return bnum;
 	}
 }
