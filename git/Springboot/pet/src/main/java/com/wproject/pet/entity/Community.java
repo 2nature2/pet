@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
@@ -21,20 +23,26 @@ import lombok.Data;
 public class Community {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private int b_id;
+	
 	@NotNull
 	@Column(name="b_title")
 	private String bTitle;
-	@Column(name="b_content", length = 2000)
+	
 	@NotNull
+	@Column(name="b_content", length = 2000)
 	private String bContent;
+	
 	@NotNull
 	private String b_writer;
+	
 	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@NotNull
+	@Temporal(TemporalType.DATE)
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date b_date;
+	
 	@ColumnDefault("0")
 	private int b_like;
+	
 	@ColumnDefault("0")
 	private int hitcount;
 }
