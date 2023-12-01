@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wproject.pet.dto.CommunityDTO;
@@ -27,7 +26,6 @@ public class CommunityController {
 	private final CommunityService communityService;
 	
 	@PostMapping("/insert")
-	@ResponseBody
 	public String insert(@RequestBody CommunityDTO communityDTO) {
 		communityService.insert(communityDTO);
 		return "success";
