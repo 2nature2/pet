@@ -1,5 +1,8 @@
 package com.wproject.pet.entity;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 616481e280bb49214379d4b056e76cf784f3e248
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +16,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 616481e280bb49214379d4b056e76cf784f3e248
 @Data
 @Entity
 @AllArgsConstructor
