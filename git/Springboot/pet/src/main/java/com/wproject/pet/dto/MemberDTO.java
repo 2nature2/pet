@@ -2,6 +2,7 @@ package com.wproject.pet.dto;
 
 
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberDTO {
-	
 	private int member_id;
 	private String userid;
 	private String password;

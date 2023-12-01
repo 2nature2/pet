@@ -1,6 +1,7 @@
 package com.wproject.pet.entity;
 
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +14,6 @@ import org.hibernate.annotations.ColumnDefault;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-
 
 @Data
 @Entity
