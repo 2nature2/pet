@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import '../../styles/Community.css';
 
 const ViewPage = () => {
     const {bnum} = useParams();
@@ -53,17 +53,14 @@ const ViewPage = () => {
     }
 
     return(
-        <div className="detail">
-
-            
+        <div className="vboard">
             <p>글제목: {bnum}</p>
             <p>제목: {view.b_title}</p>
             <p>내용: {view.b_content}</p>
             <p>{view.b_writer}</p>
             <p>{view.b_date}</p>
             <p>{view.b_like}</p>
-            <p>{view.hitcount}</p>
-            
+            <p>{view.hitcount}</p>  
         </div>
     )
 }
