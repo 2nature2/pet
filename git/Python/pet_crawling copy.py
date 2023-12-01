@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 import mysql.connector
 import pymysql
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 
 # 데이터베이스 연결
 mydb = mysql.connector.connect(
@@ -22,12 +24,28 @@ mycursor = mydb.cursor()
 # sql = "INSERT INTO animal (gender, r_date, breed, location, surgery, apperance, point, c_name, c_address, c_tel, picture) VALUES (%s, %s, %s, %s,%s, %s, %s, %s,%s, %s, %s, %s)"
 
 
-# # urlopen 함수로 웹 페이지를 열고 html 내용 파싱
-url = "https://www.animal.go.kr/front/awtis/public/publicList.do?menuNo=1000000055"
-html = urlopen(url)
-soup = BeautifulSoup(html, "html.parser")
 
+
+
+
+
+
+
+# 웹 드라이버 생성
 driver = webdriver.Chrome()
+
+# 홈피 열기
+driver.get("https://www.animal.go.kr/front/index.do")
+
+# xPath 요소 찾기
+# search_box = driver.find_element("xpath", "//*[@id="content"]/div[2]/div[2]/div[1]/a"))
+
+
+# # urlopen 함수로 웹 페이지를 열고 html 내용 파싱
+# html = urlopen(url)
+# soup = BeautifulSoup(html, "html.parser")
+
+
 animal_list = soup.select('.boardList .list li')
 
 def get_info(soup, label):
