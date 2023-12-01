@@ -11,7 +11,9 @@ function App() {
   
   const [data, setData] = useState('');
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    
+  }, []);
 
   // 회원가입
   const join = (member) => {
