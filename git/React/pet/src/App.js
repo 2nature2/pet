@@ -7,6 +7,7 @@ import Navigation from './components/pages/Navigation/Navigation';
 import WritePage from "./components/pages/Community/WritePage";
 import { useEffect, useState } from "react";
 import ViewPage from "./components/pages/Community/ViewPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
