@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 function App() {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   useEffect(() => {
     fetch('/api/main')
       .then(response => response.text())
@@ -47,6 +48,9 @@ function App() {
       alert("등록완료")
 =======
   const [communityList, setCommunityList] = useState([])
+=======
+  const [communityList, setCommunityList] = useState([]);
+>>>>>>> 48349d94f89ab07720760499ffa895ba88b7739d
   const [formContent, setFormContent] = useState({
     b_title: '',
     b_content: '',
@@ -58,10 +62,10 @@ function App() {
   }, [])
 
   const loadCommunityList = () => {
-    axios.get('/')
+    axios.get('community/')
     .then((resp) => {
-      console.log(resp.data);
-      setCommunityList(resp.data)
+      console.log("확인",resp.data.content);
+      setCommunityList(resp.data.content);
     })
   }
 
@@ -81,15 +85,13 @@ function App() {
     })
     .then((resp)=> {
       console.log(resp);
-      alert('작성완료');
-      setCommunityList((prevList) => [
-        ...prevList,
+      setCommunityList(communityList.concat(
         {
           b_title: communityDTO.b_title,
           b_content: communityDTO.b_content,
           b_writer: communityDTO.b_writer
         }
-      ]); 
+        )); 
       loadCommunityList();
       resetForm();
     })
@@ -123,7 +125,7 @@ function App() {
         <Navigation />
           <Routes>
             <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList}/>} />
             <Route path="/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
           </Routes>
       </BrowserRouter>

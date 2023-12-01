@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, Container, Form } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 
 const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
+    const movePage = useNavigate();
 
     const [formContent, setFormContent] = useState({
         b_title: '',
@@ -22,6 +24,8 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
             await insertCommunity(formContent);
             loadCommunityList();
             resetForm();
+            alert('작성완료');
+            movePage('/community');
         } catch (error) {
             console.error('오류발생:', error);
         }
@@ -47,6 +51,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     }
 
     return(
+        <div>
         <Container>
             <Form>
                 <Form.Group className="mb-3" controlId="b_title">
@@ -61,9 +66,10 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                     <Form.Label>CONTENT</Form.Label>
                     <Form.Control as='textarea' name="b_content" rows={3} value={formContent.b_content} onChange={getValue} />
                 </Form.Group>
-                <Button variant="secondary" onClick={submitCommunity}>등록</Button>
+                <Button onClick={communityInsert}>등록</Button>
             </Form>
         </Container>
+        </div>
     )
 }
 
