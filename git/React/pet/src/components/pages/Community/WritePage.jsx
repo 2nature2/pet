@@ -39,11 +39,8 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
         }).then(()=> {
             alert('작성완료');
             loadCommunityList();
-            setFormContent({
-                b_title: '',
-                b_content: '',
-                b_writer: ''
-            })
+            resetForm();
+            movePage('/community');
         })
         .catch(error => {
             console.error('오류발생:', error);

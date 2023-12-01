@@ -6,6 +6,7 @@ import CommunityPage from "./components/pages/Community/CommunityPage";
 import Navigation from './components/pages/Navigation/Navigation';
 import WritePage from "./components/pages/Community/WritePage";
 import { useEffect, useState } from "react";
+import ViewPage from "./components/pages/Community/ViewPage";
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
   }, [])
 
   const loadCommunityList = () => {
-    axios.get('community/')
+    axios.get('/community/')
     .then((resp) => {
       console.log("확인",resp.data.content);
       setCommunityList(resp.data.content);
@@ -73,8 +74,9 @@ function App() {
         <Navigation />
           <Routes>
             <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage lists={communityList}/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} />} />
             <Route path="/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
+            <Route path="/community/view/:bnum" element={<ViewPage />} />
           </Routes>
       </BrowserRouter>
   );
