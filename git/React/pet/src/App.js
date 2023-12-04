@@ -7,6 +7,7 @@ import './App.css';
 import axios from "axios";
 import MainPage from "./components/pages/Main/MainPage";
 import CommunityPage from "./components/pages/Community/CommunityPage";
+import Navigation from './components/pages/Navigation/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import JoinForm from './components/pages/Member/JoinForm';
 import LoginForm from './components/pages/Member/LoginForm';
