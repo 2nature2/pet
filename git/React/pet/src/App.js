@@ -11,6 +11,7 @@ import Navigation from './components/pages/Navigation/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import JoinForm from './components/pages/Member/JoinForm';
 import LoginForm from './components/pages/Member/LoginForm';
+import PetMain from './components/pages/Pet/PetMain';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -110,6 +111,7 @@ function App() {
             <Route path="/community" element={<CommunityPage lists={communityList} />} />
             <Route path="/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage />} />
+            <Route path="/pet" element={<PetMain />} />
             <Route path="/join" element={<JoinForm join={join} />} />
             <Route path="/login" element={<LoginForm />} />
       </Routes>
