@@ -40,7 +40,7 @@ const CommunityPage = ({lists}) => {
                             lists&&lists.map((list, index) => (
                         <tr className='tblData' key={index}>
                             <td>{list.bnum}</td>
-                            <td></td>
+                            <td>{list.b_category}</td>
                             <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title}</a></td>
                             <td>{list.b_writer}</td>
                             <td>{list.b_date}</td>

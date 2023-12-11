@@ -8,18 +8,20 @@ import WritePage from "./components/pages/Community/WritePage";
 import { useEffect, useState } from "react";
 import ViewPage from "./components/pages/Community/ViewPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import UpdatePage from "./components/pages/Community/UpdatePage";
 
 function App() {
 
   const [communityList, setCommunityList] = useState([]);
   const [formContent, setFormContent] = useState({
+    b_category: '',
     b_title: '',
     b_content: '',
     b_writer: '',
   })
 
   useEffect(()=> {
-    loadCommunityList()
+    loadCommunityList();
   }, [])
 
   const loadCommunityList = () => {
@@ -48,6 +50,7 @@ function App() {
       console.log(resp);
       setCommunityList(communityList.concat(
         {
+          b_category: communityDTO.b_category,
           b_title: communityDTO.b_title,
           b_content: communityDTO.b_content,
           b_writer: communityDTO.b_writer
@@ -64,6 +67,7 @@ function App() {
 
   const resetForm = () => {
     setFormContent({
+      b_category: '',
       b_title: '',
       b_content: '',
       b_writer: ''
@@ -78,6 +82,7 @@ function App() {
             <Route path="/community" element={<CommunityPage lists={communityList} />} />
             <Route path="/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage />} />
+            <Route path="/community/update" element={<UpdatePage />}></Route>
           </Routes>
       </BrowserRouter>
   );
