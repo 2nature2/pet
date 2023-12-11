@@ -2,6 +2,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import mysql.connector
 import pymysql
+from selenium import webdriver
 
 # 데이터베이스 연결
 mydb = mysql.connector.connect(
@@ -26,33 +27,63 @@ url = "https://www.animal.go.kr/front/awtis/public/publicList.do?menuNo=10000000
 html = urlopen(url)
 soup = BeautifulSoup(html, "html.parser")
 
-# 공고 번호
-# info_num = soup.find('dl', string='공고기간').find_next('dd').text.strip()
-
-# print(f'공고기간: {info_num}')
-
+driver = webdriver.Chrome()
 animal_list = soup.select('.boardList .list li')
 
-for animal in animal_list:
-    animal_info = animal.select_one('.txt')
-
-    # Use try-except to handle cases where an element is not found
+def get_info(soup, label):
     try:
-        공고번호 = animal_info.find('dt', text='공고번호').find_next('dd').text.strip()
-        접수일자 = animal_info.find('dt', text='접수일자').find_next('dd').text.strip()
-        품종 = animal_info.find('dt', text='품종').find_next('dd').text.strip()
-        성별 = animal_info.find('dt', text='성별').find_next('dd').text.strip()
-        발견장소 = animal_info.find('dt', text='발견장소').find_next('dd').text.strip()
-        특징 = animal_info.find('dt', text='특징').find_next('dd').text.strip()
-        상태 = animal_info.find('dt', text='상태').find_next('dd').text.strip()
+        return soup.find('th', string=label).find_next('td').text.strip()
+    except AttributeError:
+        return None
 
-        print(f'공고번호: {공고번호}')
-        print(f'접수일자: {접수일자}')
-        print(f'품종: {품종}')
-        print(f'성별: {성별}')
-        print(f'발견장소: {발견장소}')
-        print(f'특징: {특징}')
-        print(f'상태: {상태}')
-        print('---')
+for animal in animal_list:
+    try:
+        # 각 동물 정보에서 상세 페이지 링크 추출
+        detail_link = animal.find('a')
+        if detail_link:
+            # URL 조합하여 상세 페이지에 직접 접근
+            detail_url = f"https://www.animal.go.kr{detail_link['href']}"
+
+            # 상세 페이지에 접근하여 내용을 크롤링
+            driver.get(detail_url)
+            detail_soup = BeautifulSoup(driver.page_source, "html.parser")
+
+            # 동물 정보 크롤링
+            info_num = get_info(detail_soup, '공고번호')
+            gender = get_info(detail_soup, '성별')
+            r_date = get_info(detail_soup, '접수일자')
+            breed = get_info(detail_soup, '품종')
+            location = get_info(detail_soup, '발견장소')
+            surgery = get_info(detail_soup, '중성화 여부')
+            appearance = get_info(detail_soup, '특징')
+            point = get_info(detail_soup, '특이사항')
+            c_name = get_info(detail_soup, '관할보호센터명')
+            c_address = get_info(detail_soup, '주소')
+            c_tel = get_info(detail_soup, '전화번호')
+
+            # 이미지 URL 가져오기
+            picture_element = detail_soup.select_one('.photoArea img')
+            picture = picture_element['src'] if picture_element else None
+
+            # 크롤링한 동물 정보 출력 또는 데이터베이스에 저장
+            print(f'공고번호: {info_num}')
+            print(f'성별: {gender}')
+            print(f'접수일자: {r_date}')
+            print(f'품종: {breed}')
+            print(f'발견장소: {location}')
+            print(f'중성화 여부: {surgery}')
+            print(f'특징: {appearance}')
+            print(f'특이사항: {point}')
+            print(f'관할보호센터명: {c_name}')
+            print(f'주소: {c_address}')
+            print(f'전화번호: {c_tel}')
+            print(f'이미지 URL: {picture}')
+            print('---')
+
+            # 뒤로 가기 클릭
+            driver.execute_script("window.history.go(-1)")
+        else:
+            print("상세 페이지 링크가 없습니다.")
+
     except AttributeError as e:
         print(f"Error: {e}")
