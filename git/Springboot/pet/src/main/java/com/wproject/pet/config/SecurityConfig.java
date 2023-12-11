@@ -14,6 +14,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,9 +44,10 @@ public class SecurityConfig{
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         // 필요한 경우 CORS 설정 수정
-        config.addAllowedOrigin("*");
-        config.addAllowedMethod("*");
-        config.addAllowedHeader("*");
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(Arrays.asList("*"));
+
         source.registerCorsConfiguration("/**", config);
 
         CorsFilter corsFilter = new CorsFilter(source);

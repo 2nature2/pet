@@ -17,10 +17,17 @@ public class MemberService {
 	private final BCryptPasswordEncoder encoder;
 	
 	//회원가입
-	public void insert(Member member) {
+	public void insert(MemberDTO memberDTO) {
 		 //비번 암호화
-		 String encPassword = encoder.encode(member.getPassword());
+		 String encPassword = encoder.encode(memberDTO.getPassword());
+		 Member member=new Member();
+		 member.setUserid(memberDTO.getUserid());
 		 member.setPassword(encPassword);
+		 member.setName(memberDTO.getName());
+		 member.setEmail(memberDTO.getEmail());
+		 member.setTel(memberDTO.getTel());
+		 member.setAddress(memberDTO.getAddress());
+		 member.setAuth(memberDTO.getAuth());
 		
 		memberRepository.save(member);
 	}

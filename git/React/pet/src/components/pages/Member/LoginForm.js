@@ -48,6 +48,7 @@ const login = (member) => {
       console.log("로그인 정보",loginContent)
       if (resp.ok) {
           alert('로그인 성공');
+          window.location.href = 'http://localhost:3000';
       } else {
           alert('로그인 실패');
       }
