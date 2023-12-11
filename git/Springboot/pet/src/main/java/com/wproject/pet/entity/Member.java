@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -36,4 +38,12 @@ public class Member {
 	private String email;
 	@Column(columnDefinition = "varchar(255) default '0'")
 	private String auth;
+	
+	@PrePersist
+    @PreUpdate
+    public void prePersist() {
+        if (this.auth == null) {
+            this.auth = "0";
+        }
+    }
 }

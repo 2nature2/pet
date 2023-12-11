@@ -11,7 +11,8 @@ const JoinForm = ({ join }) => {
     address: '',
     tel: '',
     email: '',
-    passwordCheck:''
+    passwordCheck:'',
+    auth:''
   });
 
   //==============우편번호찾기//아이디 중복확인=======================
@@ -91,10 +92,12 @@ const [isAddrChecked, setIsAddrChecked] = useState(false);
     }else if(!joinContent.userid){
       alert("아이디를 입력하세요")
       return;
-    }else if(!isIdChecked){
+    }
+    else if(!isIdChecked){
       alert('아이디 중복확인을 먼저 수행하세요.');
       return;
-    }else if(!joinContent.password){
+    }
+    else if(!joinContent.password){
       alert("비밀번호를 입력하세요")
       return;
     }else if(!joinContent.address){
@@ -114,6 +117,7 @@ const [isAddrChecked, setIsAddrChecked] = useState(false);
       return;
     }
     join(joinContent);
+   
     setJoinContent({
       name: '',
       userid: '',

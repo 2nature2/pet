@@ -31,13 +31,15 @@ public class MemberController {
 	//회원가입
 	@PostMapping("/member/join")
 	@ResponseBody
-	public String insert(@RequestBody Member member) {
+	public String insert(@RequestBody MemberDTO memberDTO) {
 		System.out.println("test");
 		 //id이 있으면 fail
-		 if(memberRepository.findByUserid(member.getUserid())!=null) {
+		
+		 if(memberRepository.findByUserid(memberDTO.getUserid())!=null) {
 			 return "fail";
 		 }
-		memberService.insert(member);
+		memberService.insert(memberDTO);
+		
 		return "success";
 	}
 	
@@ -61,10 +63,13 @@ public class MemberController {
 
 	
 	//회원가입시 아이디 중복확인
+	@CrossOrigin(origins = "http://localhost:3000") 
 	 @PostMapping("/member/checkId")
 	 @ResponseBody
-	 public String checkId(@RequestBody Member member) {
-		
+	 public String checkId(@RequestBody MemberDTO memberDTO) {
+		System.out.println("아이디 중복황인 테스트");
+		Member member = new Member();
+		member.setUserid(memberDTO.getUserid());
 		 if (memberRepository.findByUserid(member.getUserid()) != null) {
 			 System.out.println("fail");
 	            return "fail";

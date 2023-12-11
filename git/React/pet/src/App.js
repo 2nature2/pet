@@ -94,7 +94,7 @@ function App() {
       .then((result) => {
         if (result === 'success') {
           alert('등록완료');
-         
+          window.location.href = 'http://localhost:3000/login';
         } else {
           alert('등록실패');
         }
