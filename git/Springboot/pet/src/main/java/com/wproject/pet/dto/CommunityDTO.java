@@ -10,6 +10,7 @@ import lombok.Data;
 public class CommunityDTO {
 	
 	private Long bnum;
+	private String b_category;
 	private String b_title;
 	private String b_content;
 	private String b_writer;

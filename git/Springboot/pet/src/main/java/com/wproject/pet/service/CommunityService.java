@@ -23,6 +23,7 @@ public class CommunityService {
 	@Transactional
 	public void insert(CommunityDTO communityDTO) {
 		Community community = new Community();
+		community.setB_category(communityDTO.getB_category());
 		community.setBContent(communityDTO.getB_content());
 		community.setBTitle(communityDTO.getB_title());
 		community.setB_writer(communityDTO.getB_writer());
@@ -39,6 +40,7 @@ public class CommunityService {
 		}
 		return lists.map(community -> new CommunityDTO(
 				community.getBnum(),
+				community.getB_category(),
 	            community.getBTitle(),
 	            community.getBContent(),
 	            community.getB_writer(),
@@ -51,12 +53,14 @@ public class CommunityService {
 	//상세보기
 	@Transactional
 	public CommunityDTO view(Long bnum) {
+		System.out.println("View method called for bnum: " + bnum);
 		Optional<Community> communityOptional = communityRepository.findById(bnum);
 		if(communityOptional.isPresent()) {
 			Community community = communityOptional.get();
 			community.setHitcount(community.getHitcount()+1);
 			return new CommunityDTO(
 					community.getBnum(),
+					community.getB_category(),
 	                community.getBTitle(),
 	                community.getBContent(),
 	                community.getB_writer(),
@@ -73,6 +77,7 @@ public class CommunityService {
 	@Transactional
 	public void update(CommunityDTO communityDTO) {
 		Community community = communityRepository.findById(communityDTO.getBnum()).get();
+		community.setB_category(communityDTO.getB_category());
 		community.setBTitle(communityDTO.getB_title());
 		community.setBContent(communityDTO.getB_content());
 		community.setB_date(new Date());

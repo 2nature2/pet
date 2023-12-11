@@ -73,3 +73,31 @@
 .pagination li.active {
     background-color: #1098f7;
 }
+
+/*WritePage*/
+
+.wboard {
+    width: 80vw;
+    margin: auto;
+    margin-top: 2%;
+    padding: 2%;
+    border: 1px solid black;
+}
+
+/*ViewPage*/
+
+.vboard {
+    width: 80vw;
+    margin: auto;
+    margin-top: 5%;
+}
+
+/*UpdatePage*/
+
+.uboard {
+    width: 80vw;
+    margin: auto;
+    margin-top: 2%;
+    padding: 2%;
+    border: 1px solid black;
+}
