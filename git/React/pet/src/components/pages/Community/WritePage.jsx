@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     const movePage = useNavigate();
-    
+
     const back = () => {
         movePage(-1);
     }
@@ -27,15 +27,11 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     const communityInsert = async() => {
         try{
             await insertCommunity(formContent);
-            loadCommunityList();
-            resetForm();
-            alert('작성완료');
-            movePage('/community');
         } catch (error) {
             console.error('오류발생:', error);
         }
     }
-
+//axios로 넣는 방법
     const submitCommunity = () => {
         axios.post('/community/insert', {
             b_category: formContent.b_category,
@@ -59,9 +55,10 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 <Form.Group className="mb-3">
                     <Form.Label>CATEGORY</Form.Label>
                     <Form.Select name="b_category" value={formContent.b_category} onChange={getValue}>
-                        <option disabled>선택해주세요</option>
+                        <option>==선택==</option>
                         <option disabled>공지사항</option>
                         <option>질문</option>
+                        <option>후기</option>
                         <option>기타</option>
                     </Form.Select>
                 </Form.Group>
@@ -75,7 +72,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="b_content">
                     <Form.Label>CONTENT</Form.Label>
-                    <Form.Control as='textarea' name="b_content" rows={20} value={formContent.b_content} onChange={getValue} />
+                    <Form.Control as='textarea' name="b_content" rows={20} value={formContent.b_content} onChange={getValue} placeholder="2000자 이내로 작성해주세요."/>
                 </Form.Group>
                 <Button variant="success" onClick={communityInsert} style={{marginRight: 5}}>등록</Button>
                 <Button variant="secondary" onClick={back}>취소</Button>

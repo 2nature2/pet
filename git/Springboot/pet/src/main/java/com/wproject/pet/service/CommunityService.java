@@ -88,4 +88,10 @@ public class CommunityService {
 	public void delete(Long bnum) {
 		communityRepository.deleteById(bnum);
 	}
+	
+	public void like(Long bnum) {
+		Community community = communityRepository.findById(bnum).get();
+		community.setB_like(community.getB_like()+1);
+		communityRepository.save(community);
+	}
 }

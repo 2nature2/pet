@@ -26,8 +26,20 @@
     margin: auto;
     display: flex;
 }
+
 .search {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.search input {
     margin-right: 10px;
+    width: 200px;
+}
+
+.search button {
+    border: 0px;
 }
 
 .btnW {
@@ -56,14 +68,14 @@
     display: inline-block;
     width: 30px;
     height: 30px;
-    font-size: 1rem;
-    border-radius: 30px;
+    border-radius: 20px;
     text-align: center;
 }
 
 .pagination li a {
     text-decoration: none;
     color: black;
+    vertical-align: middle;
 }
 
 .pagination li.active a{
@@ -77,6 +89,7 @@
 /*WritePage*/
 
 .wboard {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     width: 80vw;
     margin: auto;
     margin-top: 2%;
@@ -87,14 +100,47 @@
 /*ViewPage*/
 
 .vboard {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     width: 80vw;
     margin: auto;
-    margin-top: 5%;
+    margin-block: 2%;
+}
+
+.vBtns {
+    display: flex;
+}
+
+#lBtn1 {
+    margin-right: 5px;
+    background-color: transparent;
+    color: #ff5ade;
+    border-color: #ff5ade;
+}
+
+#lBtn1:hover {
+    background-color: #ff5ade;
+    color: white;
+}
+
+#lBtn2 {
+    background-color: transparent;
+    color: #fcbe03;
+    border-color: #fcbe03;
+}
+
+#lBtn2:hover {
+    background-color: #fcbe03;
+    color: white;
+}
+
+.rBtn {
+    margin-left: auto;
 }
 
 /*UpdatePage*/
 
 .uboard {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     width: 80vw;
     margin: auto;
     margin-top: 2%;

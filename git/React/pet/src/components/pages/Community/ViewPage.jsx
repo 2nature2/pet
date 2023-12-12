@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import '../../styles/Community.css';
-import { Button } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 
 const ViewPage = () => {
     const movePage = useNavigate();
     const prevBnum = useRef(null);
     const prev = () => {
-       window.history.back();
+       movePage('/community');
     }
 
     function update(){
@@ -71,20 +71,74 @@ const ViewPage = () => {
         });
     }
 
+    const deleteBoard = () => {
+        fetch(`/community/delete/${bnum}`, {
+            method: 'DELETE',
+        })
+        .then(()=> {
+            window.location = '/community';
+            // window.location = document.referrer;
+        })
+    }
+
+    const blike = () => {
+        fetch(`/community/like/${bnum}`, {
+            method: 'GET'
+        })
+        .then(()=> {
+            window.location.reload();
+        })
+    }
     return(
+        <>
         <div className="vboard">
-            <p>글번호: {bnum}</p>
-            <p>분류: {view.b_category}</p>
-            <p>제목: {view.b_title}</p>
-            <p>내용: {view.b_content}</p>
-            <p>작성자: {view.b_writer}</p>
-            <p>날짜: {view.b_date}</p>
-            <p>좋아요: {view.b_like}</p>
-            <p>조회수: {view.hitcount}</p>
+        <Button variant="outline-secondary" style={{marginBottom:10}} onClick={prev}>{`<-`}</Button>
+            <Form>
+                <Form.Group className="mb-3" controlId="b_title">
+                    <Form.Control plaintext readOnly type="text" name="b_title" value={view.b_title} style={{fontSize:30}} />
+                </Form.Group>
+                <Row>
+                    <Col>
+                        <Form.Group style={{borderRight:'1px gray solid'}} className="mb-3" controlId="b_writer">
+                            <Form.Label>작성자</Form.Label>
+                            <Form.Control plaintext readOnly type="text" name="b_writer" value={view.b_writer}/>
+                        </Form.Group>
+                    </Col>
+                    <Col>          
+                        <Form.Group style={{borderRight:'1px gray solid'}} className="mb-3" controlId="b_date">
+                            <Form.Label>등록일</Form.Label>
+                            <Form.Control plaintext readOnly type="text" name="b_date" value={view.b_date} />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group style={{borderRight:'1px gray solid'}} className="mb-3" controlId="b_category">
+                            <Form.Label>분류</Form.Label>
+                            <Form.Control plaintext readOnly type="text" name="b_category" value={view.b_category} />
+                        </Form.Group>
+                    </Col>
+                    <Col>
+                        <Form.Group className="mb-3" controlId="hitcount">
+                            <Form.Label>조회수</Form.Label>
+                            <Form.Control plaintext readOnly type="text" name="hitcount" value={view.hitcount} />
+                        </Form.Group>
+                    </Col>
+                </Row>
+                <Form.Group className="mb-3" controlId="b_content">
+                    <Form.Control plaintext readOnly as='textarea' name="b_content" rows={20} value={view.b_content}/>
+                </Form.Group>
+            </Form>
+            <div className="vBtns">
+                <div className="lBtn">
+                    <Button id="lBtn1" onClick={blike}>♥ 좋아요({view.b_like})</Button>
+                    <Button id="lBtn2" >신고</Button>
+                </div>
+            <div className="rBtn">
             <Button onClick={update} variant="info" style={{marginRight:5}}>수정</Button>
-            <Button variant="danger" style={{marginRight:5}}>삭제</Button>
-            <Button variant="secondary" onClick={prev}>뒤로가기</Button>
+            <Button variant="danger" style={{marginRight:5}} onClick={deleteBoard}>삭제</Button>
+            </div>
+            </div> 
         </div>
+        </>
     )
 }
 

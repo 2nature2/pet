@@ -55,4 +55,9 @@ public class CommunityController {
 		communityService.delete(bnum);
 		return bnum;
 	}
+	
+	@GetMapping("/like/{bnum}")
+	public void like(@PathVariable Long bnum) {
+		communityService.like(bnum);
+	}
 }
