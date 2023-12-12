@@ -10,6 +10,7 @@ import CommunityPage from "./components/pages/Community/CommunityPage";
 import Navigation from './components/pages/Navigation/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UpdatePage from "./components/pages/Community/UpdatePage";
+import Swal from "sweetalert2";
 import JoinForm from './components/pages/Member/JoinForm';
 import LoginForm from './components/pages/Member/LoginForm';
 import PetMain from './components/pages/Pet/PetMain';
@@ -61,8 +62,20 @@ function App() {
         )); 
       loadCommunityList();
       resetForm();
+      Swal.fire({
+        icon: "success",
+        iconColor: "#06BEE1",
+        title: "작성 완료",
+        confirmButtonColor: "#06BEE1",
+      }).then(function(){
+        window.history.back();
+      });
     })
     .catch((error) => {
+      Swal.fire({
+        icon: "warning",
+        title: "글자수를 확인해주세요"
+      })
       console.error('Fetch error:', error);
       console.error('Response:', error.response);
     });
@@ -114,8 +127,8 @@ function App() {
         <Route path="/" element={<MainPage/>} />
             <Route path="/community" element={<CommunityPage lists={communityList} />} />
             <Route path="/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
-            <Route path="/community/view/:bnum" element={<ViewPage />} />
-            <Route path="/community/update" element={<UpdatePage />}></Route>
+            <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
+            <Route path="/community/update" element={<UpdatePage />} />
             <Route path="/pet" element={<PetMain />} />
             <Route path="/join" element={<JoinForm join={join} />} />
             <Route path="/login" element={<LoginForm />} />
