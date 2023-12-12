@@ -2,11 +2,14 @@ package com.wproject.pet.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -78,4 +81,13 @@ public class MemberController {
 	            return "success";
 	        }
 	 }
+//	//카카오 로그인
+//	@GetMapping("/user/kakao/callback")
+//	 public Long kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
+//        // code: 카카오 서버로부터 받은 인가 코드
+//        SignupSocialDto signupKakaoDto = kakaoUserService.kakaoLogin(code);
+//        response.addHeader(AUTH_HEADER, signupKakaoDto.getToken());
+//
+//        return signupKakaoDto.getUserId();
+//    }
 }

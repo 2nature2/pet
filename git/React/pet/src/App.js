@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import JoinForm from './components/pages/Member/JoinForm';
 import LoginForm from './components/pages/Member/LoginForm';
 import PetMain from './components/pages/Pet/PetMain';
+import KakaoAuthHandle from './components/pages/Member/KakaoAuthHandle';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -114,6 +115,11 @@ function App() {
             <Route path="/pet" element={<PetMain />} />
             <Route path="/join" element={<JoinForm join={join} />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route /* 인가 코드 받기.. */
+        exact 
+        path="/user/kakao/callback"
+        component={KakaoAuthHandle}
+      />
       </Routes>
     </BrowserRouter>
 )

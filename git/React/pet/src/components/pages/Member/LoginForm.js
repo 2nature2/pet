@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
+import {KAKAO_AUTH_URL} from "./kakaoAuth"
 
 const LoginForm = () => {
   const [loginContent, setLoginContent] = useState({
@@ -66,7 +67,10 @@ const login = (member) => {
             password:''
         })
     }
-
+    //===================z카카오 로그인================================================================
+    const kakaoLogin = () =>{
+      window.location.href = KAKAO_AUTH_URL;
+    }
 
   return (
     <div>
@@ -106,6 +110,9 @@ const login = (member) => {
           </div>
         </Form>
       </Container>
+      <div>
+            <button onClick={kakaoLogin}>카카오 로그인</button>
+        </div>
     </div>
   );
 };

@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#카카오
+REACT_APP_REST_API_KEY="3ae61230f41dcde5aeadc39ea01ad8db"
+REACT_APP_REDIRECT_URL="http://localhost:3000/login/oauth2/code/kakao"
