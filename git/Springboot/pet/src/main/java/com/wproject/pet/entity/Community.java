@@ -24,6 +24,8 @@ public class Community {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long bnum;
 	
+	private String b_category;
+	
 	@NotNull
 	@Column(name="b_title")
 	private String bTitle;
