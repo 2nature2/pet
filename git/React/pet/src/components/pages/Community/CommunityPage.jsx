@@ -11,7 +11,6 @@ const CommunityPage = ({lists}) => {
         setPage(page);
         console.log("page확인", page);
     }
-    
     function write(){
         movePage('/write');
     }
