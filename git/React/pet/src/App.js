@@ -11,8 +11,6 @@ import Navigation from './components/pages/Navigation/Navigation';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UpdatePage from "./components/pages/Community/UpdatePage";
 import Swal from "sweetalert2";
-import JoinForm from './components/pages/Member/JoinForm';
-import LoginForm from './components/pages/Member/LoginForm';
 import PetMain from './components/pages/Pet/PetMain';
 
 function App() {
@@ -130,8 +128,6 @@ function App() {
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />
             <Route path="/pet" element={<PetMain />} />
-            <Route path="/join" element={<JoinForm join={join} />} />
-            <Route path="/login" element={<LoginForm />} />
       </Routes>
     </BrowserRouter>
 )
