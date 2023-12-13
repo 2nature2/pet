@@ -1,11 +1,5 @@
 package com.wproject.pet.dto;
 
-
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-
-import com.wproject.pet.entity.Member;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +15,5 @@ public class MemberDTO {
 	private String address;
 	private String email;
 	private String auth;
-	
-	
 
 }

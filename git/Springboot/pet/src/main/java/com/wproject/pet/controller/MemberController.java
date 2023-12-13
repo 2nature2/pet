@@ -1,12 +1,8 @@
 package com.wproject.pet.controller;
 
-import java.util.Map;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -67,7 +63,7 @@ public class MemberController {
 	 @PostMapping("/member/checkId")
 	 @ResponseBody
 	 public String checkId(@RequestBody MemberDTO memberDTO) {
-		System.out.println("아이디 중복황인 테스트");
+		System.out.println("아이디 중복확인 테스트");
 		Member member = new Member();
 		member.setUserid(memberDTO.getUserid());
 		 if (memberRepository.findByUserid(member.getUserid()) != null) {

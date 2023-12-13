@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import WritePage from "./components/pages/Community/WritePage";
 import ViewPage from "./components/pages/Community/ViewPage";
@@ -17,6 +16,7 @@ import PetMain from './components/pages/Pet/PetMain';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
+  // eslint-disable-next-line
   const [formContent, setFormContent] = useState({
     b_category: '',
     b_title: '',
@@ -51,7 +51,6 @@ function App() {
       return resp.text();
     })
     .then((resp)=> {
-      console.log(resp);
       setCommunityList(communityList.concat(
         {
           b_category: communityDTO.b_category,
@@ -72,10 +71,6 @@ function App() {
       });
     })
     .catch((error) => {
-      Swal.fire({
-        icon: "warning",
-        title: "글자수를 확인해주세요"
-      })
       console.error('Fetch error:', error);
       console.error('Response:', error.response);
     });
@@ -89,6 +84,7 @@ function App() {
       b_writer: ''
     })
   }
+  
 
   // 회원가입
   const join = (member) => {
@@ -104,14 +100,14 @@ function App() {
         password: member.password,
         email: member.email,
         address: member.address,
-        tel: member.tel,
+        tel: member.tel
       }),
     })
       .then((resp) => resp.text())
       .then((result) => {
         if (result === 'success') {
           alert('등록완료');
-          window.location.href = 'http://localhost:3000/login';
+          window.location.href = '/login';
         } else {
           alert('등록실패');
         }

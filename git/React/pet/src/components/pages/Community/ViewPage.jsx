@@ -9,11 +9,9 @@ const ViewPage = () => {
     const prev = () => {
        movePage('/community');
     }
-
-    function update(){
-        movePage(`/community/update`);
+    const updateForm = () => {
+        movePage(`/community/update`, { state: { viewData: view } });
     }
-
     const {bnum} = useParams();
     const [view, setView] = useState({
         b_category: '',
@@ -28,6 +26,40 @@ const ViewPage = () => {
     
     //setView는 객체 업데이트 => concat은 배열에 쓰는 메서드
     useEffect(()=> {
+        const viewList = () => {
+            fetch(`/community/view/${bnum}`, {
+                method: 'GET',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+            })
+            .then((resp)=> {
+                if(!resp.ok){
+                    throw new Error(`Network response was not ok: ${resp.status}`);
+                }
+                return resp.json();
+            })
+            .then((data)=> {
+                console.log("data확인",data);
+                setView((prevView) => (
+                    {
+                        ...prevView,
+                        b_category: data.b_category,
+                        b_title: data.b_title, 
+                        b_content: data.b_content,
+                        b_writer: data.b_writer,
+                        b_date: data.b_date,
+                        b_like: data.b_like,
+                        hitcount: data.hitcount,
+                        bnum: data.bnum
+                    }
+                ))
+            })
+            .catch((error) => {
+                console.error('Fetch error:', error);
+                console.error('Response:', error.response);
+            });
+        }
         console.log('useEffect called');
         if(bnum!==prevBnum.current){
             viewList();
@@ -35,41 +67,6 @@ const ViewPage = () => {
         }
         
     },[bnum])
-
-    const viewList = () => {
-        fetch(`/community/view/${bnum}`, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json'
-            },
-        })
-        .then((resp)=> {
-            if(!resp.ok){
-                throw new Error(`Network response was not ok: ${resp.status}`);
-            }
-            return resp.json();
-        })
-        .then((data)=> {
-            console.log("data확인",data);
-            setView((prevView) => (
-                {
-                    ...prevView,
-                    b_category: data.b_category,
-                    b_title: data.b_title, 
-                    b_content: data.b_content,
-                    b_writer: data.b_writer,
-                    b_date: data.b_date,
-                    b_like: data.b_like,
-                    hitcount: data.hitcount,
-                    bnum: data.bnum
-                }
-            ))
-        })
-        .catch((error) => {
-            console.error('Fetch error:', error);
-            console.error('Response:', error.response);
-        });
-    }
 
     const deleteBoard = () => {
         fetch(`/community/delete/${bnum}`, {
@@ -133,8 +130,8 @@ const ViewPage = () => {
                     <Button id="lBtn2" >신고</Button>
                 </div>
             <div className="rBtn">
-            <Button onClick={update} variant="info" style={{marginRight:5}}>수정</Button>
-            <Button variant="danger" style={{marginRight:5}} onClick={deleteBoard}>삭제</Button>
+                <Button style={{marginRight:5, backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={updateForm}>수정</Button>
+                <Button style={{marginRight:5, backgroundColor:"#d80000", borderColor:"#d80000"}} onClick={deleteBoard}>삭제</Button>
             </div>
             </div> 
         </div>

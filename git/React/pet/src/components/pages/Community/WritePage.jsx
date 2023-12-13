@@ -1,7 +1,7 @@
-import axios from "axios";
 import { useState } from "react";
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     const movePage = useNavigate();
@@ -25,29 +25,53 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     }
 
     const communityInsert = async() => {
-        try{
-            await insertCommunity(formContent);
-        } catch (error) {
-            console.error('오류발생:', error);
-        }
-    }
-//axios로 넣는 방법
-    const submitCommunity = () => {
-        axios.post('/community/insert', {
-            b_category: formContent.b_category,
-            b_title: formContent.b_title,
-            b_content: formContent.b_content,
-            b_writer: formContent.b_writer
-        }).then(()=> {
-            alert('작성완료');
-            loadCommunityList();
-            resetForm();
-            movePage('/community');
+        if(!formContent.b_title){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "제목을 입력해주세요.",
+                confirmButtonColor:"#06BEE1"
+            });
+        }else if(!formContent.b_content){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "내용을 입력해주세요.",
+                confirmButtonColor:"#06BEE1"
         })
-        .catch(error => {
-            console.error('오류발생:', error);
-        });
+        }else if(formContent.b_content.length>2000){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "글자수를 확인해주세요.",
+                confirmButtonColor:"#06BEE1"
+            })
+        }else{
+            try{
+                await insertCommunity(formContent);
+            } catch (error) {
+                console.error('오류발생:', error);
+            }
+        } 
     }
+
+//axios로 넣는 방법
+    // const submitCommunity = () => {
+    //     axios.post('/community/insert', {
+    //         b_category: formContent.b_category,
+    //         b_title: formContent.b_title,
+    //         b_content: formContent.b_content,
+    //         b_writer: formContent.b_writer
+    //     }).then(()=> {
+    //         alert('작성완료');
+    //         loadCommunityList();
+    //         resetForm();
+    //         movePage('/community');
+    //     })
+    //     .catch(error => {
+    //         console.error('오류발생:', error);
+    //     });
+    // }
 
     return(
         <div className="wboard">
@@ -74,8 +98,8 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                     <Form.Label>CONTENT</Form.Label>
                     <Form.Control as='textarea' name="b_content" rows={20} value={formContent.b_content} onChange={getValue} placeholder="2000자 이내로 작성해주세요."/>
                 </Form.Group>
-                <Button variant="success" onClick={communityInsert} style={{marginRight: 5}}>등록</Button>
-                <Button variant="secondary" onClick={back}>취소</Button>
+                <Button onClick={communityInsert} style={{marginRight: 5, backgroundColor:"#1098f7", borderColor:"#1098f7"}}>등록</Button>
+                <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
             </Form>
         </div>
     )
