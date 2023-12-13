@@ -67,7 +67,7 @@ const login = (member) => {
     <div>
       <Container className="panel" style={{ marginTop: "50px", width: "700px" }}>
         <Form>
-          <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextPassword">
+          <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextId">
             <Form.Label column sm="2">
               UserID
             </Form.Label>
