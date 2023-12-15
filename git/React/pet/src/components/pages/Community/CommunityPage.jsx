@@ -1,19 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Community.css';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 
-const CommunityPage = ({lists}) => {
+const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, setPage}) => {
     const movePage = useNavigate();
-    const [page, setPage] = useState(1);
-    const handlePageChange = (page) => {
-        setPage(page);
-        console.log("page확인", page);
-    }
+    const [page, setPageLocal] = useState(1);
+
+    useEffect(()=> {
+        loadCommunityList();
+    }, [page]);
+    
+    const handlePageChange = (selectedPage) => {
+        setPage(selectedPage -1);
+        setPageLocal(selectedPage);
+        console.log("page확인:",selectedPage);
+    };
+
     function write(){
-        movePage('/write');
-    }
+        movePage('/community/write');
+    };
 
     return (
         <div className='community'>
@@ -52,7 +59,7 @@ const CommunityPage = ({lists}) => {
                 </Table>
             </div>
             <div className='btns'>
-                <Pagination activePage={page} itemsCountPerPage={20} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"<"} nextPageText={">"} onChange={handlePageChange} />
+                <Pagination activePage={page} itemsCountPerPage={20} totalItemsCount={parseInt(totalElements)} pageRangeDisplayed={5} prevPageText={"<"} nextPageText={">"} onChange={handlePageChange} />
                 <Button className='btnW' onClick={write} style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}}>글쓰기</Button>
             </div>
         </div>

@@ -7,7 +7,7 @@ const ViewPage = () => {
     const movePage = useNavigate();
     const prevBnum = useRef(null);
     const prev = () => {
-       movePage('/community');
+        movePage('/community');
     }
     const updateForm = () => {
         movePage(`/community/update`, { state: { viewData: view } });
