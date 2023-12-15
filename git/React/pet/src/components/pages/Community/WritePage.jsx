@@ -74,6 +74,8 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     // }
 
     return(
+        <>
+        <p className="pTitle">빂Write빂</p>
         <div className="wboard">
             <Form>
                 <Form.Group className="mb-3">
@@ -102,6 +104,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
             </Form>
         </div>
+        </>
     )
 }
 

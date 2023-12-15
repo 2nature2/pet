@@ -22,9 +22,10 @@ const UpdatePage = () => {
     const back = () => {
         movePage(-1);
     }
-
     
     return (
+        <>
+        <p className='pTitle'>빂Modify빂</p>
         <div className="uboard">
             <Form>
                 <Form.Group className="mb-3" controlId="b_title">
@@ -69,6 +70,7 @@ const UpdatePage = () => {
             <Button style={{marginRight:5, backgroundColor:"#1098f7", borderColor:"#1098f7"}} >확인</Button>
             <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
         </div>
+        </>
     )
 }
 
