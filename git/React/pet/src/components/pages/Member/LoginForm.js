@@ -1,14 +1,12 @@
-
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 
-
 const LoginForm = () => {
   const [loginContent, setLoginContent] = useState({
     username: "",
-    password: "",
+    password: ""
   });
 
   const getValue = (e) => {
@@ -33,46 +31,45 @@ const LoginForm = () => {
 //   };
 
 const login = (member) => {
-    const formData = new URLSearchParams();
-    formData.append("username", member.username);
-    formData.append("password", member.password);
+  const formData = new URLSearchParams();
+  formData.append("username", member.username);
+  formData.append("password", member.password);
 
-    fetch('/login', {
-      method: 'post',
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded',
-      },
-      body: formData,
-    })
-    .then((resp) => {
-      console.log("로그인 정보",loginContent)
-      if (resp.ok) {
-          alert('로그인 성공');
-          window.location.href = 'http://localhost:3000';
-      } else {
-          alert('로그인 실패');
-      }
+  fetch('/login', {
+    method: 'post',
+    headers: {
+      'Content-type': 'application/x-www-form-urlencoded',
+    },
+    body: formData,
   })
-      
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  };
-
-    const loginbtn=()=>{
-        login(loginContent);
-        setLoginContent({
-          username:'',
-            password:''
-        })
+  .then((resp) => {
+    console.log("로그인 정보",loginContent)
+    if (resp.ok) {
+        alert('로그인 성공');
+        window.location.href = '/';
+    } else {
+        alert('로그인 실패');
     }
- 
+
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+  };
+  const loginbtn=()=>{
+    login(loginContent);
+    setLoginContent({
+      username:'',
+      password:''
+    })
+  }
+
 
   return (
     <div>
       <Container className="panel" style={{ marginTop: "50px", width: "700px" }}>
         <Form>
-          <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextPassword">
+          <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextId">
             <Form.Label column sm="2">
               UserID
             </Form.Label>
@@ -98,7 +95,6 @@ const login = (member) => {
             />
           </Form.Group>
           <br />
-
           <div className="d-grid gap-1">
             <Button variant="secondary"  onClick={loginbtn}> {/* 수정: type을 submit에서 button으로 변경 */}
               Sign In

@@ -18,12 +18,12 @@ const JoinForm = ({ join }) => {
   //==============우편번호찾기//아이디 중복확인=======================
     // 모달 상태
     const [showModal, setShowModal] = useState(false);
-// 중복확인 결과 상태
-const [isIdDuplicated, setIsIdDuplicated] = useState(false);
-const [idCheckMessage, setIdCheckMessage] = useState('아이디 중복 확인을 해주세요.'); // 새로운 상태 추가
-//중복확인 버튼 t/f
-const [isIdChecked, setIsIdChecked] = useState(false);
-const [isAddrChecked, setIsAddrChecked] = useState(false);
+    // 중복확인 결과 상태
+    const [isIdDuplicated, setIsIdDuplicated] = useState(false);
+    const [idCheckMessage, setIdCheckMessage] = useState('아이디 중복 확인을 해주세요.'); // 새로운 상태 추가
+    //중복확인 버튼 t/f
+    const [isIdChecked, setIsIdChecked] = useState(false);
+    const [isAddrChecked, setIsAddrChecked] = useState(false);
 
     // handler
     const handle = {

@@ -2,10 +2,12 @@ package com.wproject.pet.service;
 
 import java.util.Date;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -32,22 +34,31 @@ public class CommunityService {
 	
 	//전체보기(페이징, 검색)
 	public Page<CommunityDTO> findAll(String field, String word, Pageable pageable){
-		Page<Community> lists = communityRepository.findAll(pageable);
+		Page<Community> lists;
+		
 		if("bTitle".equals(field)){
 			lists = communityRepository.findByBTitleContaining(word, pageable);
 		}else if("bContent".equals(field)) {
 			lists = communityRepository.findByBContentContaining(word, pageable);
+		}else {
+			lists = communityRepository.findAll(pageable);
 		}
-		return lists.map(community -> new CommunityDTO(
-				community.getBnum(),
-				community.getB_category(),
-	            community.getBTitle(),
-	            community.getBContent(),
-	            community.getB_writer(),
-	            community.getB_date(),
-	            community.getB_like(),
-	            community.getHitcount()
-				));
+		return new PageImpl<>(
+				lists.getContent().stream()
+					.map(community -> new CommunityDTO(
+						community.getBnum(),
+						community.getB_category(),
+			            community.getBTitle(),
+			            community.getBContent(),
+			            community.getB_writer(),
+			            community.getB_date(),
+			            community.getB_like(),
+			            community.getHitcount()
+					))
+					.collect(Collectors.toList()),
+				pageable,
+				lists.getTotalElements()
+				);
 		}
 
 	//상세보기

@@ -1,5 +1,15 @@
 @charset "utf-8";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@font-face {
+    font-family: 'YUniverse-B';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_yuniverse@1.0/YUniverse-B.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+button:active {
+    scale: 0.9;
+}
 
 .community {
     margin-inline: 5%;
@@ -68,7 +78,7 @@
     display: inline-block;
     width: 30px;
     height: 30px;
-    border-radius: 20px;
+    border-radius: 15px;
     text-align: center;
 }
 
@@ -88,13 +98,28 @@
 
 /*WritePage*/
 
+.pTitle {
+    font-family: 'YUniverse-B';
+    margin-top: 2%;
+    margin-left: 10vw;
+    text-align: center;
+    font-size: 30px;
+    width: fit-content;
+    background-color: #f7cd10;
+    border-radius: 5px;
+}
+
 .wboard {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     width: 80vw;
     margin: auto;
-    margin-top: 2%;
+    margin-block: 2%;
     padding: 2%;
-    border: 1px solid black;
+    border: 1px solid gray;
+    border-radius: 10px;
+    background-color: #d5d5d5;
+    /* -webkit-backdrop-filter: blur(15px);
+    backdrop-filter: blur(15px); */
 }
 
 /*ViewPage*/
@@ -143,7 +168,5 @@
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     width: 80vw;
     margin: auto;
-    margin-top: 2%;
-    padding: 2%;
-    border: 1px solid black;
+    margin-block: 2%;
 }

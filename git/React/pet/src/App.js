@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import WritePage from "./components/pages/Community/WritePage";
 import ViewPage from "./components/pages/Community/ViewPage";
@@ -18,24 +17,31 @@ import Adoption from './components/pages/Pet/Adoption';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
+  // eslint-disable-next-line
   const [formContent, setFormContent] = useState({
     b_category: '',
     b_title: '',
     b_content: '',
     b_writer: '',
   })
+  const [page, setPage] = useState(1); 
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
+
+  const loadCommunityList = async() => {
+    try{
+      const response = await axios.get(`/community/?page=${page}`);
+      setCommunityList(response.data.content);
+      setTotalPages(response.data.totalPages);
+      setTotalElements(response.data.totalElements);
+    } catch(error) {
+      console.error('Error fetching data:', error);
+    }
+  }
 
   useEffect(()=> {
     loadCommunityList();
-  }, [])
-
-  const loadCommunityList = () => {
-    axios.get('/community/')
-    .then((resp) => {
-      console.log("확인",resp.data.content);
-      setCommunityList(resp.data.content);
-    })
-  }
+  }, [page]);
 
   const insertCommunity = (communityDTO) => {
     fetch('community/insert', {
@@ -52,7 +58,6 @@ function App() {
       return resp.text();
     })
     .then((resp)=> {
-      console.log(resp);
       setCommunityList(communityList.concat(
         {
           b_category: communityDTO.b_category,
@@ -65,18 +70,14 @@ function App() {
       resetForm();
       Swal.fire({
         icon: "success",
-        iconColor: "#06BEE1",
+        iconColor: "#1098f7",
         title: "작성 완료",
-        confirmButtonColor: "#06BEE1",
+        confirmButtonColor: "#1098f7",
       }).then(function(){
         window.history.back();
       });
     })
     .catch((error) => {
-      Swal.fire({
-        icon: "warning",
-        title: "글자수를 확인해주세요"
-      })
       console.error('Fetch error:', error);
       console.error('Response:', error.response);
     });
@@ -90,6 +91,7 @@ function App() {
       b_writer: ''
     })
   }
+  
 
   // 회원가입
   const join = (member) => {
@@ -105,14 +107,14 @@ function App() {
         password: member.password,
         email: member.email,
         address: member.address,
-        tel: member.tel,
+        tel: member.tel
       }),
     })
       .then((resp) => resp.text())
       .then((result) => {
         if (result === 'success') {
           alert('등록완료');
-          window.location.href = 'http://localhost:3000/login';
+          window.location.href = '/login';
         } else {
           alert('등록실패');
         }
@@ -126,8 +128,8 @@ function App() {
      <Navigation />
       <Routes>
         <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage lists={communityList} />} />
-            <Route path="/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage}/>} />
+            <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />
             <Route path="/pet" element={<PetMain />} />
