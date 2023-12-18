@@ -9,5 +9,4 @@ import com.wproject.pet.entity.Community;
 public interface CommunityRepository extends JpaRepository<Community, Long>{
 	public Page<Community> findByBTitleContaining(String word, Pageable pageable);
 	public Page<Community> findByBContentContaining(String word, Pageable pageable);
-	
 }

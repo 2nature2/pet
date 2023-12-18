@@ -93,10 +93,10 @@ const [isAddrChecked, setIsAddrChecked] = useState(false);
       alert("아이디를 입력하세요")
       return;
     }
-    else if(!isIdChecked){
-      alert('아이디 중복확인을 먼저 수행하세요.');
-      return;
-    }
+    // else if(!isIdChecked){
+    //   alert('아이디 중복확인을 먼저 수행하세요.');
+    //   return;
+    // }
     else if(!joinContent.password){
       alert("비밀번호를 입력하세요")
       return;
@@ -112,7 +112,7 @@ const [isAddrChecked, setIsAddrChecked] = useState(false);
     }else if(!isAddrChecked){
       alert("우편번호 찾기를 먼저 수행하세요")
       return;
-    }else if(joinContent.password!=joinContent.passwordCheck){
+    }else if(joinContent.password!==joinContent.passwordCheck){
       alert("비밀번호가 일치하지 않습니다.")
       return;
     }

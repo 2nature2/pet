@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-//@RequestMapping("/member/*")
+@RequestMapping("/member/*")
 @CrossOrigin(origins = "http://localhost:3000") 
 public class MemberController {
 	private final MemberService memberService;
@@ -32,7 +32,7 @@ public class MemberController {
 	
 	
 	//회원가입
-	@PostMapping("/member/join")
+	@PostMapping("/join")
 	@ResponseBody
 	public String insert(@RequestBody MemberDTO memberDTO) {
 		System.out.println("test");
@@ -67,10 +67,10 @@ public class MemberController {
 	
 	//회원가입시 아이디 중복확인
 	@CrossOrigin(origins = "http://localhost:3000") 
-	 @PostMapping("/member/checkId")
+	 @PostMapping("/checkId")
 	 @ResponseBody
 	 public String checkId(@RequestBody MemberDTO memberDTO) {
-		System.out.println("아이디 중복황인 테스트");
+		System.out.println("아이디 중복확인 테스트");
 		Member member = new Member();
 		member.setUserid(memberDTO.getUserid());
 		 if (memberRepository.findByUserid(member.getUserid()) != null) {

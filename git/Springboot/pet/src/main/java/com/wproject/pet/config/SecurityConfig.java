@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -37,7 +38,17 @@ import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class SecurityConfig{
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	 @Autowired
+	    private JwtTokenProvider jwtTokenProvider;
+	 
+	  @Override
+	    protected void configure(HttpSecurity http) throws Exception {
+	        // 다른 설정들...
+
+	        // JWT를 사용하기 위한 설정
+	        http.apply(new JwtConfigurer(jwtTokenProvider));
+	    }
 
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilter() {
@@ -66,8 +77,8 @@ public class SecurityConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeHttpRequests()
-      //  .authorizeRequests()
-//            .antMatchers("/member/*").authenticated()
+           // .authorizeRequests()
+            .antMatchers("/member/*").authenticated()
             .anyRequest().permitAll()
             .and()
             .formLogin()

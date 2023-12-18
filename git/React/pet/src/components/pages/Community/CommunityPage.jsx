@@ -19,9 +19,9 @@ const CommunityPage = ({lists}) => {
     return (
         <div className='community'>
             <div className='cboard'>
-            <div>
-                <input className='search' type='text' placeholder='내용을 입력하세요'></input>
-                <Button style={{backgroundColor: '#b89e97', borderColor: '#b89e97'}}>검색</Button>
+                <div className='search'>
+                    <input type='text' placeholder='내용을 입력하세요'></input>
+                    <Button style={{backgroundColor: '#b89e97', borderColor: '#b89e97'}}>검색</Button>
                 </div>
                 <Table>
                     <thead>
@@ -53,9 +53,8 @@ const CommunityPage = ({lists}) => {
                 </Table>
             </div>
             <div className='btns'>
-                
                 <Pagination activePage={page} itemsCountPerPage={20} totalItemsCount={450} pageRangeDisplayed={5} prevPageText={"<"} nextPageText={">"} onChange={handlePageChange} />
-                <Button className='btnW' onClick={write}>글쓰기</Button>
+                <Button className='btnW' onClick={write} style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}}>글쓰기</Button>
             </div>
         </div>
     )
