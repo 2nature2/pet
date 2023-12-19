@@ -1,6 +1,5 @@
 package com.wproject.pet.controller;
 
-import java.util.Date;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -66,14 +65,7 @@ public class CommunityController {
 	    if (requestBody.get("b_content") != null && !((String) requestBody.get("b_content")).isEmpty()) {
 	        communityDTO.setB_content((String) requestBody.get("b_content"));
 	    }
-//		communityDTO.setBnum(bnum);
-//		communityDTO.setB_category((String)requestBody.get("b_category"));
-//		communityDTO.setB_title((String) requestBody.get("b_title"));
-//		communityDTO.setB_content((String) requestBody.get("b_content"));
-//		communityDTO.setB_writer((String) requestBody.get("b_writer"));
-//		communityDTO.setB_date((Date) requestBody.get("b_date"));
-//		communityDTO.setB_like((int) requestBody.get("b_like"));
-//		communityDTO.setHitcount((int) requestBody.get("hitcount"));
+
         communityService.update(communityDTO);
     }
 	
