@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import '../../styles/Community.css';
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, FormControl, FormGroup, FormLabel, Modal, Row } from "react-bootstrap";
 
 const ViewPage = () => {
     const movePage = useNavigate();
@@ -101,6 +101,11 @@ const ViewPage = () => {
             console.error('Response:', error.response);
         });
     }
+
+    const [show, setShow] = useState(false);
+    const reportClose = () => setShow(false);
+    const reportOpen = () => setShow(true);
+    const defaultReport = `원글:: \n [ ${view.b_content} ] \n === 아래에 상세내용을 작성해주세요 ===`;
     return(
         <>
         <div className="vboard">
@@ -146,7 +151,33 @@ const ViewPage = () => {
                         ?<Button id="lBtn1" onClick={blike}>♥ 좋아요({view.b_like})</Button>
                         :<Button id="lBtn1ed">♥ 좋아요({view.b_like})</Button>
                     }
-                    <Button id="lBtn2" >신고</Button>
+                    <Button id="lBtn2" onClick={reportOpen}>신고</Button>
+                    <Modal show={show} onHide={reportClose}>
+                        <Modal.Header closeButton>
+                        <Modal.Title>{view.bnum}번 글 신고</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <FormGroup className="mb-3">
+                                <FormLabel>신고사유 :</FormLabel>
+                                <select>
+                                    <option>==선택==</option>
+                                    <option>욕설</option>
+                                    <option>비방</option>
+                                    <option>광고</option>
+                                    <option>기타</option>
+                                </select>
+                            </FormGroup>
+                            <FormControl as='textarea' rows={5} minLength={10} name='b_reason' defaultValue={defaultReport}></FormControl>
+                        </Modal.Body>
+                        <Modal.Footer>
+                        <Button variant="secondary" onClick={reportClose}>
+                            취소
+                        </Button>
+                        <Button variant="primary" onClick={reportClose}>
+                            전송
+                        </Button>
+                        </Modal.Footer>
+                    </Modal>
                 </div>
             <div className="rBtn">
                 <Button style={{marginRight:5, backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={updateForm}>수정</Button>

@@ -10,6 +10,7 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
 
     useEffect(()=> {
         loadCommunityList();
+        // eslint-disable-next-line
     }, [page]);
     
     const handlePageChange = (selectedPage) => {
