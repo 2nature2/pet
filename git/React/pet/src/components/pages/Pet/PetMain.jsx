@@ -1,7 +1,7 @@
 import React,{useState, useEffect } from 'react';
 import axios from 'axios';
 import { json, useNavigate } from 'react-router-dom';
-import '../../styles/Community.css';
+
 
 const PetMain = () => {
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const PetMain = () => {
                     pageNo:1
                 }
             });
-
+            console.log("api 응답:",response.data)
             setData(response.data);
         } catch(e){
             setError(e);
@@ -50,10 +50,10 @@ const PetMain = () => {
         return null;
     } 
     
-    const {noticeNo, processState} = data.response.body.items.item;
+    const items = Array.isArray(data.response.body.items.item) ? data.response.body.items.item : [data.response.body.items.item];
+
 
     // const {
-        
     //     noticeNo, // "경남-창원1-2023-00644"
     //     noticeSdt, // 접수일시
     //     popfile, // img
@@ -65,11 +65,17 @@ const PetMain = () => {
     // } = pets;
     
     return (
-        <div className='community'>
-            <div className='cboard'>
+        <div>
+            <div>
                 <h2>기간이 얼마 남지 않은 아이들이에요.</h2>
-                <p>공고번호 : {noticeNo}</p>
-                <p>{processState}</p>
+                {
+                items.map((item, index) => (
+                <div key={index}>
+                    <p>공고번호: {item.noticeNo}</p>
+                    <p>상태: {item.processState}</p>
+                </div>
+                ))
+                }
             </div>
             
         </div>

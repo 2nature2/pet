@@ -2,6 +2,7 @@ import { Button, Form, Col, Row } from 'react-bootstrap';
 import '../../styles/Community.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const UpdatePage = () => {
     const movePage = useNavigate();
@@ -13,14 +14,44 @@ const UpdatePage = () => {
         b_content: '',
         b_writer: '',
     })
+    
     const getValue = (e) => {
         setFormContent({
+            ...viewData,
             ...formContent,
+            b_date: new Date(),
             [e.target.name] : e.target.value
         })
     }
     const back = () => {
         movePage(-1);
+    }
+
+    const bupdate = () => {
+        fetch(`/community/update/${viewData.bnum}`,{
+            method: 'PUT',
+            headers: {
+                'Content-type' : 'application/json',
+            },
+            body: JSON.stringify(formContent),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            Swal.fire({
+                icon: "success",
+                iconColor: "#1098f7",
+                title: "수정 완료",
+                confirmButtonColor: "#1098f7",
+              }).then(function(){
+                back();
+            });
+            // return response.json();
+        })
+        .catch((error)=> {
+            console.error('Error updating post:', error);
+        })
     }
     
     return (
@@ -67,7 +98,7 @@ const UpdatePage = () => {
                     <Form.Control as='textarea' name="b_content" rows={20} defaultValue={viewData.b_content} onChange={getValue}/>
                 </Form.Group>
             </Form>
-            <Button style={{marginRight:5, backgroundColor:"#1098f7", borderColor:"#1098f7"}} >확인</Button>
+            <Button style={{marginRight:5, backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={bupdate} >확인</Button>
             <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
         </div>
         </>

@@ -147,6 +147,14 @@ button:active {
     color: white;
 }
 
+#lBtn1ed{
+    margin-right: 5px;
+    background-color: #ff5ade;
+    color: white;
+    border-color: #ff5ade;
+    cursor: default;
+}
+
 #lBtn2 {
     background-color: transparent;
     color: #fcbe03;
