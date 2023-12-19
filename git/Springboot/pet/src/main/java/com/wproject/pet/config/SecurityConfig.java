@@ -50,7 +50,7 @@ public class SecurityConfig{
         http.csrf().disable()
             .authorizeHttpRequests()
            // .authorizeRequests()
-            .antMatchers("/member/*").authenticated()
+            .antMatchers("/*").authenticated()
             .anyRequest().permitAll()
             .and()
             .formLogin()
