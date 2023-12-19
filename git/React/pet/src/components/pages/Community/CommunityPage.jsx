@@ -26,6 +26,10 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
         <div className='community'>
             <div className='cboard'>
                 <div className='search'>
+                    <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}}>
+                        <option value={lists.b_title}>제목</option>
+                        <option value={lists.b_content} >내용</option>
+                    </select>
                     <input type='text' placeholder='내용을 입력하세요'></input>
                     <Button style={{backgroundColor: '#b89e97', borderColor: '#b89e97'}}>검색</Button>
                 </div>

@@ -7,7 +7,7 @@ const ViewPage = () => {
     const movePage = useNavigate();
     const prevBnum = useRef(null);
     const prev = () => {
-        movePage('/community');
+        movePage('/community') //수정필요
     }
     const updateForm = () => {
         movePage(`/community/update`, { state: { viewData: view } });
@@ -24,7 +24,7 @@ const ViewPage = () => {
         bnum:''
     })
     
-    //setView는 객체 업데이트 => concat은 배열에 쓰는 메서드
+    //
     useEffect(()=> {
         const viewList = () => {
             fetch(`/community/view/${bnum}`, {
@@ -78,13 +78,28 @@ const ViewPage = () => {
         })
     }
 
+    const likeStateFromLocalStorage = localStorage.getItem(`likeState-${bnum}`);
+    const [likeState, setLikeState] = useState(
+        likeStateFromLocalStorage === 'true'
+    );
+
     const blike = () => {
+        setLikeState((prevLikeState) => {
+            const newLikeState = !prevLikeState;
+            localStorage.setItem(`likeState-${bnum}`, String(newLikeState));
+            return newLikeState;
+        });
+
         fetch(`/community/like/${bnum}`, {
             method: 'GET'
         })
         .then(()=> {
             window.location.reload();
         })
+        .catch((error) => {
+            console.error('Fetch error:', error);
+            console.error('Response:', error.response);
+        });
     }
     return(
         <>
@@ -126,7 +141,11 @@ const ViewPage = () => {
             </Form>
             <div className="vBtns">
                 <div className="lBtn">
-                    <Button id="lBtn1" onClick={blike}>♥ 좋아요({view.b_like})</Button>
+                    {
+                        likeState === false
+                        ?<Button id="lBtn1" onClick={blike}>♥ 좋아요({view.b_like})</Button>
+                        :<Button id="lBtn1ed">♥ 좋아요({view.b_like})</Button>
+                    }
                     <Button id="lBtn2" >신고</Button>
                 </div>
             <div className="rBtn">
@@ -134,6 +153,20 @@ const ViewPage = () => {
                 <Button style={{marginRight:5, backgroundColor:"#d80000", borderColor:"#d80000"}} onClick={deleteBoard}>삭제</Button>
             </div>
             </div> 
+            <div>
+                <Form.Group as={Row} className="mb-3">
+                    <Form.Label column sm="2">이전글</Form.Label>
+                    <Col sm="10">
+                    <Form.Text type="text" />
+                    </Col>
+                </Form.Group>
+                <Form.Group as={Row} className="mb-3" >
+                    <Form.Label column sm="2">다음글</Form.Label>
+                    <Col sm="10">
+                    <Form.Text type="text" />
+                    </Col>
+                </Form.Group>
+            </div>
         </div>
         </>
     )
