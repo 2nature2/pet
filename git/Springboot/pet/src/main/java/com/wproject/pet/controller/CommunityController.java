@@ -1,5 +1,7 @@
 package com.wproject.pet.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -17,8 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.wproject.pet.entity.Comment;
+import com.wproject.pet.dto.BoardReportDTO;
 import com.wproject.pet.dto.CommunityDTO;
+import com.wproject.pet.service.CommentService;
 import com.wproject.pet.service.CommunityService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommunityController {
 	private final CommunityService communityService;
+	private final CommentService commentService;
 	
 	@PostMapping("/insert")
 	public String insert(@RequestBody CommunityDTO communityDTO) {
@@ -46,8 +53,15 @@ public class CommunityController {
 	}
 	
 	@GetMapping("/view/{bnum}")
-	public CommunityDTO view(@PathVariable Long bnum) {
-		return communityService.view(bnum);
+	public ResponseEntity<Map<String, Object>> view(@PathVariable Long bnum) {
+		CommunityDTO communityDTO = communityService.view(bnum);
+		List<Comment> comments = commentService.findAll(bnum);
+		
+		 Map<String, Object> response = new HashMap<>();
+		 response.put("community", communityDTO);
+		 response.put("comments", comments);
+		 
+		 return ResponseEntity.ok(response);
 	}
 	
 	@PutMapping("/update/{bnum}")
@@ -78,5 +92,11 @@ public class CommunityController {
 	@GetMapping("/like/{bnum}")
 	public void like(@PathVariable Long bnum) {
 		communityService.like(bnum);
+	}
+	
+	@PostMapping("/report/{bnum}")
+	public String insert(@PathVariable Long bnum, @RequestBody BoardReportDTO boardReportDTO) {
+		communityService.send(bnum, boardReportDTO);
+		return "success";
 	}
 }
