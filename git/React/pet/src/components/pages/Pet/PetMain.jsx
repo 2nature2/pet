@@ -55,12 +55,7 @@ const PetMain = () => {
             setIsLoading(true);
 
             const response = await axios.get(URL, {
-                params: {
-                    serviceKey: process.env.REACT_APP_API_KEY,
-                    numOfRows: 1000,
-                    pageNo: 1,
-                    upkind: '417000',
-                },
+                
             });
 
             console.log("Response Data:", response.data);

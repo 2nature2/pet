@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../../styles/Community.css';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
@@ -13,6 +13,7 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
         // eslint-disable-next-line
     }, [page]);
     
+
     const handlePageChange = (selectedPage) => {
         setPage(selectedPage -1);
         setPageLocal(selectedPage);
@@ -32,7 +33,7 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
                         <option value={lists.b_content} >내용</option>
                     </select>
                     <input type='text' placeholder='내용을 입력하세요'></input>
-                    <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}}>검색</Button>
+                    <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} >검색</Button>
                 </div>
                 <Table>
                     <thead>
@@ -52,7 +53,7 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
                         <tr className='tblData' key={index}>
                             <td>{list.bnum}</td>
                             <td>{list.b_category}</td>
-                            <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title}</a></td>
+                            <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
                             <td>{list.b_writer}</td>
                             <td>{list.b_date}</td>
                             <td>{list.b_like}</td>
