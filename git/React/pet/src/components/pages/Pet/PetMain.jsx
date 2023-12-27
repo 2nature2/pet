@@ -8,7 +8,7 @@ const PetMain = () => {
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(false); // 에러
 
-    const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
+    const URL = "https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=029f99a01fbb42dba52abb947db9975e&Type=json";
 
     const fetchData = async () => {
         try {
@@ -17,12 +17,7 @@ const PetMain = () => {
             setIsLoading(true);
 
             const response = await axios.get(URL, {
-                params: {
-                    serviceKey: process.env.REACT_APP_API_KEY,
-                    numOfRows: 1000,
-                    pageNo: 1,
-                    upkind: '417000',
-                },
+                
             });
             console.log("api 응답:",response.data)
             setData(response.data);
