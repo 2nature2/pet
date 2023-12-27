@@ -1,7 +1,7 @@
 import React,{useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { json, useNavigate } from 'react-router-dom';
-import '../../styles/Community.css';
+
 
 const PetMain = () => {
     const [data, setData] = useState(null); // 요청의 결과
@@ -24,7 +24,7 @@ const PetMain = () => {
                     upkind: '417000',
                 },
             });
-
+            console.log("api 응답:",response.data)
             setData(response.data);
         } catch (e) {
             setError(e);
@@ -37,6 +37,7 @@ const PetMain = () => {
         fetchData();
     }, []);
 
+
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error...</div>;
     if (!data || !data.response || !data.response.body || !data.response.body.items) {
@@ -48,7 +49,6 @@ const PetMain = () => {
         : [data.response.body.items.item];
 
     // const {
-        
     //     noticeNo, // "경남-창원1-2023-00644"
     //     noticeSdt, // 접수일시
     //     popfile, // img
@@ -60,8 +60,8 @@ const PetMain = () => {
     // } = pets;
 
     return (
-        <div className='community'>
-            <div className='cboard'>
+        <div>
+            <div>
                 <h2>기간이 얼마 남지 않은 아이들이에요.</h2>
                 <button onClick={fetchData}>데이터 불러오기</button>
                 {items.map((item, index) => (

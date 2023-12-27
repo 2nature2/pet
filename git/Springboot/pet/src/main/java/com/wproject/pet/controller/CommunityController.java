@@ -1,5 +1,7 @@
 package com.wproject.pet.controller;
 
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +44,6 @@ public class CommunityController {
 	  Page<CommunityDTO> resultPage = communityService.findAll(field, word, PageRequest.of(page, pageable.getPageSize(), pageable.getSort()));
 	  return ResponseEntity.ok(resultPage);
 	}
-
 	
 	@GetMapping("/view/{bnum}")
 	public CommunityDTO view(@PathVariable Long bnum) {
@@ -50,8 +51,21 @@ public class CommunityController {
 	}
 	
 	@PutMapping("/update/{bnum}")
-	public void updatePost(@PathVariable Long bnum, @RequestBody CommunityDTO communityDTO) {
-        communityDTO.setBnum(bnum);
+	public void updatePost(@PathVariable Long bnum, @RequestBody Map<String, Object> requestBody) {
+		System.out.println(requestBody);
+		CommunityDTO communityDTO = communityService.view(bnum);
+		if (requestBody.get("b_category") != null && !((String) requestBody.get("b_category")).isEmpty()) {
+	        communityDTO.setB_category((String) requestBody.get("b_category"));
+	    }
+
+	    if (requestBody.get("b_title") != null && !((String) requestBody.get("b_title")).isEmpty()) {
+	        communityDTO.setB_title((String) requestBody.get("b_title"));
+	    }
+
+	    if (requestBody.get("b_content") != null && !((String) requestBody.get("b_content")).isEmpty()) {
+	        communityDTO.setB_content((String) requestBody.get("b_content"));
+	    }
+
         communityService.update(communityDTO);
     }
 	

@@ -24,7 +24,7 @@ function App() {
     b_content: '',
     b_writer: '',
   })
-  const [page, setPage] = useState(1); 
+  const [page, setPage] = useState(0); 
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
 
