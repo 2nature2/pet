@@ -40,9 +40,9 @@ public class CommunityService {
 		Page<Community> lists;
 		
 		if("bTitle".equals(field)){
-			lists = communityRepository.findByBTitleContaining(word, pageable);
+			lists = communityRepository.findByBTitleContaining(word.toLowerCase(), pageable);
 		}else if("bContent".equals(field)) {
-			lists = communityRepository.findByBContentContaining(word, pageable);
+			lists = communityRepository.findByBContentContaining(word.toLowerCase(), pageable);
 		}else {
 			lists = communityRepository.findAll(pageable);
 		}
@@ -64,7 +64,7 @@ public class CommunityService {
 				lists.getTotalElements()
 				);
 		}
-
+	
 	//상세보기
 	@Transactional
 	public CommunityDTO view(Long bnum) {
