@@ -19,5 +19,6 @@ public class CommunityDTO {
 	private Date b_date;
 	private int b_like;
 	private int hitcount;
+	private int b_comments;
 
 }

@@ -47,4 +47,7 @@ public class Community {
 	
 	@ColumnDefault("0")
 	private int hitcount;
+	
+	@ColumnDefault("0")
+	private int b_comments;
 }

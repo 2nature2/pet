@@ -19,7 +19,6 @@ const UpdatePage = () => {
         setFormContent({
             ...viewData,
             ...formContent,
-            b_date: new Date(),
             [e.target.name] : e.target.value
         })
     }
