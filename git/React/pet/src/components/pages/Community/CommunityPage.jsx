@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/Community.css';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
@@ -11,12 +11,20 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
     const getValue = (e) => {
         setUserInput(e.target.value.toLowerCase());
     }
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         await loadCommunityList();
+    //         console.log('totalPages', totalPages);
+    //     };
+    //     fetchData();
+    //     // eslint-disable-next-line
+    // }, [page]);
     
     useEffect(()=> {
         loadCommunityList();
-        console.log('lists 로드 확인', lists);
         // eslint-disable-next-line
-    }, [page]);
+    }, []);
     
     const handlePageChange = (selectedPage) => {
         setPage(selectedPage -1);
@@ -42,8 +50,8 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
             <div className='cboard'>
                 <div className='search'>
                     <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}} value={searchOption} onChange={handleSearchOptionChange}>
-                        <option value={lists.b_title} >제목</option>
-                        <option value={lists.b_content} >내용</option>
+                        <option value='b_title' >제목</option>
+                        <option value='b_content' >내용</option>
                     </select>
                     <input type='text' placeholder='내용을 입력하세요' onChange={getValue}></input>
                     <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={search}>검색</Button>
