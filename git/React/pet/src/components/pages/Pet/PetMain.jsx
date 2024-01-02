@@ -5,48 +5,12 @@ import '../../styles/Community.css';
 
 const PetMain = () => {
 
-    const [data, setData] = useState([]);
-
-    useEffect(()=> {
-        const fetchData = async () => {
-            try{
-                const response = await fetch('/api/pet');
-                if(!response.ok){
-                    throw new Error(`Fetch failed with status: ${response.status}`);
-                }
-
-                const jsonData = await response.json();
-                setData(jsonData.response.body.items.item);
-
-                //로그 추가
-                console.log('불러온 데이터:', response);
-            } catch(error){
-                console.error('Error fetching data:', error.message);
-            }
-        };
-        fetchData();
-    }, []);
-
-    return (
-        <div>
-            <h1>Flask data in React~!</h1>
-            <ul>
-                {data.map((item) => (
-                    <li key={item.desertionNo}>
-                        <img src={item.filename} alt="animal" />
-                        <p>종류 : {item.kindCd}</p>
-                        <p>색상 : {item.colorCd}</p>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    )
-    /*
     const [data, setData] = useState(null); // 요청의 결과
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(false); // 에러
 
-    const URL = "https://openapi.gg.go.kr/AbdmAnimalProtect?KEY=029f99a01fbb42dba52abb947db9975e&Type=json";
+    const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
+    const encoded = `${URL}?numOfRows=1000&pageNo=1&_type=json&serviceKey=${encodeURIComponent(process.env.REACT_APP_API_KEY)}`;
 
     const fetchData = async () => {
         try {
@@ -54,9 +18,7 @@ const PetMain = () => {
             setData(null);
             setIsLoading(true);
 
-            const response = await axios.get(URL, {
-                
-            });
+            const response = await axios.get(encoded);
 
             console.log("Response Data:", response.data);
 
@@ -70,6 +32,8 @@ const PetMain = () => {
 
     useEffect(() => {
         fetchData();
+        console.log('process.env.REACT_APP_API_KEY 확인',process.env.REACT_APP_API_KEY)
+        console.log('encoded확인', encoded)
     }, []);
 
     if (isLoading) return <div>Loading...</div>;
@@ -117,6 +81,6 @@ const PetMain = () => {
                 )}
             </div>
         </div>
-    );*/
+    );
 }
 export default PetMain;
