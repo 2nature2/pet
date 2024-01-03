@@ -33,15 +33,19 @@ function App() {
       setCommunityList(response.data.content);
       setTotalPages(response.data.totalPages);
       setTotalElements(response.data.totalElements);
+      return response.data;
     } catch(error) {
       console.error('Error fetching data:', error);
     }
   }
 
-  useEffect(()=> {
-    loadCommunityList();
+  useEffect(() => {
+    const fetchData = async() => {
+        await loadCommunityList();
+    };
+    fetchData();
     // eslint-disable-next-line
-  }, [page]);
+}, [page]);
 
   const insertCommunity = (communityDTO) => {
     fetch('/community/insert', {
@@ -128,7 +132,7 @@ function App() {
      <Navigation />
       <Routes>
         <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage}/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
             <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />

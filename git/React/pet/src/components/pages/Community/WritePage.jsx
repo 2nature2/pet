@@ -88,7 +88,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 <Form.Group className="mb-3">
                     <Form.Label>CATEGORY</Form.Label>
                     <Form.Select name="b_category" value={formContent.b_category} onChange={getValue}>
-                        <option value="" disabled selected>==선택==</option>
+                        <option value="" disabled defaultValue>==선택==</option>
                         {/* <option>공지사항</option> */}
                         <option>질문</option>
                         <option>후기</option>
