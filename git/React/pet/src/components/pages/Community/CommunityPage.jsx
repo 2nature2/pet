@@ -4,7 +4,7 @@ import '../../styles/Community.css';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 
-const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, setPage}) => {
+const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, setPage, setTotalPages, setTotalElements}) => {
     const movePage = useNavigate();
     const [page, setPageLocal] = useState(1);
     const [userInput, setUserInput] = useState('');
@@ -12,20 +12,18 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
         setUserInput(e.target.value.toLowerCase());
     }
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         await loadCommunityList();
-    //         console.log('totalPages', totalPages);
-    //     };
-    //     fetchData();
-    //     // eslint-disable-next-line
-    // }, [page]);
+    useEffect(() => {
+        const fetchData = async() => {
+            await loadCommunityList();
+        };
+        fetchData();
+        // eslint-disable-next-line
+    }, [page]);
     
     useEffect(()=> {
-        loadCommunityList();
-        // eslint-disable-next-line
-    }, []);
-    
+        setSearchLists(lists);
+    }, [lists]);
+
     const handlePageChange = (selectedPage) => {
         setPage(selectedPage -1);
         setPageLocal(selectedPage);
@@ -41,8 +39,10 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
     const handleSearchOptionChange = (e) => {
         setSearchOption(e.target.value);
     }
-    const search = () => {
-        setSearchLists(lists.filter((item) => item[searchOption] && item[searchOption].includes(userInput)));
+    const search = async() => {
+        const searchResult = lists.filter((item) => item[searchOption] && item[searchOption].includes(userInput));
+        setSearchLists(searchResult);
+        setTotalElements(searchResult.length);
     }
 
     return (
