@@ -12,6 +12,7 @@ const PetMain = () => {
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
     const encoded = `${URL}?numOfRows=1000&pageNo=1&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
 
+
     const fetchData = async () => {
         try {
             setError(null);
@@ -48,8 +49,9 @@ const PetMain = () => {
 
     // Log 추가
     // console.log("Fetched Data:", data);
+    // console.log('items확인', items);
 
-
+  
     return (
         <div className='community'>
             <div className='cboard'>
