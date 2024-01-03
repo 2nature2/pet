@@ -10,7 +10,7 @@ const PetMain = () => {
     const [error, setError] = useState(false); // 에러
 
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
-    const encoded = `${URL}?numOfRows=1000&pageNo=1&_type=json&serviceKey=${encodeURIComponent(process.env.REACT_APP_API_KEY)}`;
+    const encoded = `${URL}?numOfRows=1000&pageNo=1&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
 
     const fetchData = async () => {
         try {
@@ -20,9 +20,9 @@ const PetMain = () => {
 
             const response = await axios.get(encoded);
 
-            console.log("Response Data:", response.data);
+            // console.log("Response Data:", response.data);
 
-            setData(response.data.AbdmAnimalProject);
+            setData(response.data);
         } catch (e) {
             setError(e);
         } finally {
@@ -32,8 +32,8 @@ const PetMain = () => {
 
     useEffect(() => {
         fetchData();
-        console.log('process.env.REACT_APP_API_KEY 확인',process.env.REACT_APP_API_KEY)
-        console.log('encoded확인', encoded)
+        // console.log('process.env.REACT_APP_API_KEY 확인',process.env.REACT_APP_API_KEY)
+        // console.log('encoded확인', encoded)
     }, []);
 
     if (isLoading) return <div>Loading...</div>;
@@ -42,43 +42,32 @@ const PetMain = () => {
         return <div>No data available</div>;
     }
 
-    const items = Array.isArray(data.response.body.items.item)
+    const items = Array.isArray(data.response.body.items)
         ? data.response.body.items.item
         : [data.response.body.items.item];
 
     // Log 추가
-    console.log("Fetched Data:", data);
+    // console.log("Fetched Data:", data);
 
-    // const {
-        
-    //     noticeNo, // "경남-창원1-2023-00644"
-    //     noticeSdt, // 접수일시
-    //     popfile, // img
-    //     happenPlace, // 발견장소
-    //     kindCd, // 종류
-    //     specialMark, // 특징
-    //     processState, // 상태(보유중 보호중 등등..)
-
-    // } = pets;
 
     return (
         <div className='community'>
             <div className='cboard'>
                 <h2>기간이 얼마 남지 않은 아이들이에요.</h2>
-                <button onClick={fetchData}>데이터 불러오기</button>
-                {data && data.length  > 0 ? (
-                    data.map((item, index) => (
+                {/* <button onClick={fetchData}>데이터 불러오기</button> */}
+                {
+                    items.map((item, index) => (
                         <div key={index}>
-                            <p>공고번호: {item.noticeNo}</p>
-                            <p>상태: {item.processState}</p>
-                            <p>발견장소: {item.happenPlace}</p>
-                            <p>종류: {item.kindCd}</p>
-                            <p>특징: {item.specialMark}</p>
+                            <img src={item[index].popfile}></img>
+                            <p>공고번호: {item[index].noticeNo}</p>
+                            <p>상태: {item[index].processState}</p>
+                            <p>접수일시: {item[index].noticeSdt}</p>
+                            <p>발견장소: {item[index].happenPlace}</p>
+                            <p>종류: {item[index].kindCd}</p>
+                            <p>특징: {item[index].specialMark}</p>
                         </div>
                     ))
-                ) : (
-                    <div>No data available</div>
-                )}
+                }
             </div>
         </div>
     );
