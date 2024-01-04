@@ -117,7 +117,6 @@ const JoinForm = ({ join }) => {
       return;
     }
     join(joinContent);
-   
     setJoinContent({
       name: '',
       userid: '',

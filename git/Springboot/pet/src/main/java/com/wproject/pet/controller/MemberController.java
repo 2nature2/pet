@@ -4,7 +4,16 @@ package com.wproject.pet.controller;
 
 
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,7 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.wproject.pet.config.auth.PrincipalDetail;
+import com.wproject.pet.config.auth.PrincipalUser;
 import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.entity.Member;
 import com.wproject.pet.repository.MemberRepository;
@@ -82,13 +92,27 @@ public class MemberController {
 	            return "success";
 	        }
 	 }
-//	//카카오 로그인
-//	@GetMapping("/user/kakao/callback")
-//	 public Long kakaoLogin(@RequestParam String code, HttpServletResponse response) throws JsonProcessingException {
-//        // code: 카카오 서버로부터 받은 인가 코드
-//        SignupSocialDto signupKakaoDto = kakaoUserService.kakaoLogin(code);
-//        response.addHeader(AUTH_HEADER, signupKakaoDto.getToken());
-//
-//        return signupKakaoDto.getUserId();
-//    }
+	
+	
+	//회원정보
+	@GetMapping("/api/user")
+	public Map<String, Object> userInfo(@AuthenticationPrincipal PrincipalUser principaluser){
+		Member member = principaluser.getMember();
+		String name = member.getName();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("name",name );
+		if(name==null) {
+			name="null";
+		}
+		return map;
+	}
+	
+	//로그인 실패
+//	@PostMapping("/api/loginfail")
+//	public void loginFail(HttpServletResponse response) throws IOException{
+//		HttpHeaders headers = new HttpHeaders();
+//		String redirect_uri = "http://localhost:3000/loginFail";
+//		response.addHeader("login_result", "fail");
+//		response.sendRedirect(redirect_uri);
+//	}
 }
