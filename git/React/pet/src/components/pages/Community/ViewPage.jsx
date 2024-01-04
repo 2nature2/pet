@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import '../../styles/Community.css';
-import { Button, Col, Form, FormControl, FormGroup, FormLabel, Modal, Row, Table } from "react-bootstrap";
+import { Button, Col, Form, FormControl, FormGroup, FormLabel, Modal, Row } from "react-bootstrap";
 
 const ViewPage = () => {
     const movePage = useNavigate();
@@ -27,6 +27,7 @@ const ViewPage = () => {
     const [commentList, setCommentList] = useState([]);
     
     useEffect(()=> {
+        console.log('localStorage',localStorage);
         const viewList = () => {
             fetch(`/community/view/${bnum}`, {
                 method: 'GET',
@@ -53,8 +54,14 @@ const ViewPage = () => {
                         b_like: data.community.b_like,
                         hitcount: data.community.hitcount,
                         bnum: data.community.bnum
+                    }));
+                    if(data.comments){
+                        const initialState = data.comments.map((comment) => {
+                            const cmtlikeStateFromLocalStorage = localStorage.getItem(`cmtLikeState-${comment.c_id}`);
+                            return cmtlikeStateFromLocalStorage === 'true';
+                        });
+                        setCmtLikeStates(initialState); 
                     }
-                ));
                 setCommentList(data.comments);
             })
             .catch((error) => {
@@ -62,13 +69,10 @@ const ViewPage = () => {
                 console.error('Response:', error.response);
             });
         }
-        // loadCommentList();
-        console.log('useEffect called');
         if(bnum!==prevBnum.current){
             viewList();
             prevBnum.current = bnum;
         }
-        
     },[bnum]);
 
     const deleteBoard = () => {
@@ -108,7 +112,7 @@ const ViewPage = () => {
     const [show, setShow] = useState(false);
     const reportClose = () => setShow(false);
     const reportOpen = () => setShow(true);
-    const defaultReport = `원글:: \n [ ${view.b_content} ] \n === 상세내용을 작성해주세요 ===`;
+    const defaultReport = `원글:: [ ${view.b_content} ] \n === 상세내용을 작성해주세요 ===`;
     const [boardReport, setBoardReport] = useState({
         b_reporter: '',
         b_reason: '',
@@ -185,6 +189,101 @@ const ViewPage = () => {
         })
     }
 
+    const [cmtLikeStates, setCmtLikeStates] = useState(() => {
+        const initialState = commentList.map((comment) => {
+            const cmtlikeStateFromLocalStorage = localStorage.getItem(`cmtLikeState-${comment.c_id}`);
+            return cmtlikeStateFromLocalStorage === 'true';
+        });
+        return initialState;
+    });
+
+    const clike = (c_id, index) => {
+        fetch(`/comment/like/${c_id}`, {
+            method: 'GET'
+        })
+        .then(()=> {
+            setCommentList((prevCommentList)=> {
+                const updatedList = [...prevCommentList];
+                const updatedComment = {...updatedList[index], c_like: updatedList[index].c_like+1};
+                console.log("updatedComment확인:", updatedComment)
+                updatedList[index] = updatedComment;
+                return updatedList;
+            });
+
+            setCmtLikeStates((prevCmtLikeState) => {
+                const newCmtLikeStates = [...prevCmtLikeState];
+                newCmtLikeStates[index] = true;
+                localStorage.setItem(`cmtLikeState-${c_id}`, 'true');
+                return newCmtLikeStates;
+            })
+        })
+        .catch((error) => {
+            console.error('Fetch error:', error);
+            console.error('Response:', error.response);
+        });
+    }
+
+    const deleteComment = (c_id) => {
+        fetch(`/comment/delete/${c_id}`, {
+            method: 'DELETE',
+        })
+        .then(()=> {
+            window.location.reload();
+            // window.location = document.referrer;
+        })
+    }
+    const [cShow, setCShow] = useState(false);
+    const cReportClose = () => setCShow(false);
+    const cReportOpen = (c_id) => {
+        setCmtReport((prevCmtReport) => ({
+            ...prevCmtReport,
+            c_id: c_id
+        }));
+        setCShow(true);
+    }
+    const [cmtReport, setCmtReport] = useState({
+        c_reporter: '',
+        c_reason: '',
+        c_id: 0
+    });
+
+    const defaultCmtReport = `상세내용을 작성해주세요.`;
+   
+    const cmtGetValue = (e) => {
+        setCmtReport((prevCmtReport) => ({
+            ...prevCmtReport,
+            [e.target.name] : e.target.value
+        }));
+    }
+    const cReportSend = () => {
+        const commentReportDTO = {
+            c_reporter: cmtReport.c_reporter,
+            c_reason: cmtReport.c_reason,
+            c_id: cmtReport.c_id
+        };
+        fetch(`/comment/report/${cmtReport.c_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(commentReportDTO)
+        })
+        .then((resp) => {
+            if(!resp.ok){
+                throw new Error(`Network response was not ok: ${resp.status}`);
+            }
+            return resp.text();
+        })
+        .then((resp) => {
+            setCmtReport({
+                c_reporter: '',
+                c_reason: '',
+                c_id: commentReportDTO.c_id
+            });
+            cReportClose();
+        })
+    }
+
     return(
         <>
         <div className="vboard">
@@ -237,7 +336,7 @@ const ViewPage = () => {
                 <Button style={{marginRight:5, backgroundColor:"#b80042", borderColor:"#b80042"}} onClick={deleteBoard}>삭제</Button>
             </div>
             </div> 
-            <div>
+            <div className="bReportModal">
                 <Modal show={show} onHide={reportClose}>
                     <Modal.Header closeButton>
                     <Modal.Title>{view.bnum}번 글 신고</Modal.Title>
@@ -257,7 +356,7 @@ const ViewPage = () => {
                 </Modal>
             </div>
             <div className="cmtboard">
-                <FormLabel style={{fontWeight:"bold"}}>댓글 00</FormLabel>
+                <FormLabel style={{fontWeight:"bold"}}>댓글 {commentList.length}</FormLabel>
                 <div className="cInsert">
                     <Form.Group className="mb-3" controlId="comment">
                         <Form.Control type="text" plaintext value={formComment.c_writer} style={{fontWeight: "bold"}} name="c_writer" placeholder="작성자" onChange={getComment}/>
@@ -272,11 +371,39 @@ const ViewPage = () => {
                             <FormGroup className='cmt' key={index}>
                                 <Form.Control type="text" plaintext readOnly value={comment.c_writer} style={{fontWeight:'bold'}}/>
                                 <Form.Control as="textarea" plaintext readOnly value={comment.c_content} style={{resize:'none'}}/>
+                                <FormGroup className='cmtFooter'>
+                                    {
+                                        cmtLikeStates[index] === false
+                                        ?<Button key={index} variant={cmtLikeStates[index] ?"dark": "outline-dark"} size="sm" onClick={()=> clike(comment.c_id, index)} style={{marginRight: '5px'}}>♥ 좋아요({comment.c_like})</Button>                                
+                                        :<Button key={index} variant={cmtLikeStates[index] ?"dark": "outline-dark"} size="sm" style={{marginRight: '5px', cursor: 'default'}}>♥ 좋아요({comment.c_like})</Button>
+                                    }
+                                <Button variant="outline-warning" size="sm" onClick={()=> cReportOpen(comment.c_id)} style={{marginRight:'5px'}}>신고</Button>
+                                <Button variant="outline-danger" size="sm" onClick={()=> deleteComment(comment.c_id)}>삭제</Button>
                                 <Form.Control type="date" plaintext readOnly value={comment.c_date} style={{fontSize:'12px', color:"gray"}}/>
+                                </FormGroup>
                             </FormGroup>
                         ))
                     }
                 </div>
+                <div className="cReportModal">
+                <Modal show={cShow} onHide={cReportClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>{cmtReport.c_id}번 댓글 신고</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <FormGroup className="mb-3">
+                            <FormLabel>신고사유 :</FormLabel>
+                            {/* value에 로그인한 사람 id 들어가도록 */}
+                            <input type="hidden" value={cmtReport.c_reporter} name="c_reporter"/>
+                            <FormControl as='textarea' value={cmtReport.c_reason} style={{resize: "none"}} rows={5} minLength={10} name='c_reason' placeholder={defaultCmtReport} onChange={cmtGetValue}></FormControl>
+                        </FormGroup>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={cReportClose}>취소</Button>
+                        <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={cReportSend}>전송</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
             </div>
         </div>
         </>

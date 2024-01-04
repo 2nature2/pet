@@ -4,15 +4,26 @@ import '../../styles/Community.css';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 
-const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, setPage}) => {
+const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, setPage, setTotalPages, setTotalElements}) => {
     const movePage = useNavigate();
     const [page, setPageLocal] = useState(1);
+    const [userInput, setUserInput] = useState('');
+    const getValue = (e) => {
+        setUserInput(e.target.value.toLowerCase());
+    }
 
-    useEffect(()=> {
-        loadCommunityList();
+    useEffect(() => {
+        const fetchData = async() => {
+            await loadCommunityList();
+        };
+        fetchData();
         // eslint-disable-next-line
     }, [page]);
     
+    useEffect(()=> {
+        setSearchLists(lists);
+    }, [lists]);
+
     const handlePageChange = (selectedPage) => {
         setPage(selectedPage -1);
         setPageLocal(selectedPage);
@@ -23,16 +34,27 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
         movePage('/community/write');
     };
 
+    const [searchLists, setSearchLists] = useState(lists);
+    const [searchOption, setSearchOption] = useState('b_title');
+    const handleSearchOptionChange = (e) => {
+        setSearchOption(e.target.value);
+    }
+    const search = async() => {
+        const searchResult = lists.filter((item) => item[searchOption] && item[searchOption].includes(userInput));
+        setSearchLists(searchResult);
+        setTotalElements(searchResult.length);
+    }
+
     return (
         <div className='community'>
             <div className='cboard'>
                 <div className='search'>
-                    <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}}>
-                        <option value={lists.b_title}>제목</option>
-                        <option value={lists.b_content} >내용</option>
+                    <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}} value={searchOption} onChange={handleSearchOptionChange}>
+                        <option value='b_title' >제목</option>
+                        <option value='b_content' >내용</option>
                     </select>
-                    <input type='text' placeholder='내용을 입력하세요'></input>
-                    <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}}>검색</Button>
+                    <input type='text' placeholder='내용을 입력하세요' onChange={getValue}></input>
+                    <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={search}>검색</Button>
                 </div>
                 <Table>
                     <thead>
@@ -48,11 +70,11 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
                     </thead>
                     <tbody>
                         {
-                            lists&&lists.map((list, index) => (
+                            searchLists&&searchLists.map((list, index) => (
                         <tr className='tblData' key={index}>
                             <td>{list.bnum}</td>
                             <td>{list.b_category}</td>
-                            <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title}</a></td>
+                            <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
                             <td>{list.b_writer}</td>
                             <td>{list.b_date}</td>
                             <td>{list.b_like}</td>

@@ -1,6 +1,5 @@
 package com.wproject.pet.service;
 
-import java.util.Date;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,6 @@ import com.wproject.pet.dto.CommunityDTO;
 import com.wproject.pet.entity.BoardReport;
 import com.wproject.pet.entity.Community;
 import com.wproject.pet.repository.BoardReportRepository;
-import com.wproject.pet.repository.CommentRepository;
 import com.wproject.pet.repository.CommunityRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 public class CommunityService {
 	private final CommunityRepository communityRepository;
 	private final BoardReportRepository boardReportRepository;
-	private final CommentRepository commentRepsitory;
 	
 	@Transactional
 	public void insert(CommunityDTO communityDTO) {
@@ -43,9 +40,9 @@ public class CommunityService {
 		Page<Community> lists;
 		
 		if("bTitle".equals(field)){
-			lists = communityRepository.findByBTitleContaining(word, pageable);
+			lists = communityRepository.findByBTitleContaining(word.toLowerCase(), pageable);
 		}else if("bContent".equals(field)) {
-			lists = communityRepository.findByBContentContaining(word, pageable);
+			lists = communityRepository.findByBContentContaining(word.toLowerCase(), pageable);
 		}else {
 			lists = communityRepository.findAll(pageable);
 		}
@@ -59,14 +56,15 @@ public class CommunityService {
 			            community.getB_writer(),
 			            community.getB_date(),
 			            community.getB_like(),
-			            community.getHitcount()
+			            community.getHitcount(),
+			            community.getB_comments()
 					))
 					.collect(Collectors.toList()),
 				pageable,
 				lists.getTotalElements()
 				);
 		}
-
+	
 	//상세보기
 	@Transactional
 	public CommunityDTO view(Long bnum) {
@@ -83,7 +81,8 @@ public class CommunityService {
 	                community.getB_writer(),
 	                community.getB_date(),
 	                community.getB_like(),
-	                community.getHitcount()
+	                community.getHitcount(),
+	                community.getB_comments()
 					);
 		}else {
 			return null;
@@ -97,7 +96,7 @@ public class CommunityService {
 		community.setB_category(communityDTO.getB_category());
 		community.setBTitle(communityDTO.getB_title());
 		community.setBContent(communityDTO.getB_content());
-		community.setB_date(new Date());
+		community.setB_date(communityDTO.getB_date());
 		communityRepository.save(community);
 	}
 	
