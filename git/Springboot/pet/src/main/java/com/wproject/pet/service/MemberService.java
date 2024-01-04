@@ -27,7 +27,7 @@ public class MemberService {
 		 member.setEmail(memberDTO.getEmail());
 		 member.setTel(memberDTO.getTel());
 		 member.setAddress(memberDTO.getAddress());
-		 member.setAuth(memberDTO.getAuth());
+		 //member.setR(memberDTO.getRoles());
 		
 		memberRepository.save(member);
 	}

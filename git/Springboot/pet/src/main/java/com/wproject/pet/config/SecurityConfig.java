@@ -15,10 +15,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 
 
+
+
+
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig{
-
+	
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -45,15 +48,16 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-            .authorizeHttpRequests()
-      //  .authorizeRequests()
-//            .antMatchers("/member/*").authenticated()
-            .anyRequest().permitAll()
+        	.authorizeRequests()
+        	.antMatchers("/*").authenticated()
+        	.anyRequest().permitAll()
             .and()
             .formLogin()
             .loginPage("/login")
+            .loginProcessingUrl("/login")
             .defaultSuccessUrl("http://localhost:3000")
-            .failureUrl("http://localhost:3000/login?error=true")
+           //.failureForwardUrl("/member/api/loginfail")
+            .failureUrl("http://localhost:3000/loginFail")
             .and()
             .oauth2Login()
             .and()
