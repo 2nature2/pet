@@ -25,26 +25,33 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     }
 
     const communityInsert = async() => {
-        if(!formContent.b_title){
+        if(!formContent.b_category.trim()){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "카테고리를 선택해주세요.",
+                confirmButtonColor:"#b80042"
+            });
+        }else if(!formContent.b_title.trim()){
             Swal.fire({
                 icon: "warning",
                 iconColor: "red",
                 title: "제목을 입력해주세요.",
-                confirmButtonColor:"#06BEE1"
+                confirmButtonColor:"#b80042"
             });
-        }else if(!formContent.b_content){
+        }else if(!formContent.b_content.trim()){
             Swal.fire({
                 icon: "warning",
                 iconColor: "red",
                 title: "내용을 입력해주세요.",
-                confirmButtonColor:"#06BEE1"
+                confirmButtonColor:"#b80042"
         })
-        }else if(formContent.b_content.length>2000){
+        }else if(formContent.b_content.trim().length>2000){
             Swal.fire({
                 icon: "warning",
                 iconColor: "red",
                 title: "글자수를 확인해주세요.",
-                confirmButtonColor:"#06BEE1"
+                confirmButtonColor:"#b80042"
             })
         }else{
             try{
@@ -81,8 +88,8 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 <Form.Group className="mb-3">
                     <Form.Label>CATEGORY</Form.Label>
                     <Form.Select name="b_category" value={formContent.b_category} onChange={getValue}>
-                        <option>==선택==</option>
-                        <option disabled>공지사항</option>
+                        <option value="" disabled selected>==선택==</option>
+                        {/* <option>공지사항</option> */}
                         <option>질문</option>
                         <option>후기</option>
                         <option>기타</option>

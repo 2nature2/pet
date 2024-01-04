@@ -11,8 +11,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.wproject.pet.dto.BoardReportDTO;
 import com.wproject.pet.dto.CommunityDTO;
+import com.wproject.pet.entity.BoardReport;
 import com.wproject.pet.entity.Community;
+import com.wproject.pet.repository.BoardReportRepository;
+import com.wproject.pet.repository.CommentRepository;
 import com.wproject.pet.repository.CommunityRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommunityService {
 	private final CommunityRepository communityRepository;
+	private final BoardReportRepository boardReportRepository;
+	private final CommentRepository commentRepsitory;
 	
 	@Transactional
 	public void insert(CommunityDTO communityDTO) {
@@ -104,5 +110,14 @@ public class CommunityService {
 		Community community = communityRepository.findById(bnum).get();
 		community.setB_like(community.getB_like()+1);
 		communityRepository.save(community);
+	}
+	
+	public void send(Long bnum, BoardReportDTO boardReportDTO) {
+		Community community = communityRepository.findById(bnum).get();
+		BoardReport boardReport = new BoardReport();
+		boardReport.setB_reporter(boardReportDTO.getB_reporter());
+		boardReport.setB_reason(boardReportDTO.getB_reason());
+		boardReport.setCommunity(community);
+		boardReportRepository.save(boardReport);
 	}
 }

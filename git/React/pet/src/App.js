@@ -2,18 +2,21 @@ import React, { useEffect, useState } from 'react';
 import WritePage from "./components/pages/Community/WritePage";
 import ViewPage from "./components/pages/Community/ViewPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import './App.css';
 import axios from "axios";
 import MainPage from "./components/pages/Main/MainPage";
 import CommunityPage from "./components/pages/Community/CommunityPage";
 import Navigation from './components/pages/Navigation/Navigation';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import UpdatePage from "./components/pages/Community/UpdatePage";
 import Swal from "sweetalert2";
 import JoinForm from './components/pages/Member/JoinForm';
 import LoginForm from './components/pages/Member/LoginForm';
 import PetMain from './components/pages/Pet/PetMain';
+
 import Adoption from './components/pages/Pet/Adoption';
+
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -41,10 +44,11 @@ function App() {
 
   useEffect(()=> {
     loadCommunityList();
+    // eslint-disable-next-line
   }, [page]);
 
   const insertCommunity = (communityDTO) => {
-    fetch('community/insert', {
+    fetch('/community/insert', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'

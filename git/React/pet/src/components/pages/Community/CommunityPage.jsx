@@ -32,7 +32,7 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
                         <option value={lists.b_content} >내용</option>
                     </select>
                     <input type='text' placeholder='내용을 입력하세요'></input>
-                    <Button style={{backgroundColor: '#b89e97', borderColor: '#b89e97'}}>검색</Button>
+                    <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}}>검색</Button>
                 </div>
                 <Table>
                     <thead>
