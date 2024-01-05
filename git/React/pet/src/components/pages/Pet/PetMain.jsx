@@ -5,6 +5,9 @@ import '../../styles/Community.css';
 
 const PetMain = () => {
 
+<<<<<<< HEAD
+    
+=======
     const [data, setData] = useState(null); // 요청의 결과
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(false); // 에러
@@ -73,5 +76,6 @@ const PetMain = () => {
             </div>
         </div>
     );
+>>>>>>> aa7514d5f53f906996d85d07bd6a6ea39d2e95a9
 }
 export default PetMain;
