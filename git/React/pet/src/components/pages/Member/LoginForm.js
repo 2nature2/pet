@@ -8,7 +8,7 @@ const LoginForm = () => {
     username: "",
     password: ""
   });
-
+const [isLogin,setIsLogin]=useState(false)
   const getValue = (e) => {
     setLoginContent({
       ...loginContent,
@@ -32,41 +32,47 @@ const LoginForm = () => {
 
 const login = (member) => {
   const formData = new URLSearchParams();
-  formData.append("username", member.username);
-  formData.append("password", member.password);
+  
+  // formData.append("username", member.username);
+  // formData.append("password", member.password);
 
-  fetch('/login', {
-    method: 'post',
-    headers: {
-      'Content-type': 'application/x-www-form-urlencoded',
-    },
-    body: formData,
-  })
-  .then((resp) => {
-    console.log("로그인 정보",loginContent)
-    if (resp.ok) {
-        alert('로그인 성공');
-        window.location.href = '/';
-    } else {
-        alert('로그인 실패');
-    }
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
+  // fetch('/login', {
+  //   method: 'post',
+  //   headers: {
+  //     'Content-type': 'application/x-www-form-urlencoded',
+  //   },
+  //   body: formData,
+  //   mode: 'cors',
+  // })
+  // .then((resp) => {
+  //   console.log("로그인 정보",loginContent)
+  //   if (resp.ok) {
+  //       alert('로그인 성공');
+  //       window.location.href = '/';
+  //   } else {
+  //       alert('로그인 실패');
+  //   }
+
+  // })
+  // .catch((error) => {
+  //   console.error('Error:', error);
+  // });
   };
-  const loginbtn=()=>{
-    login(loginContent);
-    setLoginContent({
-      username:'',
-      password:''
-    })
-  }
+  // const loginbtn=()=>{
+  //   login(loginContent);
+  //   setLoginContent({
+  //     username:'',
+  //     password:''
+  //   })
+  // }
+
 
   return (
     <div>
       <Container className="panel" style={{ marginTop: "50px", width: "700px" }}>
-        <Form>
+        <Form
+        action="/login"
+        method="POST">
           <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextId">
             <Form.Label column sm="2">
               UserID
@@ -94,12 +100,13 @@ const login = (member) => {
           </Form.Group>
           <br />
           <div className="d-grid gap-1">
-            <Button variant="secondary"  onClick={loginbtn}> {/* 수정: type을 submit에서 button으로 변경 */}
+            <Button variant="secondary"  type="submit"> {/* 수정: type을 submit에서 button으로 변경 */}
               Sign In
             </Button>
           </div>
         </Form>
       </Container>
+   
     </div>
   );
 };

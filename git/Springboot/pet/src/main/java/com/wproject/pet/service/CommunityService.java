@@ -29,42 +29,57 @@ public class CommunityService {
 	public void insert(CommunityDTO communityDTO) {
 		Community community = new Community();
 		community.setB_category(communityDTO.getB_category());
-		community.setBContent(communityDTO.getB_content());
-		community.setBTitle(communityDTO.getB_title());
+		community.setContent(communityDTO.getB_content());
+		community.setTitle(communityDTO.getB_title());
 		community.setB_writer(communityDTO.getB_writer());
 		communityRepository.save(community);
 	}
 	
-	//전체보기(페이징, 검색)
-	public Page<CommunityDTO> findAll(String field, String word, Pageable pageable){
+	//DTO변환
+	private Page<CommunityDTO> convertToDtoPage(Page<Community> communityPage) {
+	    return new PageImpl<>(
+	            communityPage.getContent().stream()
+	                    .map(community -> new CommunityDTO(
+	                            community.getBnum(),
+	                            community.getB_category(),
+	                            community.getTitle(),
+	                            community.getContent(),
+	                            community.getB_writer(),
+	                            community.getB_date(),
+	                            community.getB_like(),
+	                            community.getHitcount(),
+	                            community.getB_comments()
+	                    ))
+	                    .collect(Collectors.toList()),
+	            communityPage.getPageable(),
+	            communityPage.getTotalElements()
+	    );
+	}
+
+	
+	//전체보기 페이징 
+	public Page<CommunityDTO> findAll(Pageable pageable){
+		Page<Community> lists = communityRepository.findAll(pageable);
+		
+		return convertToDtoPage(lists);
+		}
+	
+	//검색 
+	public Page<CommunityDTO> search(String field, String word, Pageable pageable){
 		Page<Community> lists;
 		
-		if("bTitle".equals(field)){
-			lists = communityRepository.findByBTitleContaining(word, pageable);
-		}else if("bContent".equals(field)) {
-			lists = communityRepository.findByBContentContaining(word, pageable);
-		}else {
-			lists = communityRepository.findAll(pageable);
+		switch(field){
+			case "b_title":
+				lists = communityRepository.findByTitleContaining(word.toLowerCase(), pageable);
+				break;
+			case "b_content":
+				lists = communityRepository.findByContentContaining(word.toLowerCase(), pageable);
+				break;
+			default: lists = communityRepository.findAll(pageable);
 		}
-		return new PageImpl<>(
-				lists.getContent().stream()
-					.map(community -> new CommunityDTO(
-						community.getBnum(),
-						community.getB_category(),
-			            community.getBTitle(),
-			            community.getBContent(),
-			            community.getB_writer(),
-			            community.getB_date(),
-			            community.getB_like(),
-			            community.getHitcount(),
-			            community.getB_comments()
-					))
-					.collect(Collectors.toList()),
-				pageable,
-				lists.getTotalElements()
-				);
-		}
-
+		return convertToDtoPage(lists);	
+	}
+	
 	//상세보기
 	@Transactional
 	public CommunityDTO view(Long bnum) {
@@ -76,8 +91,8 @@ public class CommunityService {
 			return new CommunityDTO(
 					community.getBnum(),
 					community.getB_category(),
-	                community.getBTitle(),
-	                community.getBContent(),
+	                community.getTitle(),
+	                community.getContent(),
 	                community.getB_writer(),
 	                community.getB_date(),
 	                community.getB_like(),
@@ -94,8 +109,8 @@ public class CommunityService {
 	public void update(CommunityDTO communityDTO) {
 		Community community = communityRepository.findById(communityDTO.getBnum()).get();
 		community.setB_category(communityDTO.getB_category());
-		community.setBTitle(communityDTO.getB_title());
-		community.setBContent(communityDTO.getB_content());
+		community.setTitle(communityDTO.getB_title());
+		community.setContent(communityDTO.getB_content());
 		community.setB_date(communityDTO.getB_date());
 		communityRepository.save(community);
 	}

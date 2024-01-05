@@ -27,12 +27,12 @@ public class Community {
 	private String b_category;
 	
 	@NotNull
-	@Column(name="b_title")
-	private String bTitle;
+	@Column(name = "b_title")
+	private String title;
 	
 	@NotNull
-	@Column(name="b_content", length = 2000)
-	private String bContent;
+	@Column(name = "b_content", length = 2000)
+	private String content;
 	
 	@NotNull
 	private String b_writer;
@@ -50,4 +50,5 @@ public class Community {
 	
 	@ColumnDefault("0")
 	private int b_comments;
+	
 }
