@@ -2,12 +2,25 @@ import React,{useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { json, useNavigate } from 'react-router-dom';
 import '../../styles/Community.css';
+import Pagination from 'react-js-pagination';
 
 const PetList = () => {
 
-    const [data, setData] = useState([]); // 요청의 결과
+    const [data, setData] = useState(null); // 요청의 결과
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(false); // 에러
+
+    const [pageList, setPageList] = useState([])
+    const [curPage, setCurPage] = useState(0); // 현재 페이지
+    const [prevBlock, setPrevBlock] = useState(0); // 이전 페이지
+    const [nextBlock, setNextBlock] = useState(0); // 다음 페이지
+    const [lastPage, setLastPage] = useState(0); // 마지막 페이지
+
+    const [search, setSeacrh] = useState({
+        page : 1,
+        sk : '',
+        sv : '',
+    });
 
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
     const encoded = `${URL}?numOfRows=1000&pageNo=1&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
@@ -53,13 +66,13 @@ const PetList = () => {
     return (
         <div className='community'>
             <div className='cboard'>
-                <h2>기간이 얼마 남지 않은 아이들이에요.</h2>
+                <h2>아이들이 당신을 기다리고 있어요!</h2>
                 {/* <button onClick={fetchData}>데이터 불러오기</button> */}
                 {
                     data.response.body.items.item.map((animal) => (
                         <div key={animal.desertionNo}>
                             <img src={animal.popfile}></img>
-                            <p>공고번호: {animal.noticeNo}</p>
+                            <p style={{textAlign: 'justify'}}>공고번호: <a href={'/pet/detail/:desertionNo'}>{animal.noticeNo}</a></p>
                             <p>상태: {animal.processState}</p>
                             <p>접수일시: {animal.noticeSdt}</p>
                             <p>발견장소: {animal.happenPlace}</p>
