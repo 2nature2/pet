@@ -5,7 +5,7 @@ import '../../styles/Community.css';
 
 const PetList = () => {
 
-    const [data, setData] = useState(null); // 요청의 결과
+    const [data, setData] = useState([]); // 요청의 결과
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(false); // 에러
 
@@ -42,12 +42,12 @@ const PetList = () => {
         return <div>No data available</div>;
     }
 
-    const items = Array.isArray(data.response.body.items)
-        ? data.response.body.items.item
-        : [data.response.body.items.item];
+    // const items = Array.isArray(data.response.body.items)
+    //     ? data.response.body.items.item
+    //     : [data.response.body.items.item];
 
     // Log 추가
-    // console.log("Fetched Data:", data);
+    console.log("Fetched Data:", data);
 
 
     return (
@@ -56,15 +56,15 @@ const PetList = () => {
                 <h2>기간이 얼마 남지 않은 아이들이에요.</h2>
                 {/* <button onClick={fetchData}>데이터 불러오기</button> */}
                 {
-                    items.map((item, index) => (
-                        <div key={index}>
-                            <img src={item[index].popfile}></img>
-                            <p>공고번호: {item[index].noticeNo}</p>
-                            <p>상태: {item[index].processState}</p>
-                            <p>접수일시: {item[index].noticeSdt}</p>
-                            <p>발견장소: {item[index].happenPlace}</p>
-                            <p>종류: {item[index].kindCd}</p>
-                            <p>특징: {item[index].specialMark}</p>
+                    data.response.body.items.item.map((animal) => (
+                        <div key={animal.desertionNo}>
+                            <img src={animal.popfile}></img>
+                            <p>공고번호: {animal.noticeNo}</p>
+                            <p>상태: {animal.processState}</p>
+                            <p>접수일시: {animal.noticeSdt}</p>
+                            <p>발견장소: {animal.happenPlace}</p>
+                            <p>종류: {animal.kindCd}</p>
+                            <p>특징: {animal.specialMark}</p>
                         </div>
                     ))
                 }
