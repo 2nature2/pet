@@ -15,6 +15,8 @@ import com.wproject.pet.dto.CommunityDTO;
 import com.wproject.pet.entity.BoardReport;
 import com.wproject.pet.entity.Community;
 import com.wproject.pet.repository.BoardReportRepository;
+import com.wproject.pet.repository.CommentReportRepository;
+import com.wproject.pet.repository.CommentRepository;
 import com.wproject.pet.repository.CommunityRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class CommunityService {
 	private final CommunityRepository communityRepository;
 	private final BoardReportRepository boardReportRepository;
+	private final CommentRepository commentRepository;
+	private final CommentReportRepository commentReportRepository;
 	
 	@Transactional
 	public void insert(CommunityDTO communityDTO) {
@@ -116,7 +120,12 @@ public class CommunityService {
 	}
 	
 	//삭제 
+	@Transactional
 	public void delete(Long bnum) {
+		Community community = communityRepository.findById(bnum).get();
+		boardReportRepository.deleteAllByCommunity(community);
+		commentReportRepository.deleteAllByCommunity(community);
+		commentRepository.deleteAllByCommunity(community);
 		communityRepository.deleteById(bnum);
 	}
 	

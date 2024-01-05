@@ -46,11 +46,13 @@ public class CommentService {
 		commentRepository.save(comment);
 	}
 	
+	@Transactional
 	public void delete(int c_id) {
 		Comment comment = commentRepository.findById(c_id).get();
 		if (comment != null) {
 			Community community = comment.getCommunity();
 			community.setB_comments(community.getB_comments()-1);
+			commentReportRepository.deleteAllByComment(comment);
 			commentRepository.deleteById(c_id);
 		}
 	}
