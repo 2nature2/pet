@@ -41,7 +41,7 @@ function App() {
 
   useEffect(() => {
     const fetchData = async() => {
-        await loadCommunityList();
+        await loadCommunityList(page);
     };
     fetchData();
     // eslint-disable-next-line
@@ -132,7 +132,7 @@ function App() {
      <Navigation />
       <Routes>
         <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
             <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />
