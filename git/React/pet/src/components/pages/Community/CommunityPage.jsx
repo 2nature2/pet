@@ -1,33 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Community.css';
+import axios from 'axios';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 
-const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, setPage, setTotalPages, setTotalElements}) => {
+const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElements, totalPages, setPage, setTotalPages, setTotalElements}) => {
     const movePage = useNavigate();
     const [page, setPageLocal] = useState(1);
     const [userInput, setUserInput] = useState('');
+    const [searching, setSearching] = useState(false);
+
     const getValue = (e) => {
         setUserInput(e.target.value.toLowerCase());
     }
 
+    const handleInputFocus = () => {
+        setSearching(true);
+    };
+    
+    const handleInputBlur = () => {
+        setSearching(false);
+    };
+
     useEffect(() => {
         const fetchData = async() => {
-            await loadCommunityList();
+            if(userInput.trim()===''){
+                await loadCommunityList(page - 1);
+            } 
+            if(!searching){
+                await search(page);
+            }
         };
         fetchData();
         // eslint-disable-next-line
-    }, [page]);
+    }, [page, userInput, searching]);
     
     useEffect(()=> {
         setSearchLists(lists);
     }, [lists]);
 
-    const handlePageChange = (selectedPage) => {
-        setPage(selectedPage -1);
-        setPageLocal(selectedPage);
-        console.log("page확인:",selectedPage);
+    const handlePageChange = async(selectedPage) => {
+        try{
+            const currentPage = Math.max(selectedPage, 1);
+            setPageLocal(currentPage);
+            // await search(currentPage);
+        } catch(error) {
+            console.error("페이지 변경 오류", error);
+        }
     };
 
     function write(){
@@ -36,14 +56,24 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
 
     const [searchLists, setSearchLists] = useState(lists);
     const [searchOption, setSearchOption] = useState('b_title');
+
     const handleSearchOptionChange = (e) => {
         setSearchOption(e.target.value);
-    }
-    const search = async() => {
-        const searchResult = lists.filter((item) => item[searchOption] && item[searchOption].includes(userInput));
-        setSearchLists(searchResult);
-        setTotalElements(searchResult.length);
-    }
+    };
+    const search = async(selectedPage) => {
+        try{
+            const currentPage = selectedPage -1;
+            const response = await axios.get(`/community/search?&size=20&page=${currentPage}&field=${searchOption}&word=${userInput}`);
+            setCommunityList(response.data.content);
+            setTotalElements(response.data.totalElements);
+            }catch(error){
+            console.error("검색 오류:", error);
+        }
+    };
+
+    const handleSearch = () => {
+        search(page);
+    };
 
     return (
         <div className='community'>
@@ -53,8 +83,8 @@ const CommunityPage = ({lists, loadCommunityList, totalElements, totalPages, set
                         <option value='b_title' >제목</option>
                         <option value='b_content' >내용</option>
                     </select>
-                    <input type='text' placeholder='내용을 입력하세요' onChange={getValue}></input>
-                    <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={search}>검색</Button>
+                    <input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
+                    <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={handleSearch}>검색</Button>
                 </div>
                 <Table>
                     <thead>
