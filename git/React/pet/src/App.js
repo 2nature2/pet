@@ -17,6 +17,7 @@ import UserInfo from './components/pages/Member/UserInfo';
 import LoginFail from './components/pages/Member/LoginFail';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PetDetail from './components/pages/Pet/PetDetail';
 
 
 function App() {
@@ -142,6 +143,7 @@ function App() {
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />
             <Route path="/pet" element={<PetMain />} />
+            <Route path="/pet/detail/:desertionNo" element={<PetDetail />} />
             <Route path="/member/join" element={<JoinForm join={join} />} />
             <Route path="/member/login" element={<LoginForm />} />
             <Route path="/member/userInfo" element={<UserInfo />} />
