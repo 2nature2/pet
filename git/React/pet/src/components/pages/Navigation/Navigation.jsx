@@ -35,7 +35,7 @@ const Navigation = () => {
             <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
             <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>
             <NavLink className='navmenu' to="/member/userInfo">UserInfo</NavLink>
-            <NavLink className='navmenu' onClick={handleLogout}>LOGOUT</NavLink>
+            <NavLink className='navmenu' to="/membet/logout">LOGOUT</NavLink>
             
             
         </div>
