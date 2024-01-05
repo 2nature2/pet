@@ -11,8 +11,13 @@ import Swal from "sweetalert2";
 import JoinForm from './components/pages/Member/JoinForm';
 import LoginForm from './components/pages/Member/LoginForm';
 import PetMain from './components/pages/Pet/PetMain';
+
+import Adoption from './components/pages/Pet/Adoption';
+import UserInfo from './components/pages/Member/UserInfo';
+import LoginFail from './components/pages/Member/LoginFail';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -131,14 +136,17 @@ function App() {
     <BrowserRouter>
       <Navigation />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements} />} />
-        <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm} />} />
-        <Route path="/community/view/:bnum" element={<ViewPage lists={communityList} />} />
-        <Route path="/community/update" element={<UpdatePage />} />
-        <Route path="/pet" element={<PetMain />} />
-        <Route path="/join" element={<JoinForm join={join} />} />
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/" element={<MainPage/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
+            <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
+            <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
+            <Route path="/community/update" element={<UpdatePage />} />
+            <Route path="/pet" element={<PetMain />} />
+            <Route path="/member/join" element={<JoinForm join={join} />} />
+            <Route path="/member/login" element={<LoginForm />} />
+            <Route path="/member/userInfo" element={<UserInfo />} />
+            <Route path="/loginFail" element={<LoginFail />} />
+            <Route path="/adoption" element={<Adoption/>}/>
       </Routes>
     </BrowserRouter>
   )
