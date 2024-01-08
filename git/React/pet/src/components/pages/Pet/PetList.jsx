@@ -16,6 +16,29 @@ const PetList = () => {
     const [nextBlock, setNextBlock] = useState(0); // 다음 페이지
     const [lastPage, setLastPage] = useState(0); // 마지막 페이지
 
+    const navigate = useNavigate();
+
+    const goAnimal = (animal) => {
+        navigate(`/pet/detail/${animal.desertionNo}`, {
+            state : {
+                noticeNo: animal.noticeNo,
+                popfile: animal.popfile,
+                kindCd: animal.kindCd,
+                colorCd: animal.colorCd,
+                sexCd: animal.sexCd,
+                neuterYn: animal.neuterYn,
+                specialMark: animal.specialMark,
+                happenDt: animal.happenDt,
+                happenPlace: animal.happenPlace,
+                noticeSdt: animal.noticeSdt,
+                noticeEdt: animal.noticeEdt,
+                careNm: animal.careNm,
+                careAddr: animal.careAddr,
+                careTel: animal.careTel
+            }
+        });
+    };
+
     const [search, setSeacrh] = useState({
         page : 1,
         sk : '',
@@ -71,8 +94,10 @@ const PetList = () => {
                 {
                     data.response.body.items.item.map((animal) => (
                         <div key={animal.desertionNo}>
-                            <img src={animal.popfile}></img>
-                            <p style={{textAlign: 'justify'}}>공고번호: <a href={'/pet/detail/:desertionNo'}>{animal.noticeNo}</a></p>
+                            <a href={`/pet/detail/${animal.desertionNo}`}>
+                                <img src={animal.popfile} onClick={() => goAnimal(animal)}></img>
+                            </a>
+                            <p>공고번호: {animal.noticeNo}</p>
                             <p>상태: {animal.processState}</p>
                             <p>접수일시: {animal.noticeSdt}</p>
                             <p>발견장소: {animal.happenPlace}</p>
