@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,13 +45,26 @@ public class CommunityController {
 	@GetMapping("/")
 	public ResponseEntity<Page<CommunityDTO>> getPosts(
 			@PageableDefault(size = 20, sort = "bnum", direction = Direction.DESC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "") String field,
-			@RequestParam(required = false, defaultValue = "") String word,
 			@RequestParam(required = false, defaultValue = "0") int page) {
-	  Page<CommunityDTO> resultPage = communityService.findAll(field, word, PageRequest.of(page, pageable.getPageSize(), pageable.getSort()));
+	  Page<CommunityDTO> resultPage = communityService.findAll(PageRequest.of(page, pageable.getPageSize(), pageable.getSort()));
 	  return ResponseEntity.ok(resultPage);
 	}
 	
+	@GetMapping("/search")
+	public ResponseEntity<Page<CommunityDTO>> search(
+			@RequestParam(required = false, defaultValue = "") String field,
+			@RequestParam(required = false, defaultValue = "") String word, 
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@PageableDefault(size = Integer.MAX_VALUE, sort = "bnum", direction = Direction.DESC) Pageable pageable){
+		try {
+	        Page<CommunityDTO> searchResult = communityService.search(field, word, pageable);
+	        return ResponseEntity.ok(searchResult);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }
+	}
+
 	@GetMapping("/view/{bnum}")
 	public ResponseEntity<Map<String, Object>> view(@PathVariable Long bnum) {
 		CommunityDTO communityDTO = communityService.view(bnum);
@@ -59,7 +73,7 @@ public class CommunityController {
 		 Map<String, Object> response = new HashMap<>();
 		 response.put("community", communityDTO);
 		 response.put("comments", comments);
-		 
+
 		 return ResponseEntity.ok(response);
 	}
 	

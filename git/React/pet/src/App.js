@@ -18,6 +18,7 @@ import LoginFail from './components/pages/Member/LoginFail';
 import Logout from './components/pages/Member/Logout';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import PetDetail from './components/pages/Pet/PetDetail';
 
 
 function App() {
@@ -29,29 +30,29 @@ function App() {
     b_content: '',
     b_writer: '',
   })
-  const [page, setPage] = useState(0); 
+  const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
 
-  const loadCommunityList = async() => {
-    try{
+  const loadCommunityList = async () => {
+    try {
       const response = await axios.get(`/community/?page=${page}`);
       setCommunityList(response.data.content);
       setTotalPages(response.data.totalPages);
       setTotalElements(response.data.totalElements);
       return response.data;
-    } catch(error) {
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
   }
 
   useEffect(() => {
-    const fetchData = async() => {
-        await loadCommunityList();
+    const fetchData = async () => {
+      await loadCommunityList(page);
     };
     fetchData();
     // eslint-disable-next-line
-}, [page]);
+  }, [page]);
 
   const insertCommunity = (communityDTO) => {
     fetch('/community/insert', {
@@ -61,36 +62,36 @@ function App() {
       },
       body: JSON.stringify(communityDTO)
     })
-    .then((resp) => {
-      if(!resp.ok){
-        throw new Error(`Network response was not ok: ${resp.status}`);
-      }
-      return resp.text();
-    })
-    .then((resp)=> {
-      setCommunityList(communityList.concat(
-        {
-          b_category: communityDTO.b_category,
-          b_title: communityDTO.b_title,
-          b_content: communityDTO.b_content,
-          b_writer: communityDTO.b_writer
+      .then((resp) => {
+        if (!resp.ok) {
+          throw new Error(`Network response was not ok: ${resp.status}`);
         }
-        )); 
-      loadCommunityList();
-      resetForm();
-      Swal.fire({
-        icon: "success",
-        iconColor: "#1098f7",
-        title: "작성 완료",
-        confirmButtonColor: "#1098f7",
-      }).then(function(){
-        window.history.back();
+        return resp.text();
+      })
+      .then((resp) => {
+        setCommunityList(communityList.concat(
+          {
+            b_category: communityDTO.b_category,
+            b_title: communityDTO.b_title,
+            b_content: communityDTO.b_content,
+            b_writer: communityDTO.b_writer
+          }
+        ));
+        loadCommunityList();
+        resetForm();
+        Swal.fire({
+          icon: "success",
+          iconColor: "#1098f7",
+          title: "작성 완료",
+          confirmButtonColor: "#1098f7",
+        }).then(function () {
+          window.history.back();
+        });
+      })
+      .catch((error) => {
+        console.error('Fetch error:', error);
+        console.error('Response:', error.response);
       });
-    })
-    .catch((error) => {
-      console.error('Fetch error:', error);
-      console.error('Response:', error.response);
-    });
   };
 
   const resetForm = () => {
@@ -101,11 +102,11 @@ function App() {
       b_writer: ''
     })
   }
-  
+
 
   // 회원가입
   const join = (member) => {
-    
+
     fetch('/member/join', {
       method: 'post',
       headers: {
@@ -135,14 +136,15 @@ function App() {
   };
   return (
     <BrowserRouter>
-     <Navigation />
+      <Navigation />
       <Routes>
         <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
             <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />
             <Route path="/pet" element={<PetMain />} />
+            <Route path="/pet/detail/:desertionNo" element={<PetDetail />} />
             <Route path="/member/join" element={<JoinForm join={join} />} />
             <Route path="/member/login" element={<LoginForm />} />
             <Route path="/member/userInfo" element={<UserInfo />} />
@@ -151,7 +153,7 @@ function App() {
             <Route path="/adoption" element={<Adoption/>}/>
       </Routes>
     </BrowserRouter>
-)
+  )
 }
 
 export default App;
