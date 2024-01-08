@@ -15,6 +15,7 @@ import PetMain from './components/pages/Pet/PetMain';
 import Adoption from './components/pages/Pet/Adoption';
 import UserInfo from './components/pages/Member/UserInfo';
 import LoginFail from './components/pages/Member/LoginFail';
+import Logout from './components/pages/Member/Logout';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -123,7 +124,7 @@ function App() {
       .then((result) => {
         if (result === 'success') {
           alert('등록완료');
-          window.location.href = '/login';
+          window.location.href = '/member/login';
         } else {
           alert('등록실패');
         }
@@ -145,6 +146,7 @@ function App() {
             <Route path="/member/join" element={<JoinForm join={join} />} />
             <Route path="/member/login" element={<LoginForm />} />
             <Route path="/member/userInfo" element={<UserInfo />} />
+            <Route path="member/logout" element={<Logout />} />
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/adoption" element={<Adoption/>}/>
       </Routes>

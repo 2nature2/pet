@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-
+import axios from 'axios';
+import { Navigate, useNavigate } from "react-router-dom";
+import Navigation from "../Navigation/Navigation";
 const LoginForm = () => {
+//button submit 방식. 회원정보가 가져와짐
   const [loginContent, setLoginContent] = useState({
     username: "",
     password: ""
   });
 const [isLogin,setIsLogin]=useState(false)
+
+const navigate = useNavigate();
   const getValue = (e) => {
     setLoginContent({
       ...loginContent,
@@ -16,63 +21,40 @@ const [isLogin,setIsLogin]=useState(false)
     });
   };
 
-//   const login = () => {
-//     axios
-//       .post('/login', {  
-//         userid: loginContent.userid,
-//         password: loginContent.password,
-//       })
-//       .then((resp) => resp.statusText)
-//       .then((result) => {
-//         if (result === "success") {
-//           alert("로그인 성공");
-//         }
-//       });
-//   };
+  const handleCustomSubmit = async () => {
+    console.log("로그인버튼",loginContent.username)
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: loginContent.username,
+          password: loginContent.password,
+        }),
+      });
 
-const login = (member) => {
-  const formData = new URLSearchParams();
-  
-  // formData.append("username", member.username);
-  // formData.append("password", member.password);
-
-  // fetch('/login', {
-  //   method: 'post',
-  //   headers: {
-  //     'Content-type': 'application/x-www-form-urlencoded',
-  //   },
-  //   body: formData,
-  //   mode: 'cors',
-  // })
-  // .then((resp) => {
-  //   console.log("로그인 정보",loginContent)
-  //   if (resp.ok) {
-  //       alert('로그인 성공');
-  //       window.location.href = '/';
-  //   } else {
-  //       alert('로그인 실패');
-  //   }
-
-  // })
-  // .catch((error) => {
-  //   console.error('Error:', error);
-  // });
+      if (response.ok) {
+        // 서버 요청이 성공하면 다른 동작 수행
+        setIsLogin(true);
+        // 이후 추가로 해야 할 작업이 있다면 여기에서 수행
+      } else {
+        console.error('로그인 실패:', response.status);
+        // 로그인 실패 시에 대한 처리
+      }
+    } catch (error) {
+      console.error('로그인 실패:', error);
+    }
   };
-  // const loginbtn=()=>{
-  //   login(loginContent);
-  //   setLoginContent({
-  //     username:'',
-  //     password:''
-  //   })
-  // }
 
-
+ 
   return (
     <div>
       <Container className="panel" style={{ marginTop: "50px", width: "700px" }}>
         <Form
-        action="/login"
-        method="POST">
+         
+        >
           <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextId">
             <Form.Label column sm="2">
               UserID
@@ -100,13 +82,13 @@ const login = (member) => {
           </Form.Group>
           <br />
           <div className="d-grid gap-1">
-            <Button variant="secondary"  type="submit"> {/* 수정: type을 submit에서 button으로 변경 */}
+            <Button variant="secondary"  onClick={handleCustomSubmit} > 
               Sign In
             </Button>
           </div>
         </Form>
+        
       </Container>
-   
     </div>
   );
 };

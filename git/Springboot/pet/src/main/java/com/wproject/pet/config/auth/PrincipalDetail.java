@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wproject.pet.entity.Member;
 import com.wproject.pet.repository.MemberRepository;
@@ -35,6 +37,7 @@ public class PrincipalDetail implements UserDetailsService {
 		 System.out.println("loadUserByUsername::" + username);
 		    
 		    Member member = memberRepository.findByUserid(username);
+		    System.out.println(member);
 		    if (member == null) {
 		    	 System.out.println("로그인실패");
 		        throw new UsernameNotFoundException("User not found with username: " + username);

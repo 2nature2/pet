@@ -12,12 +12,12 @@ const UserInfo = () => {
     useEffect(()=>{
         console.log("UserInfo 렌더링");
       axios.get("/member/api/user")
-      .then((response)=>{
-        return response.data
+      .then((response) => {
+        // 서버 응답에서 사용자 정보를 가져와서 업데이트
+        setUserInfo(response.data);
       })
-      .then(function(data){
-        console.log('data: ', data) 
-        setUserInfo(data);
+      .catch((error) => {
+        console.error('Error fetching user info:', error);
       })
     },[]);
 
