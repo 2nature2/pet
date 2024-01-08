@@ -19,7 +19,6 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
 
-
 function App() {
   const [communityList, setCommunityList] = useState([]);
   // eslint-disable-next-line

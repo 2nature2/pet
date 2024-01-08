@@ -319,9 +319,7 @@ const ViewPage = () => {
                             </Form.Group>
                         </Col>
                     </Row>
-                    <Form.Group className="mb-3" controlId="b_content">
-                        <Form.Control plaintext readOnly as='textarea' style={{ resize: "none" }} name="b_content" rows={20} value={view.b_content} />
-                    </Form.Group>
+                    <div className="ck-content" dangerouslySetInnerHTML={{__html: view.b_content}}></div>
                 </Form>
                 <div className="vBtns">
                     <div className="lBtn">

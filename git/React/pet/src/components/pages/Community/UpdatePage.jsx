@@ -3,6 +3,9 @@ import '../../styles/Community.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import '@ckeditor/ckeditor5-build-classic/build/translations/ko';
 
 const UpdatePage = () => {
     const movePage = useNavigate();
@@ -93,9 +96,55 @@ const UpdatePage = () => {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Form.Group className="mb-3" controlId="b_content">
-                    <Form.Control as='textarea' name="b_content" rows={20} defaultValue={viewData.b_content} onChange={getValue}/>
-                </Form.Group>
+                <CKEditor editor={ClassicEditor} id="b_content" data={viewData.b_content}
+                    config={{
+                        language: 'ko',
+                        placeholder: "2000자 이내로 작성해주세요.",
+                        toolbar: {
+                            items: [
+                                'undo',
+                                'redo',
+                                'heading',
+                                '|',
+                                'fontSize',
+                                'fontFamily',
+                                'fontColor',
+                                'fontBackgroundColor',
+                                '|',
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strikethrough',
+                                'highlight',
+                                'removeFormat',
+                                '|',
+                                'alignment',
+                                '|',
+                                'numberedList',
+                                'bulletedList',
+                                '|',
+                                'indent',
+                                'outdent',
+                                '|',
+                                'todoList',
+                                'link',
+                                'blockQuote',
+                                // 'imageUpload',
+                                'insertTable',
+                                // 'mediaEmbed',
+                                '|',
+                            ]
+                        }
+                    }}
+
+                    onChange={(event, editor) => {
+                       setFormContent({
+                        ...formContent,
+                        b_content: editor.getData(),
+                       });
+                        console.log({event,editor,formContent});
+                    }}
+                />
             </Form>
             <Button style={{marginRight:5, backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={bupdate} >확인</Button>
             <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
