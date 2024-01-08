@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Col, Form, FormControl, FormGroup, FormLabel, Modal, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import '../../styles/Community.css';
+import Swal from "sweetalert2";
 
 const ViewPage = () => {
     const movePage = useNavigate();
@@ -168,18 +169,33 @@ const ViewPage = () => {
     }
 
     const commentInsert = () => {
-        const commentDTO = {
-            c_writer: formComment.c_writer,
-            c_content: formComment.c_content,
-            b_id: bnum
-        }
-        fetch(`/comment/insert/${view.bnum}`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(commentDTO)
+        if(!formComment.c_content.trim()){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "댓글을 입력해주세요.",
+                confirmButtonColor:"#b80042"
         })
+        }else if(formComment.c_content.length>255){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "글자수를 확인해주세요.",
+                confirmButtonColor:"#b80042"
+            })
+        }else{
+            const commentDTO = {
+                c_writer: formComment.c_writer,
+                c_content: formComment.c_content,
+                b_id: bnum
+            }
+            fetch(`/comment/insert/${view.bnum}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(commentDTO)
+            })
             .then((resp) => {
                 setFormComment({
                     c_writer: '',
@@ -188,6 +204,7 @@ const ViewPage = () => {
                 })
                 window.location.reload();
             })
+        }
     }
 
     const [cmtLikeStates, setCmtLikeStates] = useState(() => {
@@ -358,7 +375,7 @@ const ViewPage = () => {
                     <FormLabel style={{ fontWeight: "bold" }}>댓글 {commentList.length}</FormLabel>
                     <Form.Group className="cInsert">
                         <Form.Control type="text" plaintext id="c_writer" value={formComment.c_writer} style={{ fontWeight: "bold" }} name="c_writer" placeholder="작성자" onChange={getComment} />
-                        <Form.Control as="textarea" plaintext id="c_content" value={formComment.c_content} style={{ resize: "none" }} name="c_content" placeholder="내용을 입력하세요" onChange={getComment} />
+                        <Form.Control as="textarea" plaintext id="c_content" value={formComment.c_content} style={{ resize: "none" }} name="c_content" placeholder="255자 내로 내용을 입력해주세요." onChange={getComment} />
                         <Button variant="outline-dark" style={{ display: 'block', marginLeft: 'auto' }} onClick={commentInsert}>작성</Button>
                     </Form.Group>
                     <hr />
