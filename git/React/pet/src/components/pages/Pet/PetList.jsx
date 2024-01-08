@@ -97,12 +97,12 @@ const PetList = () => {
                             <a href={`/pet/detail/${animal.desertionNo}`}>
                                 <img src={animal.popfile} onClick={() => goAnimal(animal)}></img>
                             </a>
-                            <p>공고번호: {animal.noticeNo}</p>
-                            <p>상태: {animal.processState}</p>
-                            <p>접수일시: {animal.noticeSdt}</p>
-                            <p>발견장소: {animal.happenPlace}</p>
-                            <p>종류: {animal.kindCd}</p>
-                            <p>특징: {animal.specialMark}</p>
+                            <p>공고번호 : {animal.noticeNo}</p>
+                            <p>상태 : {animal.processState}</p>
+                            <p>접수일시 : {animal.noticeSdt}</p>
+                            <p>발견장소 : {animal.happenPlace}</p>
+                            <p>종류 : {animal.kindCd}</p>
+                            <p>특징 : {animal.specialMark}</p>
                         </div>
                     ))
                 }
