@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const Navigation = ({isLogin}) => {
    
-
+console.log("session: ", sessionStorage.getItem("name"));
 
       
     return(
@@ -15,8 +15,8 @@ const Navigation = ({isLogin}) => {
             <NavLink className='navmenu' to="/adoption">ADOPTION</NavLink>
             <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
            
-
-            {isLogin ? (
+{/* 
+            {sessionStorage.getItem("name")!="null" ? (
         <>
           <NavLink className='navmenu' to="/member/userInfo">UserInfo</NavLink>
           <NavLink className='navmenu' to="/member/logout">LOGOUT</NavLink>
@@ -26,12 +26,12 @@ const Navigation = ({isLogin}) => {
           <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
           <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>
         </>
-      )}
+      )} */}
       
-            {/* <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
+            <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
             <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>
             <NavLink className='navmenu' to="/member/userInfo">UserInfo</NavLink>
-            <NavLink className='navmenu' to="/membet/logout">LOGOUT</NavLink> */}
+            <NavLink className='navmenu' to="/member/logout">LOGOUT</NavLink>
             
             
         </div>

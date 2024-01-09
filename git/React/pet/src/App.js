@@ -54,6 +54,8 @@ function App() {
     // eslint-disable-next-line
   }, [page]);
 
+ 
+
   const insertCommunity = (communityDTO) => {
     fetch('/community/insert', {
       method: 'POST',
@@ -134,6 +136,34 @@ function App() {
         console.error('Error:', error);
       });
   };
+
+   //로그인이 되어있는지 없는지 확인
+   useEffect(()=>{
+    console.log("UserInfo 렌더링");
+  axios.get("/member/api/user")
+  .then((response) => {
+    // 서버 응답에서 사용자 정보를 가져와서 업데이트
+    console.log(response.data)
+    if(response.data!=null){
+      sessionStorage.setItem("name",response.data.name)
+    }
+    else{
+      sessionStorage.setItem("name",null)
+    }
+  })
+  .catch((error) => {
+    console.error('Error fetching user info:', error);
+  })
+},[]);
+
+  // //로그인 후 isLogin값 전달
+  // // const [isLogin, setIsLogin] = useState(false);
+  // const handleLoginSubmit = () => {
+  //   sessionStorage.setItem("login",res.data.userid);
+  //   // 로그인이 성공하면 isLogin을 true로 설정
+  //   setIsLogin(true);
+  // };
+  
   return (
     <BrowserRouter>
       <Navigation />
@@ -146,7 +176,7 @@ function App() {
             <Route path="/pet" element={<PetMain />} />
             <Route path="/pet/detail/:desertionNo" element={<PetDetail />} />
             <Route path="/member/join" element={<JoinForm join={join} />} />
-            <Route path="/member/login" element={<LoginForm />} />
+            <Route path="/member/login" element={<LoginForm  />} />
             <Route path="/member/userInfo" element={<UserInfo />} />
             <Route path="member/logout" element={<Logout />} />
             <Route path="/loginFail" element={<LoginFail />} />

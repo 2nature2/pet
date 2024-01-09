@@ -15,6 +15,7 @@ const UserInfo = () => {
       .then((response) => {
         // 서버 응답에서 사용자 정보를 가져와서 업데이트
         setUserInfo(response.data);
+        console.log("유저이름 : ",userInfo.name)
       })
       .catch((error) => {
         console.error('Error fetching user info:', error);

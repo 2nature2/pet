@@ -16,7 +16,7 @@ import com.wproject.pet.repository.MemberRepository;
 
 import lombok.Data;
 
-@Data
+
 @Service
 public class PrincipalDetail implements UserDetailsService {
 	@Autowired
