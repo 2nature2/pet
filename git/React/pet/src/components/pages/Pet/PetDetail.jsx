@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import '../../styles/Community.css';
+import Kakao from "./Kakao";
 
 const PetDetail = () => {
     const location = useLocation();
@@ -33,6 +34,7 @@ const PetDetail = () => {
                 <p>전화번호 : {goAnimal.careTel}</p>
 
             </div>
+            <Kakao />
         </div>
     )
 }
