@@ -24,7 +24,6 @@ const UserInfo = () => {
 
   return (
       <div>
-          {/* <ul>이름 : {userInfo.name}</ul> */}
          <ul>이름 : {sessionStorage.getItem("name")}</ul> 
       </div>
   );
