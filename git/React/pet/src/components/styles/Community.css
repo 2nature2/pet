@@ -7,6 +7,11 @@
     font-style: normal;
 }
 
+.ck-editor__editable_inline {
+    min-height: 400px;
+    margin-bottom: 2%;
+}
+
 button:active {
     scale: 0.9;
 }
@@ -134,6 +139,12 @@ button:active {
     width: 80vw;
     margin: auto;
     margin-block: 2%;
+    padding-block: 2%;
+}
+
+.ck-content {
+    padding-block: 2%;
+    word-break: break-all;
 }
 
 .vBtns {

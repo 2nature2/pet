@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Button, Form } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import '../../styles/Community.css';
 
 const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
     const movePage = useNavigate();
@@ -39,14 +42,14 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 title: "제목을 입력해주세요.",
                 confirmButtonColor:"#b80042"
             });
-        }else if(!formContent.b_content.trim()){
+        }else if(!formContent.b_content){
             Swal.fire({
                 icon: "warning",
                 iconColor: "red",
                 title: "내용을 입력해주세요.",
                 confirmButtonColor:"#b80042"
         })
-        }else if(formContent.b_content.trim().length>2000){
+        }else if(formContent.b_content.length>2000){
             Swal.fire({
                 icon: "warning",
                 iconColor: "red",
@@ -62,26 +65,8 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
         } 
     }
 
-//axios로 넣는 방법
-    // const submitCommunity = () => {
-    //     axios.post('/community/insert', {
-    //         b_category: formContent.b_category,
-    //         b_title: formContent.b_title,
-    //         b_content: formContent.b_content,
-    //         b_writer: formContent.b_writer
-    //     }).then(()=> {
-    //         alert('작성완료');
-    //         loadCommunityList();
-    //         resetForm();
-    //         movePage('/community');
-    //     })
-    //     .catch(error => {
-    //         console.error('오류발생:', error);
-    //     });
-    // }
-
     return(
-        <>
+        <div className="Editor">
         <p className="pTitle">빂Write빂</p>
         <div className="wboard">
             <Form>
@@ -103,15 +88,62 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                     <Form.Label>WRITER</Form.Label>
                     <Form.Control type="text" name="b_writer" value={formContent.b_writer} onChange={getValue} />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="b_content">
-                    <Form.Label>CONTENT</Form.Label>
-                    <Form.Control as='textarea' name="b_content" rows={20} value={formContent.b_content} onChange={getValue} placeholder="2000자 이내로 작성해주세요."/>
-                </Form.Group>
+                <div className="ck-content">
+                <CKEditor editor={ClassicEditor} id="b_content" data=""
+                    config={{
+                        language: 'ko',
+                        placeholder: "2000자 이내로 작성해주세요.",
+                        toolbar: {
+                            items: [
+                                'undo',
+                                'redo',
+                                'heading',
+                                '|',
+                                'fontSize',
+                                'fontFamily',
+                                'fontColor',
+                                'fontBackgroundColor',
+                                '|',
+                                'bold',
+                                'italic',
+                                // 'underline',
+                                // 'strikethrough',
+                                'highlight',
+                                // 'removeFormat',
+                                // '|',
+                                // 'alignment',
+                                // '|',
+                                'numberedList',
+                                'bulletedList',
+                                '|',
+                                'indent',
+                                'outdent',
+                                '|',
+                                // 'todoList',
+                                'link',
+                                'blockQuote',
+                                // 'imageUpload',
+                                'insertTable',
+                                // 'mediaEmbed',
+                                '|',
+                            ]
+                        }
+                    }}
+
+                    onChange={(event, editor) => {
+                       setFormContent({
+                        ...formContent,
+                        b_content: editor.getData(),
+                       });
+                        console.log({event,editor,formContent});
+                    }}
+                />
+                </div>
                 <Button onClick={communityInsert} style={{marginRight: 5, backgroundColor:"#1098f7", borderColor:"#1098f7"}}>등록</Button>
                 <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
             </Form>
         </div>
-        </>
+        </div>
     )
 }
 
