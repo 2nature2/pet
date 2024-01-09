@@ -24,6 +24,7 @@ const UserInfo = () => {
   return (
       <div>
           <ul>이름 : {userInfo.name}</ul>
+          <ul>아이디: {userInfo.userid}</ul>
       </div>
   );
 };

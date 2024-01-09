@@ -10,7 +10,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
     const [page, setPageLocal] = useState(1);
     const [userInput, setUserInput] = useState('');
     const [searching, setSearching] = useState(false);
-
+    
     const getValue = (e) => {
         setUserInput(e.target.value.toLowerCase());
     }
