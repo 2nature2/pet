@@ -93,6 +93,7 @@ public class MemberController {
 	//회원정보
 	@GetMapping("/api/user")
 	public Map<String, Object> userInfo(@AuthenticationPrincipal PrincipalUser principaluser){
+		System.out.println("회원정보 : "+ principaluser.getUsername() );
 		Member member = principaluser.getMember();
 		String name = member.getName();
 		Map<String, Object> map = new HashMap<String, Object>();
