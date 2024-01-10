@@ -24,14 +24,16 @@ const JoinForm = ({ join }) => {
     //중복확인 버튼 t/f
     const [isIdChecked, setIsIdChecked] = useState(false);
     const [isAddrChecked, setIsAddrChecked] = useState(false);
+    //비밀번호 양식
+    const [passwordFormColor,setpasswordFormColor]=useState(false);
+    const [passwordForm, setPasswordForm] = useState('비밀번호는 최소 8자 이상이어야 하며, 영문 대/소문자 및 숫자를 포함해야 합니다.');
+
 
     // handler
     const handle = {
-      // 버튼 클릭 이벤트
       clickButtonaddr: () => {
         setShowModal(true);
       },
-  
       clickButton: async () => {
         // 서버로 중복확인 요청 보내기
         try {
@@ -55,6 +57,7 @@ const JoinForm = ({ join }) => {
           console.error('중복확인 오류:', error);
         }
       },
+      
   
       // 주소 선택 이벤트
       selectAddress: (data) => {
@@ -83,7 +86,28 @@ const JoinForm = ({ join }) => {
       [e.target.name]: e.target.value,
     });
   };
+//=====================================================
 
+// const validatePassword = (password) => {
+//   // 최소 8자 이상, 영문 대/소문자 및 숫자 포함
+//   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{7,}$/;
+//   return passwordRegex.test(password);
+// };
+
+// const handlePassword=()=>{
+//   if (!validatePassword(joinContent.password)) {
+//     setpasswordFormColor(true);
+//     setPasswordForm('비밀번호는 최소 8자 이상이어야 하며, 영문 대/소문자 및 숫자를 포함해야 합니다.');
+//   } else {
+//     setpasswordFormColor(false);
+//     setPasswordForm('사용 가능한 비밀번호입니다.');
+//   }
+// }
+
+
+
+
+//=====================================================
   const memberInsert = () => {
     //유효성검사
     if(!joinContent.name){
@@ -93,10 +117,10 @@ const JoinForm = ({ join }) => {
       alert("아이디를 입력하세요")
       return;
     }
-    // else if(!isIdChecked){
-    //   alert('아이디 중복확인을 먼저 수행하세요.');
-    //   return;
-    // }
+    else if(!isIdChecked){
+      alert('아이디 중복확인을 먼저 수행하세요.');
+      return;
+    }
     else if(!joinContent.password){
       alert("비밀번호를 입력하세요")
       return;
@@ -131,28 +155,6 @@ const JoinForm = ({ join }) => {
 
   };
 
-  // const submitMember = () => {
-  //   axios
-  //     .post('/member/join', {
-  //       name: joinContent.name,
-  //       userid: joinContent.userid,
-  //       password: joinContent.password,
-  //       address: joinContent.address,
-  //       tel: joinContent.tel,
-  //       email: joinContent.email,
-  //     })
-  //     .then((resp) => {
-  //       alert('등록성공');
-  //       setJoinContent({
-  //         name: '',
-  //         userid: '',
-  //         password: '',
-  //         address: '',
-  //         tel: '',
-  //         email: '',
-  //       });
-  //     });
-  // };
 
   return (
     <Container>
@@ -193,12 +195,19 @@ const JoinForm = ({ join }) => {
           <Form.Group as={Col} controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
-              type="Password"
+              type="text"
               name="password"
-              onChange={getValue}
+              onChange={(e) => {
+                getValue(e);
+              //  handlePassword(e);
+               // validatePassword(e);
+              }}
               value={joinContent.password}
               placeholder="Enter Password"
             />
+            <Form.Text className={passwordFormColor ? 'text-danger' : 'text-muted'}>
+            {passwordForm}
+          </Form.Text>
           </Form.Group>
 
           <Form.Group as={Col} controlId="passwordcheck">

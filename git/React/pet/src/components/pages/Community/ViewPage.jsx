@@ -128,7 +128,7 @@ const ViewPage = () => {
     }
     const reportSend = () => {
         const boardReportDTO = {
-            b_reporter: boardReport.b_reporter,
+            b_reporter: sessionStorage.getItem("name"),
             b_reason: boardReport.b_reason,
             b_id: bnum
         };
@@ -147,7 +147,7 @@ const ViewPage = () => {
             })
             .then((resp) => {
                 setBoardReport({
-                    b_reporter: boardReportDTO.b_reporter,
+                    b_reporter: sessionStorage.getItem("name"),
                     b_reason: boardReportDTO.b_reason,
                     b_id: bnum
                 });
@@ -275,7 +275,7 @@ const ViewPage = () => {
     }
     const cReportSend = () => {
         const commentReportDTO = {
-            c_reporter: cmtReport.c_reporter,
+            c_reporter: sessionStorage.getItem("name"),
             c_reason: cmtReport.c_reason,
             c_id: cmtReport.c_id
         };
@@ -361,7 +361,7 @@ const ViewPage = () => {
                             <FormGroup className="mb-3">
                                 <FormLabel>신고사유 :</FormLabel>
                                 {/* value에 로그인한 사람 id 들어가도록 */}
-                                <input type="hidden" value={boardReport.b_reporter} name="b_reporter" />
+                                <input type="hidden" value={sessionStorage.getItem("name")} name="b_reporter" />
                                 <FormControl as='textarea' value={boardReport.b_reason} style={{ resize: "none" }} rows={5} minLength={10} name='b_reason' placeholder={defaultReport} onChange={getValue}></FormControl>
                             </FormGroup>
                         </Modal.Body>
@@ -408,7 +408,7 @@ const ViewPage = () => {
                                 <FormGroup className="mb-3">
                                     <FormLabel>신고사유 :</FormLabel>
                                     {/* value에 로그인한 사람 id 들어가도록 */}
-                                    <input type="hidden" value={cmtReport.c_reporter} name="c_reporter" />
+                                    <input type="hidden" value={sessionStorage.getItem("name")} name="c_reporter" />
                                     <FormControl as='textarea' value={cmtReport.c_reason} style={{ resize: "none" }} rows={5} minLength={10} name='c_reason' placeholder={defaultCmtReport} onChange={cmtGetValue}></FormControl>
                                 </FormGroup>
                             </Modal.Body>

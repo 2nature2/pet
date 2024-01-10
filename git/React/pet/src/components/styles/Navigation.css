@@ -4,7 +4,13 @@
     margin: 5%;
     display: flex; 
   }
-  
+  .nav-right {
+    display: flex;
+    color: black; 
+    gap: 10px;
+    margin-left: auto;
+    font-size: 10px;
+  }
   .navmenu {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     color: black; 
@@ -16,6 +22,8 @@
     -ms-user-select: none;
     user-select: none;
   }
+
+  
 
   .active {
     color: #1098f7;
