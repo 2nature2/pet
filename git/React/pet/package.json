@@ -8,6 +8,8 @@
     "@ckeditor/ckeditor5-dev-translations": "^39.5.1",
     "@ckeditor/ckeditor5-essentials": "^40.2.0",
     "@ckeditor/ckeditor5-font": "^40.2.0",
+    "@ckeditor/ckeditor5-image": "40.2.0",
+    "@ckeditor/ckeditor5-media-embed": "^40.2.0",
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
