@@ -390,7 +390,7 @@ const ViewPage = () => {
                 <div className="cmtboard">
                     <FormLabel style={{ fontWeight: "bold" }}>댓글 {commentList.length}</FormLabel>
                     <Form.Group className="cInsert">
-                        <Form.Control type="text" plaintext id="c_writer" value={formComment.c_writer} style={{ fontWeight: "bold" }} name="c_writer" placeholder="작성자" onChange={getComment} />
+                        <Form.Control type="text" plaintext readOnly id="c_writer" value={formComment.c_writer} style={{ fontWeight: "bold" }} name="c_writer" placeholder="작성자" onChange={getComment} />
                         <Form.Control as="textarea" plaintext id="c_content" value={formComment.c_content} style={{ resize: "none" }} name="c_content" placeholder="255자 내로 내용을 입력해주세요." onChange={getComment} />
                         <Button variant="outline-dark" style={{ display: 'block', marginLeft: 'auto' }} onClick={commentInsert}>작성</Button>
                     </Form.Group>
