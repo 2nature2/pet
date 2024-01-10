@@ -38,7 +38,7 @@ const Kakao = () => {
 
                 // 인포윈도우로 장소에 대한 설명을 표시한다.
                 var infowindow = new kakao.maps.InfoWindow({
-                    content: '<div style="width:150px;text-align:center;padding:6px 0;">동물보호센터</div>'
+                    content: `<div style="width:150px;text-align:center;padding:6px 0;">${goAnimal.careNm}</div>`
                 });
                 infowindow.open(map, marker);
 
