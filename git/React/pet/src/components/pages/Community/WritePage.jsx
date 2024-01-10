@@ -93,7 +93,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 <CKEditor editor={ClassicEditor} id="b_content" data=""
                     config={{
                         language: 'ko',
-                        placeholder: "2000자 이내로 작성해주세요.",
+                        placeholder: "내용을 입력해주세요.",
                         mediaEmbed: {
                             previewsInData: true
                         },
@@ -139,8 +139,10 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                     }}
                 />
                 </div>
-                <Button onClick={communityInsert} style={{marginRight: 5, backgroundColor:"#1098f7", borderColor:"#1098f7"}}>등록</Button>
-                <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
+                <div className="wBtns">
+                    <Button onClick={communityInsert} style={{marginRight: 5, backgroundColor:"#1098f7", borderColor:"#1098f7"}}>등록</Button>
+                    <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
+                </div>
             </Form>
         </div>
         </div>
