@@ -1,7 +1,6 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import '../../styles/Navigation.css';
-import { useEffect, useState,  } from 'react';
-import axios from 'axios';
+import { useEffect } from 'react';
 
 const Navigation = ({isLogin}) => {
    

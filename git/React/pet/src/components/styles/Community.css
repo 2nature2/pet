@@ -145,6 +145,7 @@ button:active {
 .ck-content {
     padding-block: 2%;
     word-break: break-all;
+    min-height: 200px;
 }
 
 .vBtns {

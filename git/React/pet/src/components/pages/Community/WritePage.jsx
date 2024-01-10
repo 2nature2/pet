@@ -78,6 +78,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                         <option>질문</option>
                         <option>후기</option>
                         <option>기타</option>
+
                     </Form.Select>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="b_title">
@@ -86,13 +87,16 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="b_writer">
                     <Form.Label>WRITER</Form.Label>
-                    <Form.Control type="text" name="b_writer" value={sessionStorage.getItem("name")} onChange={getValue} />
+                    <Form.Control readOnly type="text" name="b_writer" value={sessionStorage.getItem("name")} onChange={getValue} />
                 </Form.Group>
                 <div className="ck-content">
                 <CKEditor editor={ClassicEditor} id="b_content" data=""
                     config={{
                         language: 'ko',
                         placeholder: "2000자 이내로 작성해주세요.",
+                        mediaEmbed: {
+                            previewsInData: true
+                        },
                         toolbar: {
                             items: [
                                 'undo',
@@ -109,22 +113,17 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                                 // 'underline',
                                 // 'strikethrough',
                                 'highlight',
-                                // 'removeFormat',
-                                // '|',
-                                // 'alignment',
-                                // '|',
                                 'numberedList',
                                 'bulletedList',
                                 '|',
                                 'indent',
                                 'outdent',
                                 '|',
-                                // 'todoList',
                                 'link',
                                 'blockQuote',
                                 // 'imageUpload',
                                 'insertTable',
-                                // 'mediaEmbed',
+                                'mediaEmbed',
                                 '|',
                             ]
                         }

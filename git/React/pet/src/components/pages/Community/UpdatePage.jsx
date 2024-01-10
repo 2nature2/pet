@@ -100,6 +100,9 @@ const UpdatePage = () => {
                     config={{
                         language: 'ko',
                         placeholder: "2000자 이내로 작성해주세요.",
+                        mediaEmbed: {
+                            previewsInData: true
+                        },
                         toolbar: {
                             items: [
                                 'undo',
@@ -116,22 +119,17 @@ const UpdatePage = () => {
                                 // 'underline',
                                 // 'strikethrough',
                                 'highlight',
-                                // 'removeFormat',
-                                // '|',
-                                // 'alignment',
-                                // '|',
                                 'numberedList',
                                 'bulletedList',
                                 '|',
                                 'indent',
                                 'outdent',
                                 '|',
-                                // 'todoList',
                                 'link',
                                 'blockQuote',
                                 // 'imageUpload',
                                 'insertTable',
-                                // 'mediaEmbed',
+                                'mediaEmbed',
                                 '|',
                             ]
                         }
