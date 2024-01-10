@@ -86,7 +86,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="b_writer">
                     <Form.Label>WRITER</Form.Label>
-                    <Form.Control type="text" name="b_writer" value={formContent.b_writer} onChange={getValue} />
+                    <Form.Control type="text" name="b_writer" value={sessionStorage.getItem("name")} onChange={getValue} />
                 </Form.Group>
                 <div className="ck-content">
                 <CKEditor editor={ClassicEditor} id="b_content" data=""
@@ -134,6 +134,7 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                        setFormContent({
                         ...formContent,
                         b_content: editor.getData(),
+                        b_writer: sessionStorage.getItem("name")
                        });
                         console.log({event,editor,formContent});
                     }}

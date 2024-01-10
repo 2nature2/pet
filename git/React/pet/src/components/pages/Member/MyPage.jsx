@@ -3,15 +3,15 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 
-const Adoption = () => {
 
-
-    return (
-        <Container className="panel" style={{ marginTop: "50px", width: "700px" }}>
-        <Form>
+const MyPage=()=>{
+    return(
+        <Container className="panel" style={{ marginTop: "50px", width: "700px"}}>
+          <h4>회원정보 수정</h4>
+        <Form style={{border:"3px solid #ccc", padding: "20px", borderRadius:"10px"}}>
           <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextPassword">
             <Form.Label column sm="2">
-              신청자 이름
+              이름
             </Form.Label>
             <Form.Control
               type="text"
@@ -42,27 +42,20 @@ const Adoption = () => {
 
           <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextPassword">
             <Form.Label column sm="2">
-              공고번호
+              전화번호
             </Form.Label>
             <Form.Control
               type="text"
-              placeholder="Password"
+              value={sessionStorage.getItem("tel")}
               name="password"
             />
           </Form.Group>
-          <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextPassword">
-            <Form.Label column sm="2">
-              관할 보호 센터
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Password"
-              name="password"
-            />
-          </Form.Group>
+          <Button variant="secondary"  type="submit">
+              수정
+            </Button>
           </Form>
+
           </Container>
     )
 }
-
-export default Adoption;
+export default MyPage;

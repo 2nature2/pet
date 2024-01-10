@@ -58,24 +58,6 @@ public class MemberController {
 	}
 	
 	
-	  
-//	  @PostMapping("/login")
-//	  @ResponseBody
-//	  public String loginform(@RequestBody Map<String, String> loginInfo) {
-//	    System.out.println("로그인 테스트");
-//	    String userid = loginInfo.get("userid");
-//	    String password = loginInfo.get("password");
-//
-////	    // 로그인 로직 수행 후 실패 시 "failure" 반환
-////	    if (loginFailed) {
-////	      return "failure";
-////	    }
-//
-//	    return "success";
-//	  }
-	  
-
-	
 	//회원가입시 아이디 중복확인
 	@CrossOrigin(origins = "http://localhost:3000") 
 	 @PostMapping("/checkId")
@@ -100,8 +82,14 @@ public class MemberController {
 		System.out.println("회원정보 : "+ principaluser.getUsername() );
 		Member member = principaluser.getMember();
 		String name = member.getName();
+		String address = member.getAddress();
+		String email = member.getEmail();
+		int tel = member.getTel();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name",name );
+		map.put("address",address );
+		map.put("email",email );
+		map.put("tel",tel );
 		if(name==null) {
 			name="null";
 		}

@@ -5,13 +5,15 @@ import axios from 'axios';
 
 const Navigation = ({isLogin}) => {
    
-console.log("session: ", sessionStorage.getItem("name"));
-
 const navigate = useNavigate();
+
+useEffect(() => {
+  
+}, [])
+
 const handleLogout = async () => {
   try {
     console.log("로그아웃")
-    // 서버로 로그아웃 요청 보내기 (예: Axios 또는 Fetch 사용)
     const response = await fetch('/logout', {
       method: 'POST',
     });
@@ -38,7 +40,7 @@ const handleLogout = async () => {
             <NavLink className='navmenu' to="/adoption">ADOPTION</NavLink>
             <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
            
-
+            <div className="nav-right">
             {sessionStorage.getItem("name")==null ? (
         <>
          <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
@@ -46,18 +48,12 @@ const handleLogout = async () => {
         </>
       ) : (
         <>
-        <NavLink className='navmenu' to="/member/userInfo">UserInfo</NavLink>
+        <NavLink className='navmenu' to="/member/mypage">MY-PAGE</NavLink>
           <NavLink className='navmenu' to="#" onClick={handleLogout}>LOGOUT</NavLink>
           
         </>
       )}
-      
-            {/* <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
-            <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>
-            <NavLink className='navmenu' to="/member/userInfo">UserInfo</NavLink>
-            <NavLink className='navmenu' to="#" onClick={handleLogout}>LOGOUT</NavLink> */}
-            
-            
+         </div>
         </div>
     );
 };
