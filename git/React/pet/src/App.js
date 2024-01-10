@@ -14,7 +14,7 @@ import PetMain from './components/pages/Pet/PetMain';
 
 import Adoption from './components/pages/Pet/Adoption';
 import LoginFail from './components/pages/Member/LoginFail';
-import Logout from './components/pages/Member/Logout';
+// import Logout from './components/pages/Member/Logout';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
@@ -158,13 +158,7 @@ function App() {
   })
 },[]);
 
-  // //로그인 후 isLogin값 전달
-  // // const [isLogin, setIsLogin] = useState(false);
-  // const handleLoginSubmit = () => {
-  //   sessionStorage.setItem("login",res.data.userid);
-  //   // 로그인이 성공하면 isLogin을 true로 설정
-  //   setIsLogin(true);
-  // };
+
   
   return (
     <BrowserRouter>
@@ -180,7 +174,7 @@ function App() {
             <Route path="/member/join" element={<JoinForm join={join} />} />
             <Route path="/member/login" element={<LoginForm  />} />
             <Route path="/member/mypage" element={<MyPage />} />
-            <Route path="member/logout" element={<Logout />} />
+            {/* <Route path="member/logout" element={<Logout />} /> */}
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/adoption" element={<Adoption/>}/>
       </Routes>

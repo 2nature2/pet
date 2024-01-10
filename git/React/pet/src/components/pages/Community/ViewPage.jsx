@@ -114,7 +114,7 @@ const ViewPage = () => {
     const [show, setShow] = useState(false);
     const reportClose = () => setShow(false);
     const reportOpen = () => setShow(true);
-    const defaultReport = `원글:: [ ${view.b_content} ] \n === 상세내용을 작성해주세요 ===`;
+    const defaultReport = `상세내용을 작성해주세요.`;
     const [boardReport, setBoardReport] = useState({
         b_reporter: '',
         b_reason: '',
