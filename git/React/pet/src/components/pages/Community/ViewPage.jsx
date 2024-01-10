@@ -96,17 +96,16 @@ const ViewPage = () => {
     );
 
     const blike = () => {
-        setLikeState((prevLikeState) => {
-            const newLikeState = !prevLikeState;
-            localStorage.setItem(`likeState-${bnum}-${user}`, String(newLikeState));
-            return newLikeState;
-        });
-
         fetch(`/community/like/${bnum}`, {
             method: 'GET'
         })
             .then(() => {
-                window.location.reload();
+                setLikeState((prevLikeState) => {
+                    const newLikeState = !prevLikeState;
+                    localStorage.setItem(`likeState-${bnum}-${user}`, String(newLikeState));
+                    return newLikeState;
+                });
+                view.b_like ++;
             })
             .catch((error) => {
                 console.error('Fetch error:', error);
@@ -346,7 +345,7 @@ const ViewPage = () => {
                         {
                             likeState === true || sessionStorage.length === 0
                                 ? <Button id="bLiked">♥ 좋아요({view.b_like})</Button>
-                                : <Button id="bLike" onClick={blike} >♥ 좋아요({view.b_like})</Button>
+                                : <Button id="bLike" onClick={()=>blike()} >♥ 좋아요({view.b_like})</Button>
                         }
                         {
                             sessionStorage.length === 0
