@@ -21,7 +21,7 @@ const handleLogout = async () => {
       console.log('로그아웃 성공');
 
       //로컬 스토리지에서 토큰 제거
-      sessionStorage.removeItem('name');
+      sessionStorage.clear();
       navigate("/")
      // window.location.href("/")
     } else {

@@ -152,19 +152,19 @@ button:active {
     display: flex;
 }
 
-#lBtn1 {
+#bLike {
     margin-right: 5px;
     background-color: transparent;
     color: #ff5ade;
     border-color: #ff5ade;
 }
 
-#lBtn1:hover {
+#bLike:hover {
     background-color: #ff5ade;
     color: white;
 }
 
-#lBtn1ed{
+#bLiked{
     margin-right: 5px;
     background-color: #ff5ade;
     color: white;

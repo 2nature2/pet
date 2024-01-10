@@ -5,8 +5,10 @@ import '../../styles/Community.css';
 import Swal from "sweetalert2";
 
 const ViewPage = () => {
+
     const movePage = useNavigate();
     const prevBnum = useRef(null);
+    const user = sessionStorage.getItem("name");
 
     const prev = () => {
         window.history.back();
@@ -30,6 +32,7 @@ const ViewPage = () => {
     const [commentList, setCommentList] = useState([]);
     
     useEffect(() => {
+        console.log("localStorage", localStorage);
         const viewList = () => {
             fetch(`/community/view/${bnum}`, {
                 method: 'GET',
@@ -59,7 +62,7 @@ const ViewPage = () => {
                         }));
                     if (data.comments) {
                         const initialState = data.comments.map((comment) => {
-                            const cmtlikeStateFromLocalStorage = localStorage.getItem(`cmtLikeState-${comment.c_id}`);
+                            const cmtlikeStateFromLocalStorage = localStorage.getItem(`cmtLikeState-${comment.c_id}-${user}`);
                             return cmtlikeStateFromLocalStorage === 'true';
                         });
                         setCmtLikeStates(initialState);
@@ -87,7 +90,7 @@ const ViewPage = () => {
             })
     }
 
-    const likeStateFromLocalStorage = localStorage.getItem(`likeState-${bnum}`);
+    const likeStateFromLocalStorage = localStorage.getItem(`likeState-${bnum}-${user}`);
     const [likeState, setLikeState] = useState(
         likeStateFromLocalStorage === 'true'
     );
@@ -95,7 +98,7 @@ const ViewPage = () => {
     const blike = () => {
         setLikeState((prevLikeState) => {
             const newLikeState = !prevLikeState;
-            localStorage.setItem(`likeState-${bnum}`, String(newLikeState));
+            localStorage.setItem(`likeState-${bnum}-${user}`, String(newLikeState));
             return newLikeState;
         });
 
@@ -156,7 +159,7 @@ const ViewPage = () => {
     }
 
     const [formComment, setFormComment] = useState({
-        c_writer: '',
+        c_writer: sessionStorage.getItem("name"),
         c_content: '',
         b_id: bnum
     })
@@ -209,7 +212,7 @@ const ViewPage = () => {
 
     const [cmtLikeStates, setCmtLikeStates] = useState(() => {
         const initialState = commentList.map((comment) => {
-            const cmtlikeStateFromLocalStorage = localStorage.getItem(`cmtLikeState-${comment.c_id}`);
+            const cmtlikeStateFromLocalStorage = localStorage.getItem(`cmtLikeState-${comment.c_id}-${user}`);
             return cmtlikeStateFromLocalStorage === 'true';
         });
         return initialState;
@@ -231,7 +234,7 @@ const ViewPage = () => {
                 setCmtLikeStates((prevCmtLikeState) => {
                     const newCmtLikeStates = [...prevCmtLikeState];
                     newCmtLikeStates[index] = true;
-                    localStorage.setItem(`cmtLikeState-${c_id}`, 'true');
+                    localStorage.setItem(`cmtLikeState-${c_id}-${user}`, 'true');
                     return newCmtLikeStates;
                 })
             })
@@ -341,15 +344,28 @@ const ViewPage = () => {
                 <div className="vBtns">
                     <div className="lBtn">
                         {
-                            likeState === false
-                                ? <Button id="lBtn1" onClick={blike}>♥ 좋아요({view.b_like})</Button>
-                                : <Button id="lBtn1ed">♥ 좋아요({view.b_like})</Button>
+                            likeState === true || sessionStorage.length === 0
+                                ? <Button id="bLiked">♥ 좋아요({view.b_like})</Button>
+                                : <Button id="bLike" onClick={blike} >♥ 좋아요({view.b_like})</Button>
                         }
-                        <Button id="lBtn2" onClick={reportOpen}>신고</Button>
+                        {
+                            sessionStorage.length === 0
+                            ?<Button id="lBtn2" style={{visibility:"hidden"}}>신고</Button>
+                            :<Button id="lBtn2" onClick={reportOpen}>신고</Button>
+                        }        
                     </div>
                     <div className="rBtn">
-                        <Button style={{ marginRight: 5, backgroundColor: "#1098f7", borderColor: "#1098f7" }} onClick={updateForm}>수정</Button>
-                        <Button style={{ marginRight: 5, backgroundColor: "#b80042", borderColor: "#b80042" }} onClick={deleteBoard}>삭제</Button>
+                        {
+                            sessionStorage.getItem("name")===view.b_writer
+                            ?<Button style={{ marginRight: 5, backgroundColor: "#1098f7", borderColor: "#1098f7" }} onClick={updateForm}>수정</Button>
+                            :<Button style={{ marginRight: 5, backgroundColor: "#1098f7", borderColor: "#1098f7", visibility:"hidden"}} onClick={updateForm}>수정</Button>
+                        }
+                        {
+                            sessionStorage.getItem("name")===view.b_writer
+                            ?<Button style={{ marginRight: 5, backgroundColor: "#b80042", borderColor: "#b80042" }} onClick={deleteBoard}>삭제</Button>
+                            :<Button style={{ marginRight: 5, backgroundColor: "#b80042", borderColor: "#b80042", visibility:"hidden"}} onClick={deleteBoard}>삭제</Button>
+                        }
+                        
                     </div>
                 </div>
                 <div className="bReportModal">
@@ -387,12 +403,20 @@ const ViewPage = () => {
                                     <Form.Control as="textarea" plaintext readOnly value={comment.c_content} style={{ resize: 'none' }} />
                                     <FormGroup className='cmtFooter'>
                                         {
-                                            cmtLikeStates[index] === false
-                                                ? <Button key={index} variant={cmtLikeStates[index] ? "dark" : "outline-dark"} size="sm" onClick={() => clike(comment.c_id, index)} style={{ marginRight: '5px' }}>♥ 좋아요({comment.c_like})</Button>
-                                                : <Button key={index} variant={cmtLikeStates[index] ? "dark" : "outline-dark"} size="sm" style={{ marginRight: '5px', cursor: 'default' }}>♥ 좋아요({comment.c_like})</Button>
+                                            cmtLikeStates[index] === true || sessionStorage.length === 0
+                                                ? <Button key={index} variant={cmtLikeStates[index] ? "dark" : "outline-dark"} size="sm" style={{ marginRight: '5px', cursor: 'default' }}>♥ 좋아요({comment.c_like})</Button>
+                                                : <Button key={index} variant={cmtLikeStates[index] ? "dark" : "outline-dark"} size="sm" onClick={() => clike(comment.c_id, index)} style={{ marginRight: '5px' }}>♥ 좋아요({comment.c_like})</Button>
+                                                }
+                                        {
+                                            sessionStorage.length === 0
+                                            ?<Button style={{visibility: "hidden"}}>신고</Button>
+                                            :<Button variant="outline-warning" size="sm" onClick={() => cReportOpen(comment.c_id)} style={{ marginRight: '5px' }}>신고</Button>
                                         }
-                                        <Button variant="outline-warning" size="sm" onClick={() => cReportOpen(comment.c_id)} style={{ marginRight: '5px' }}>신고</Button>
-                                        <Button variant="outline-danger" size="sm" onClick={() => deleteComment(comment.c_id)}>삭제</Button>
+                                        {
+                                            sessionStorage.getItem("name")===comment.c_writer
+                                            ?<Button variant="outline-danger" size="sm" onClick={() => deleteComment(comment.c_id)}>삭제</Button>
+                                            :<Button variant="outline-danger" size="sm" style={{visibility: "hidden"}}>삭제</Button>
+                                        }
                                         <Form.Control type="date" plaintext readOnly value={comment.c_date} style={{ fontSize: '12px', color: "gray" }} />
                                     </FormGroup>
                                 </FormGroup>
