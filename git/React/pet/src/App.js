@@ -53,8 +53,6 @@ function App() {
     // eslint-disable-next-line
   }, [page]);
 
- 
-
   const insertCommunity = (communityDTO) => {
     fetch('/community/insert', {
       method: 'POST',
@@ -104,7 +102,6 @@ function App() {
     })
   }
 
-
   // 회원가입
   const join = (member) => {
 
@@ -139,24 +136,24 @@ function App() {
    //로그인이 되어있는지 없는지 확인
    useEffect(()=>{
     console.log("세션 값 확인");
-  axios.get("/member/api/user")
-  .then((response) => {
-    // 서버 응답에서 사용자 정보를 가져와서 업데이트
-    console.log("세션 내용", response.data)
-    if(response.data!=null){
-      sessionStorage.setItem("name",response.data.name)
-      sessionStorage.setItem("address",response.data.address)
-      sessionStorage.setItem("email",response.data.email)
-      sessionStorage.setItem("tel",response.data.tel)
-    }
-    else{
-      sessionStorage.setItem("name",null)
-    }
-  })
-  .catch((error) => {
-    console.error('Error fetching user info:', error);
-  })
-},[]);
+    axios.get("/member/api/user")
+    .then((response) => {
+      // 서버 응답에서 사용자 정보를 가져와서 업데이트
+      console.log("세션 내용", response.data)
+      if(response.data!=null){
+        sessionStorage.setItem("name",response.data.name)
+        sessionStorage.setItem("address",response.data.address)
+        sessionStorage.setItem("email",response.data.email)
+        sessionStorage.setItem("tel",response.data.tel)
+      }
+      else{
+        sessionStorage.setItem("name",null)
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching user info:', error);
+    })
+  },[]);
 
 
   
