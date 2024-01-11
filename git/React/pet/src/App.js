@@ -162,8 +162,8 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
-            <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} setTotalElements={setTotalElements}/>} />
+            <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />
             <Route path="/pet" element={<PetMain />} />

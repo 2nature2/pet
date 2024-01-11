@@ -6,7 +6,7 @@ import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 import Swal from 'sweetalert2';
 
-const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElements, totalPages, setPage, setTotalPages, setTotalElements}) => {
+const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElements, setTotalElements}) => {
     const movePage = useNavigate();
     const [page, setPageLocal] = useState(1);
     const [userInput, setUserInput] = useState('');

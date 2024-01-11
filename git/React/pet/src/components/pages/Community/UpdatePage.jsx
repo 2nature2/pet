@@ -81,10 +81,13 @@ const UpdatePage = () => {
                         <Form.Group style={{borderRight:'1px gray solid', paddingRight:'10px'}} className="mb-3" controlId="b_category">
                             <Form.Label>분류</Form.Label>
                             <Form.Select name="b_category" defaultValue={viewData.b_category} onChange={getValue}>
-                                <option>==선택==</option>
+                                <option disabled defaultValue>==선택==</option>
                                 <option disabled>공지사항</option>
                                 <option>질문</option>
+                                <option>정보</option>
                                 <option>후기</option>
+                                <option>삽니다</option>
+                                <option>팝니다</option>
                                 <option>기타</option>
                             </Form.Select>
                         </Form.Group>
@@ -140,7 +143,7 @@ const UpdatePage = () => {
                         ...formContent,
                         b_content: editor.getData(),
                        });
-                        console.log({event,editor,formContent});
+                        // console.log({event,editor,formContent});
                     }}
                 />
             </Form>
