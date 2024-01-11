@@ -1,16 +1,26 @@
-import React,{useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
-import { json, useNavigate } from 'react-router-dom';
+import React,{useState} from 'react';
 import '../../styles/Community.css';
 import PetList from './PetList';
+import Pagination from 'react-js-pagination';
+import Category from './Category';
+import { agoDate } from '../../../util/DateFormat';
 
-const PetMain = () => {
+export default function PetMain() {
+    const [query, setQuery] = useState({
+        noticeSdt : agoDate(new Date(), 12),
+        noticeEdt : "",
+        kindCd : "",
+    });
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setQuery({...query, [name]: value});
+    };
 
     return(
         <div className='community'>
-            <h2>전체 리스트</h2>
+            <Category query={query} onChange={handleChange} />
             <PetList />
         </div>
     )
 }
-export default PetMain;

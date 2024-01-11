@@ -1,8 +1,7 @@
-import React,{useState, useEffect, useCallback } from 'react';
+import React,{useState, useEffect} from 'react';
 import axios from 'axios';
-import { json, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/Community.css';
-import Pagination from 'react-js-pagination';
 
 const PetList = () => {
 
@@ -10,11 +9,14 @@ const PetList = () => {
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(false); // 에러
 
-    const [pageList, setPageList] = useState([])
-    const [curPage, setCurPage] = useState(0); // 현재 페이지
-    const [prevBlock, setPrevBlock] = useState(0); // 이전 페이지
-    const [nextBlock, setNextBlock] = useState(0); // 다음 페이지
-    const [lastPage, setLastPage] = useState(0); // 마지막 페이지
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+
+    const itemsPerPage = 9;
+
+    const navigateToPage = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
 
     const navigate = useNavigate();
 
@@ -39,14 +41,8 @@ const PetList = () => {
         });
     };
 
-    const [search, setSeacrh] = useState({
-        page : 1,
-        sk : '',
-        sv : '',
-    });
-
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
-    const encoded = `${URL}?numOfRows=1000&pageNo=1&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+    const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPage}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
 
     const fetchData = async () => {
         try {
@@ -59,6 +55,7 @@ const PetList = () => {
             // console.log("Response Data:", response.data);
 
             setData(response.data);
+            setTotalPages(Math.ceil(response.data.response.body.totalCount / itemsPerPage));
         } catch (e) {
             setError(e);
         } finally {
@@ -70,7 +67,7 @@ const PetList = () => {
         fetchData();
         // console.log('process.env.REACT_APP_API_KEY 확인',process.env.REACT_APP_API_KEY)
         // console.log('encoded확인', encoded)
-    }, []);
+    }, [currentPage]); // currentPage 가 변경될 때마다 API 호출
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
@@ -78,24 +75,19 @@ const PetList = () => {
         return <div>No data available</div>;
     }
 
-    // const items = Array.isArray(data.response.body.items)
-    //     ? data.response.body.items.item
-    //     : [data.response.body.items.item];
-
     // Log 추가
     console.log("Fetched Data:", data);
-
 
     return (
         <div className='community'>
             <div className='cboard'>
                 <h2>아이들이 당신을 기다리고 있어요!</h2>
-                {/* <button onClick={fetchData}>데이터 불러오기</button> */}
+                
                 {
                     data.response.body.items.item.map((animal) => (
                         <div key={animal.desertionNo}>
                             <a href={`/pet/detail/${animal.desertionNo}`}>
-                                <img src={animal.popfile} onClick={() => goAnimal(animal)}></img>
+                                <img src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}></img>
                             </a>
                             <p>공고번호 : {animal.noticeNo}</p>
                             <p>상태 : {animal.processState}</p>
@@ -107,7 +99,23 @@ const PetList = () => {
                     ))
                 }
             </div>
+            <Pagination 
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={navigateToPage}
+            />
         </div>
     );
+}
+const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+    return(
+        <div>
+            {Array.from({ length: totalPages }).map((_, index) => (
+                <button key={index + 1} onClick={() => onPageChange(index+1)}>
+                    {index + 1}
+                </button>
+            ))}
+        </div>
+    )
 }
 export default PetList;
