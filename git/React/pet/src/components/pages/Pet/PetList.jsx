@@ -108,13 +108,43 @@ const PetList = () => {
     );
 }
 const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+    const pagesToShow = 5;
+    const halfPagesToShow = Math.floor(pagesToShow / 2);
+
+    let startPage = currentPage - halfPagesToShow;
+    let endPage = currentPage + halfPagesToShow;
+
+    if (startPage < 1){
+        startPage = 1;
+        endPage = Math.min(pagesToShow, totalPages);
+    }
+    if (endPage > totalPages){
+        startPage = Math.max(1, totalPages - pagesToShow + 1);
+        endPage = totalPages;
+    }
+    const hasPrevious = startPage > 1;
+    const hasNext = endPage < totalPages;
+
     return(
         <div>
-            {Array.from({ length: totalPages }).map((_, index) => (
-                <button key={index + 1} onClick={() => onPageChange(index+1)}>
-                    {index + 1}
+            {hasPrevious && (
+                <button onClick={() => onPageChange(currentPage - 1)}>
+                    &lt;&lt; Previous
+                </button>
+            )}
+
+
+            {Array.from({ length: endPage - startPage + 1 }).map((_, index) => (
+                <button key={startPage + index} onClick={() => onPageChange(startPage + index)}>
+                    {startPage + index}
                 </button>
             ))}
+
+            {hasNext && (
+                <button onClick={() => onPageChange(currentPage + 1)}>
+                    Next &gt;&gt;
+                </button>
+            )}
         </div>
     )
 }
