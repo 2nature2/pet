@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Container, Form, Row, Col, Modal  } from 'react-bootstrap';
 import axios from 'axios';
 import DaumPostcode from 'react-daum-postcode';
@@ -12,8 +12,9 @@ const JoinForm = ({ join }) => {
     tel: '',
     email: '',
     passwordCheck:'',
-    auth:''
+  
   });
+
 
   //==============우편번호찾기//아이디 중복확인=======================
     // 모달 상태
@@ -26,8 +27,7 @@ const JoinForm = ({ join }) => {
     const [isAddrChecked, setIsAddrChecked] = useState(false);
     const [isNicknameChecked, setIsNicknameChecked] = useState(false);
     //비밀번호 양식
-    const [passwordFormColor,setpasswordFormColor]=useState(false);
-    const [passwordForm, setPasswordForm] = useState('비밀번호는 최소 8자 이상이어야 하며, 영문 대/소문자 및 숫자를 포함해야 합니다.');
+    const [passwordForm, setPasswordForm] = useState('비밀번호는 최소 8자 이상이어야 하며, 영문 및 숫자,특수문자를 포함해야 합니다.');
     //닉네임
     const [isNickDuplicated, setIsNickDuplicated] = useState(false);
     const [nickCheckMessage, setNickCheckMessage] = useState('닉네임 중복 확인을 해주세요.'); // 새로운 상태 추가
@@ -116,24 +116,13 @@ const JoinForm = ({ join }) => {
   };
 //=====================================================
 
-// const validatePassword = (password) => {
-//   // 최소 8자 이상, 영문 대/소문자 및 숫자 포함
-//   const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{7,}$/;
-//   return passwordRegex.test(password);
-// };
-
-// const handlePassword=()=>{
-//   if (!validatePassword(joinContent.password)) {
-//     setpasswordFormColor(true);
-//     setPasswordForm('비밀번호는 최소 8자 이상이어야 하며, 영문 대/소문자 및 숫자를 포함해야 합니다.');
-//   } else {
-//     setpasswordFormColor(false);
-//     setPasswordForm('사용 가능한 비밀번호입니다.');
-//   }
-// }
 
 
+const pwdCheck =/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
 
+const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
 
 //=====================================================
   const memberInsert = () => {
@@ -159,6 +148,10 @@ const JoinForm = ({ join }) => {
       alert("비밀번호를 입력하세요")
       return;
     }
+    else if(!pwdCheck.test(joinContent.password)){
+      alert("비밀번호는 영문자,특수문자,숫자를 포함한 8~25자 사이로 설정해주세요 ")
+      return;
+    }
     // else if(!joinContent.address){
     //   alert("주소를 입력하세요")
     //   return;
@@ -178,10 +171,19 @@ const JoinForm = ({ join }) => {
       alert("비밀번호가 일치하지 않습니다.")
       return;
     }
+    else if(!emailCheck.test(joinContent.email)){
+      alert("이메일 양식이 맞지 않습니다.")
+      return;
+    }
+    else if(!telCheck.test(joinContent.tel)){
+      alert("전화번호 양식이 맞지 않습니다.")
+      return;
+    }
     join(joinContent);
     setJoinContent({
       name: '',
       userid: '',
+      nickname: '',
       password: '',
       address: '',
       tel: '',
@@ -195,8 +197,8 @@ const JoinForm = ({ join }) => {
 
 
   return (
-    <Container>
-      <Form style={{ marginTop: '30px' }}>
+    <Container style={{ marginTop: "50px", marginBottom: "50px" }}>
+      <Form  style={{ marginTop: "50px", width: "80%", margin: "0 auto" }}>
       <Form.Group as={Col} controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -256,13 +258,13 @@ const JoinForm = ({ join }) => {
               name="password"
               onChange={(e) => {
                 getValue(e);
-              //  handlePassword(e);
-               // validatePassword(e);
+               // handlePassword(e);
+                // validatePassword(e);
               }}
               value={joinContent.password}
               placeholder="Enter Password"
             />
-            <Form.Text className={passwordFormColor ? 'text-danger' : 'text-muted'}>
+            <Form.Text>
             {passwordForm}
           </Form.Text>
           </Form.Group>

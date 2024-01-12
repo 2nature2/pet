@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navigation from "../Navigation/Navigation";
 
-const LoginForm = ({handleLoginSubmit}) => {
+const LoginForm = () => {
   const [loginContent, setLoginContent] = useState({
     username: "",
     password: ""
@@ -28,7 +28,6 @@ const LoginForm = ({handleLoginSubmit}) => {
         <Form
         action="/login"
         method="POST"
-        //onSubmit={handleLoginSubmit}
         >
           <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextId">
             <Form.Label column sm="2">
