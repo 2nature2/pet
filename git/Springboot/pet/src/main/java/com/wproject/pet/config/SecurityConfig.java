@@ -50,6 +50,7 @@ public class SecurityConfig{
         http.csrf().disable()
         	.authorizeRequests()
         	.antMatchers("/*").authenticated()
+        	.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
         	.anyRequest().permitAll()
             .and()
             .formLogin()

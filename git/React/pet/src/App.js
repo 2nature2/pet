@@ -19,6 +19,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
 import MyPage from './components/pages/Member/MyPage';
+import Admin from './components/pages/Member/Admin';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -116,7 +117,8 @@ function App() {
         password: member.password,
         email: member.email,
         address: member.address,
-        tel: member.tel
+        tel: member.tel,
+        nickname:member.nickname
       }),
     })
       .then((resp) => resp.text())
@@ -136,27 +138,29 @@ function App() {
    //로그인이 되어있는지 없는지 확인
    useEffect(()=>{
     console.log("세션 값 확인");
-    axios.get("/member/api/user")
-    .then((response) => {
-      // 서버 응답에서 사용자 정보를 가져와서 업데이트
-      console.log("세션 내용", response.data)
-      if(response.data!=null){
-        sessionStorage.setItem("name",response.data.name)
-        sessionStorage.setItem("address",response.data.address)
-        sessionStorage.setItem("email",response.data.email)
-        sessionStorage.setItem("tel",response.data.tel)
-      }
-      else{
-        sessionStorage.setItem("name",null)
-      }
-    })
-    .catch((error) => {
-      console.error('Error fetching user info:', error);
-    })
-  },[]);
+
+  axios.get("/member/api/user")
+  .then((response) => {
+    // 서버 응답에서 사용자 정보를 가져와서 업데이트
+    console.log("세션 내용", response.data)
+    if(response.data!=null){
+      sessionStorage.setItem("name",response.data.name)
+      sessionStorage.setItem("userid",response.data.userid)
+      sessionStorage.setItem("email",response.data.email)
+      sessionStorage.setItem("tel",response.data.tel)
+      sessionStorage.setItem("role",response.data.role)
+      sessionStorage.setItem("nickname",response.data.nickname)
+    }
+    else{
+      sessionStorage.setItem("name",null)
+    }
+  })
+  .catch((error) => {
+    console.error('Error fetching user info:', error);
+  })
+},[]);
 
 
-  
   return (
     <BrowserRouter>
       <Navigation />
@@ -174,6 +178,7 @@ function App() {
             {/* <Route path="member/logout" element={<Logout />} /> */}
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/adoption" element={<Adoption/>}/>
+            <Route path="/admin/admin" element={<Admin/>}/>
       </Routes>
     </BrowserRouter>
   )

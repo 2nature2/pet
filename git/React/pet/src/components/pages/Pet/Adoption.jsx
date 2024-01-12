@@ -46,7 +46,7 @@ const Adoption = () => {
             </Form.Label>
             <Form.Control
               type="text"
-              placeholder="Password"
+              
               name="password"
             />
           </Form.Group>
@@ -56,7 +56,7 @@ const Adoption = () => {
             </Form.Label>
             <Form.Control
               type="text"
-              placeholder="Password"
+              
               name="password"
             />
           </Form.Group>

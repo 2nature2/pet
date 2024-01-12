@@ -2,8 +2,10 @@ package com.wproject.pet.entity;
 
 
 
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,9 +15,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
+
 
 import com.wproject.pet.entity.Role;
 
@@ -30,45 +36,47 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Member {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int member_id;
+	private int memberid;
 	@NotNull
 	private String userid;
 	@NotNull
 	private String password;
-	@NotNull
+	
+	//@NotNull
 	private String name;
-	@NotNull
+	
+	//@NotNull
 	private int tel;
-	@NotNull
-	private String address;
-	@NotNull
+	//@NotNull
+	//private String address;
+	//@NotNull
 	private String email;
 	
+	private String nickname;
 	
-	 @Enumerated(EnumType.STRING)
-	    private Role role; // ROLE_USER, ROLE_ADMIN
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	 
 	 @Builder
-	 public Member(int member_id,String userid, String password,String name,int tel, String address, String email) {
-		 this.member_id=member_id;
+	 public Member(int mid,String userid, String password,String name,int tel, String email, String nickname) {
+		 this.memberid=memberid;
 		 this.userid=userid;
 		 this.password=password;
 		 this.name=name;
 		 this.tel=tel;
-		 this.address=address;
 		 this.email=email;
+		 this.nickname=nickname;
+		 
+		
+		
 	 }
-//	
-//	@ElementCollection(fetch=FetchType.EAGER)
-//	@Enumerated(EnumType.STRING)
-//	private Set<Role> roles;
+
+
+	public void setRole(String roleUser) {
+		// TODO Auto-generated method stub
+		this.role = Role.valueOf(roleUser);
+	}
+
 	
-//	@PrePersist
-//    @PreUpdate
-//    public void prePersist() {
-//        if (this.auth == null) {
-//            this.auth = "0";
-//        }
-//    }
   
 }

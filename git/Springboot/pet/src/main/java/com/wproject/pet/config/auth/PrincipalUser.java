@@ -2,6 +2,7 @@ package com.wproject.pet.config.auth;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -23,18 +24,10 @@ public class PrincipalUser implements UserDetails{
 		this.member = member;
 	}
 	
-	   // 해당 user의 권한을 return하는 함수
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return member.getRole().toString();
-            }
-        });
-        return collect;
-    }
+	  @Override
+	    public Collection<? extends GrantedAuthority> getAuthorities() {
+	        return Collections.singleton(new SimpleGrantedAuthority(member.getRole().name()));
+	    }
 	@Override
 	public String getPassword() {
 		return member.getPassword();
