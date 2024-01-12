@@ -116,7 +116,6 @@ function App() {
         userid: member.userid,
         password: member.password,
         email: member.email,
-        address: member.address,
         tel: member.tel,
         nickname:member.nickname
       }),

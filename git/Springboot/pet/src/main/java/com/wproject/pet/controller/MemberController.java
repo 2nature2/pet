@@ -102,7 +102,7 @@ public class MemberController {
 		String email = member.getEmail();
 		String userid = member.getUserid();
 		Role role = member.getRole();
-		int tel = member.getTel();
+		String tel = member.getTel();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name",name );
 		map.put("nickname",nickname );

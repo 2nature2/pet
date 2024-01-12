@@ -46,7 +46,7 @@ public class Member {
 	private String name;
 	
 	//@NotNull
-	private int tel;
+	private String tel;
 	//@NotNull
 	//private String address;
 	//@NotNull

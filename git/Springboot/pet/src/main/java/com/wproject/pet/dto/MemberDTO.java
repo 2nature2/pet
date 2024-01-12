@@ -22,7 +22,7 @@ public class MemberDTO {
 	private String userid;
 	private String password;
 	private String name;
-	private int tel;
+	private String tel;
 //	private String address;
 	private String nickname;
 	private String email;
