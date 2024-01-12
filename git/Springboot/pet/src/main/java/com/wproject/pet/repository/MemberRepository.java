@@ -5,4 +5,6 @@ import com.wproject.pet.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member,Integer> {
 	Member findByUserid(String username);
+
+
 }

@@ -8,7 +8,7 @@ const Navigation = ({isLogin}) => {
 const navigate = useNavigate();
 
 useEffect(() => {
-  
+  console.log("세션 role:", sessionStorage.getItem("role"))
 }, [])
 
 const handleLogout = async () => {
@@ -22,7 +22,8 @@ const handleLogout = async () => {
       console.log('로그아웃 성공');
 
       //로컬 스토리지에서 토큰 제거
-      sessionStorage.removeItem('name');
+     // sessionStorage.removeItem('name');
+     sessionStorage.clear()
       navigate("/")
      // window.location.href("/")
     } else {
@@ -39,6 +40,9 @@ const handleLogout = async () => {
             <NavLink className='navmenu' to="/pet">PET</NavLink>
             <NavLink className='navmenu' to="/adoption">ADOPTION</NavLink>
             <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
+            {sessionStorage.getItem("role") === "ROLE_ADMIN" && (
+      <NavLink className='navmenu' to="/admin/admin">ADMIN</NavLink>
+    )}
            
             <div className="nav-right">
             {sessionStorage.getItem("name")==null ? (
@@ -50,6 +54,8 @@ const handleLogout = async () => {
         <>
         <NavLink className='navmenu' to="/member/mypage">MY-PAGE</NavLink>
           <NavLink className='navmenu' to="#" onClick={handleLogout}>LOGOUT</NavLink>
+
+        
           
         </>
       )}

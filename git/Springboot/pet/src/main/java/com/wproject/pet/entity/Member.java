@@ -2,8 +2,10 @@ package com.wproject.pet.entity;
 
 
 
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -13,9 +15,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotNull;
+
 
 import com.wproject.pet.entity.Role;
 
@@ -35,18 +41,19 @@ public class Member {
 	private String userid;
 	@NotNull
 	private String password;
-	@NotNull
+	
+	//@NotNull
 	private String name;
-	@NotNull
+	
+	//@NotNull
 	private int tel;
-	@NotNull
+	//@NotNull
 	private String address;
-	@NotNull
+	//@NotNull
 	private String email;
 	
-	
-	 @Enumerated(EnumType.STRING)
-	    private Role role; // ROLE_USER, ROLE_ADMIN
+	@Enumerated(EnumType.STRING)
+	private Role role;
 	 
 	 @Builder
 	 public Member(int member_id,String userid, String password,String name,int tel, String address, String email) {
@@ -57,18 +64,16 @@ public class Member {
 		 this.tel=tel;
 		 this.address=address;
 		 this.email=email;
+		
+		
 	 }
-//	
-//	@ElementCollection(fetch=FetchType.EAGER)
-//	@Enumerated(EnumType.STRING)
-//	private Set<Role> roles;
+
+
+	public void setRole(String roleUser) {
+		// TODO Auto-generated method stub
+		this.role = Role.valueOf(roleUser);
+	}
+
 	
-//	@PrePersist
-//    @PreUpdate
-//    public void prePersist() {
-//        if (this.auth == null) {
-//            this.auth = "0";
-//        }
-//    }
   
 }

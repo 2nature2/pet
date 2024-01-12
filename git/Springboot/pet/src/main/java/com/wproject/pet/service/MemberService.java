@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.entity.Member;
+import com.wproject.pet.entity.Role;
 import com.wproject.pet.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class MemberService {
 		 member.setEmail(memberDTO.getEmail());
 		 member.setTel(memberDTO.getTel());
 		 member.setAddress(memberDTO.getAddress());
+		 member.setRole("ROLE_USER");
 		 //member.setR(memberDTO.getRoles());
 		
 		memberRepository.save(member);

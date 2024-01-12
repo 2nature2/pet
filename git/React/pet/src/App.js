@@ -19,6 +19,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
 import MyPage from './components/pages/Member/MyPage';
+import Admin from './components/pages/Member/Admin';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -148,6 +149,7 @@ function App() {
       sessionStorage.setItem("address",response.data.address)
       sessionStorage.setItem("email",response.data.email)
       sessionStorage.setItem("tel",response.data.tel)
+      sessionStorage.setItem("role",response.data.role)
     }
     else{
       sessionStorage.setItem("name",null)
@@ -177,6 +179,7 @@ function App() {
             {/* <Route path="member/logout" element={<Logout />} /> */}
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/adoption" element={<Adoption/>}/>
+            <Route path="/admin/admin" element={<Admin/>}/>
       </Routes>
     </BrowserRouter>
   )

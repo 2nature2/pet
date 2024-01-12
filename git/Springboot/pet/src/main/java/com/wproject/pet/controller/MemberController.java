@@ -23,6 +23,7 @@ import com.wproject.pet.config.auth.PrincipalDetail;
 import com.wproject.pet.config.auth.PrincipalUser;
 import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.entity.Member;
+import com.wproject.pet.entity.Role;
 import com.wproject.pet.repository.MemberRepository;
 import com.wproject.pet.service.MemberService;
 
@@ -80,24 +81,19 @@ public class MemberController {
 		String name = member.getName();
 		String address = member.getAddress();
 		String email = member.getEmail();
+		Role role = member.getRole();
 		int tel = member.getTel();
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name",name );
 		map.put("address",address );
 		map.put("email",email );
 		map.put("tel",tel );
+		map.put("role", role);
 		if(name==null) {
 			name="null";
 		}
 		return map;
 	}
 	
-	//로그인 실패
-//	@PostMapping("/api/loginfail")
-//	public void loginFail(HttpServletResponse response) throws IOException{
-//		HttpHeaders headers = new HttpHeaders();
-//		String redirect_uri = "http://localhost:3000/loginFail";
-//		response.addHeader("login_result", "fail");
-//		response.sendRedirect(redirect_uri);
-//	}
+
 }
