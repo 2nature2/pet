@@ -4,8 +4,9 @@ import '../../styles/Community.css';
 import axios from 'axios';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
+import Swal from 'sweetalert2';
 
-const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElements, totalPages, setPage, setTotalPages, setTotalElements}) => {
+const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElements, setTotalElements}) => {
     const movePage = useNavigate();
     const [page, setPageLocal] = useState(1);
     const [userInput, setUserInput] = useState('');
@@ -38,6 +39,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
     
     useEffect(()=> {
         setSearchLists(lists);
+        console.log("sessionStorage", sessionStorage);
     }, [lists]);
 
     const handlePageChange = async(selectedPage) => {
@@ -51,7 +53,16 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
     };
 
     function write(){
-        movePage('/community/write');
+        if(sessionStorage.length!==0){
+            movePage('/community/write');
+        }else{
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "로그인 해주세요.",
+                confirmButtonColor:"#b80042"
+            })
+        }
     };
 
     const [searchLists, setSearchLists] = useState(lists);

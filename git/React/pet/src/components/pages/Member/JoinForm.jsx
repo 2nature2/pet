@@ -24,9 +24,13 @@ const JoinForm = ({ join }) => {
     //중복확인 버튼 t/f
     const [isIdChecked, setIsIdChecked] = useState(false);
     const [isAddrChecked, setIsAddrChecked] = useState(false);
+    const [isNicknameChecked, setIsNicknameChecked] = useState(false);
     //비밀번호 양식
     const [passwordFormColor,setpasswordFormColor]=useState(false);
     const [passwordForm, setPasswordForm] = useState('비밀번호는 최소 8자 이상이어야 하며, 영문 대/소문자 및 숫자를 포함해야 합니다.');
+    //닉네임
+    const [isNickDuplicated, setIsNickDuplicated] = useState(false);
+    const [nickCheckMessage, setNickCheckMessage] = useState('닉네임 중복 확인을 해주세요.'); // 새로운 상태 추가
 
 
     // handler
@@ -50,6 +54,30 @@ const JoinForm = ({ join }) => {
             setIsIdDuplicated(true);
             setIdCheckMessage('이미 사용 중인 아이디입니다.');
             setIsIdChecked(false); // 중복확인 미수행 상태로 설정
+          } else {
+            console.error('잘못된 응답:', response.data);
+          }
+        } catch (error) {
+          console.error('중복확인 오류:', error);
+        }
+      },
+
+      clickButtonNickname: async () => {
+        // 서버로 중복확인 요청 보내기
+        try {
+          const response = await axios.post('/member/checkNickname', {
+            nickname: joinContent.nickname,
+          });
+  
+          // 중복되지 않으면 메시지 표시
+          if (response.data === 'success') {
+            setIsNickDuplicated(false);
+            setNickCheckMessage('사용 가능한 닉네임입니다.');
+            setIsNicknameChecked(true); // 중복확인 수행 상태로 설정
+          } else if (response.data === 'fail') {
+            setIsNickDuplicated(true);
+            setNickCheckMessage('이미 사용 중인 닉네임입니다.');
+            setIsNicknameChecked(false); // 중복확인 미수행 상태로 설정
           } else {
             console.error('잘못된 응답:', response.data);
           }
@@ -120,23 +148,33 @@ const JoinForm = ({ join }) => {
     else if(!isIdChecked){
       alert('아이디 중복확인을 먼저 수행하세요.');
       return;
+    } else if(!joinContent.nickname){
+      alert('닉네임을 입력하세요.');
+      return;
+    }else if(!isNicknameChecked){
+      alert('닉네임 중복확인을 먼저 수행하세요.');
+      return;
     }
     else if(!joinContent.password){
       alert("비밀번호를 입력하세요")
       return;
-    }else if(!joinContent.address){
-      alert("주소를 입력하세요")
-      return;
-    }else if(!joinContent.tel){
+    }
+    // else if(!joinContent.address){
+    //   alert("주소를 입력하세요")
+    //   return;
+    // }
+    else if(!joinContent.tel){
       alert("전화번호를 입력하세요")
       return;
     }else if(!joinContent.email){
       alert("이메일을 입력하세요")
       return;
-    }else if(!isAddrChecked){
-      alert("우편번호 찾기를 먼저 수행하세요")
-      return;
-    }else if(joinContent.password!==joinContent.passwordCheck){
+    }
+    // else if(!isAddrChecked){
+    //   alert("우편번호 찾기를 먼저 수행하세요")
+    //   return;
+    // }
+    else if(joinContent.password!==joinContent.passwordCheck){
       alert("비밀번호가 일치하지 않습니다.")
       return;
     }
@@ -159,8 +197,7 @@ const JoinForm = ({ join }) => {
   return (
     <Container>
       <Form style={{ marginTop: '30px' }}>
-        <Row className="mb-3">
-          <Form.Group as={Col} controlId="name">
+      <Form.Group as={Col} controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
               name="name"
@@ -169,8 +206,9 @@ const JoinForm = ({ join }) => {
               placeholder="Enter Name"
             />
           </Form.Group>
-
-          <Form.Group as={Col} controlId="userid">
+          <br/>
+        <Row className="mb-3">
+        <Form.Group as={Col} controlId="userid">
             <Form.Label>Id</Form.Label>
             <Form.Control
               name="userid"
@@ -182,10 +220,29 @@ const JoinForm = ({ join }) => {
             {idCheckMessage}
           </Form.Text>
           </Form.Group>
-
           <Form.Group as={Col} controlId="btn" style={{ marginTop: '6px' }}>
             <br />
             <Button variant="primary" type="button" onClick={handle.clickButton}>
+              중복확인
+            </Button>
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="userid">
+            <Form.Label>NickName</Form.Label>
+            <Form.Control
+              name="nickname"
+              onChange={getValue}
+              value={joinContent.nickname}
+              placeholder="Enter Nickname"
+            />
+                  <Form.Text className={isNickDuplicated ? 'text-danger' : 'text-muted'}>
+            {nickCheckMessage}
+          </Form.Text>
+          </Form.Group>
+
+          <Form.Group as={Col} controlId="btn" style={{ marginTop: '6px' }}>
+            <br />
+            <Button variant="primary" type="button" onClick={handle.clickButtonNickname}>
               중복확인
             </Button>
           </Form.Group>
@@ -216,7 +273,7 @@ const JoinForm = ({ join }) => {
               value={joinContent.passwordCheck}/>
           </Form.Group>
         </Row>
-        <Row>
+        {/* <Row>
         <Form.Group as={Col} className="mb-3" controlId="address">
           <Form.Label>Address</Form.Label>
           <Form.Control
@@ -232,7 +289,7 @@ const JoinForm = ({ join }) => {
             우편번호 찾기
             </Button>
           </Form.Group>
-        </Row>
+        </Row> */}
        
 
         <Form.Group className="mb-3" controlId="tel">

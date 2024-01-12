@@ -54,8 +54,6 @@ function App() {
     // eslint-disable-next-line
   }, [page]);
 
- 
-
   const insertCommunity = (communityDTO) => {
     fetch('/community/insert', {
       method: 'POST',
@@ -105,7 +103,6 @@ function App() {
     })
   }
 
-
   // 회원가입
   const join = (member) => {
 
@@ -120,7 +117,8 @@ function App() {
         password: member.password,
         email: member.email,
         address: member.address,
-        tel: member.tel
+        tel: member.tel,
+        nickname:member.nickname
       }),
     })
       .then((resp) => resp.text())
@@ -140,16 +138,18 @@ function App() {
    //로그인이 되어있는지 없는지 확인
    useEffect(()=>{
     console.log("세션 값 확인");
+
   axios.get("/member/api/user")
   .then((response) => {
     // 서버 응답에서 사용자 정보를 가져와서 업데이트
     console.log("세션 내용", response.data)
     if(response.data!=null){
       sessionStorage.setItem("name",response.data.name)
-      sessionStorage.setItem("address",response.data.address)
+      sessionStorage.setItem("userid",response.data.userid)
       sessionStorage.setItem("email",response.data.email)
       sessionStorage.setItem("tel",response.data.tel)
       sessionStorage.setItem("role",response.data.role)
+      sessionStorage.setItem("nickname",response.data.nickname)
     }
     else{
       sessionStorage.setItem("name",null)
@@ -161,14 +161,13 @@ function App() {
 },[]);
 
 
-  
   return (
     <BrowserRouter>
       <Navigation />
       <Routes>
         <Route path="/" element={<MainPage/>} />
-            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} totalPages={totalPages} setPage={setPage} setTotalPages={setTotalPages} setTotalElements={setTotalElements}/>} />
-            <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity} loadCommunityList={loadCommunityList} resetForm={resetForm}/>} />
+            <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} setTotalElements={setTotalElements}/>} />
+            <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />
             <Route path="/community/update" element={<UpdatePage />} />
             <Route path="/pet" element={<PetMain />} />

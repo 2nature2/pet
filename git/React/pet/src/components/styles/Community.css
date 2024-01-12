@@ -110,7 +110,7 @@ button:active {
 
 .pTitle {
     font-family: 'YUniverse-B';
-    margin-top: 2%;
+    margin-top: 5%;
     margin-left: 10vw;
     text-align: center;
     font-size: 30px;
@@ -132,6 +132,10 @@ button:active {
     backdrop-filter: blur(15px); */
 }
 
+.wBtns {
+    margin-top: -2%;
+}
+
 /*ViewPage*/
 
 .vboard {
@@ -145,25 +149,26 @@ button:active {
 .ck-content {
     padding-block: 2%;
     word-break: break-all;
+    min-height: 200px;
 }
 
 .vBtns {
     display: flex;
 }
 
-#lBtn1 {
+#bLike {
     margin-right: 5px;
     background-color: transparent;
     color: #ff5ade;
     border-color: #ff5ade;
 }
 
-#lBtn1:hover {
+#bLike:hover {
     background-color: #ff5ade;
     color: white;
 }
 
-#lBtn1ed{
+#bLiked{
     margin-right: 5px;
     background-color: #ff5ade;
     color: white;

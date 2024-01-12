@@ -36,7 +36,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Member {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int member_id;
+	private int memberid;
 	@NotNull
 	private String userid;
 	@NotNull
@@ -48,22 +48,25 @@ public class Member {
 	//@NotNull
 	private int tel;
 	//@NotNull
-	private String address;
+	//private String address;
 	//@NotNull
 	private String email;
+	
+	private String nickname;
 	
 	@Enumerated(EnumType.STRING)
 	private Role role;
 	 
 	 @Builder
-	 public Member(int member_id,String userid, String password,String name,int tel, String address, String email) {
-		 this.member_id=member_id;
+	 public Member(int mid,String userid, String password,String name,int tel, String email, String nickname) {
+		 this.memberid=memberid;
 		 this.userid=userid;
 		 this.password=password;
 		 this.name=name;
 		 this.tel=tel;
-		 this.address=address;
 		 this.email=email;
+		 this.nickname=nickname;
+		 
 		
 		
 	 }

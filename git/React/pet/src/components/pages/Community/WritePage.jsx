@@ -6,7 +6,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import '../../styles/Community.css';
 
-const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
+const WritePage = ({ insertCommunity }) => {
     const movePage = useNavigate();
 
     const back = () => {
@@ -74,9 +74,12 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                     <Form.Label>CATEGORY</Form.Label>
                     <Form.Select name="b_category" value={formContent.b_category} onChange={getValue}>
                         <option value="" disabled defaultValue>==선택==</option>
-                        {/* <option>공지사항</option> */}
+                        <option disabled>공지사항</option>
                         <option>질문</option>
+                        <option>정보</option>
                         <option>후기</option>
+                        <option>삽니다</option>
+                        <option>팝니다</option>
                         <option>기타</option>
                     </Form.Select>
                 </Form.Group>
@@ -86,13 +89,16 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="b_writer">
                     <Form.Label>WRITER</Form.Label>
-                    <Form.Control type="text" name="b_writer" value={sessionStorage.getItem("name")} onChange={getValue} />
+                    <Form.Control readOnly type="text" name="b_writer" value={sessionStorage.getItem("name")} onChange={getValue} />
                 </Form.Group>
                 <div className="ck-content">
                 <CKEditor editor={ClassicEditor} id="b_content" data=""
                     config={{
                         language: 'ko',
-                        placeholder: "2000자 이내로 작성해주세요.",
+                        placeholder: "내용을 입력해주세요.",
+                        mediaEmbed: {
+                            previewsInData: true
+                        },
                         toolbar: {
                             items: [
                                 'undo',
@@ -106,25 +112,18 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                                 '|',
                                 'bold',
                                 'italic',
-                                // 'underline',
-                                // 'strikethrough',
                                 'highlight',
-                                // 'removeFormat',
-                                // '|',
-                                // 'alignment',
-                                // '|',
+                                '|',
                                 'numberedList',
                                 'bulletedList',
-                                '|',
                                 'indent',
                                 'outdent',
                                 '|',
-                                // 'todoList',
                                 'link',
                                 'blockQuote',
                                 // 'imageUpload',
                                 'insertTable',
-                                // 'mediaEmbed',
+                                'mediaEmbed',
                                 '|',
                             ]
                         }
@@ -136,12 +135,14 @@ const WritePage = ({ insertCommunity, loadCommunityList, resetForm }) => {
                         b_content: editor.getData(),
                         b_writer: sessionStorage.getItem("name")
                        });
-                        console.log({event,editor,formContent});
+                        // console.log({event,editor,formContent});
                     }}
                 />
                 </div>
-                <Button onClick={communityInsert} style={{marginRight: 5, backgroundColor:"#1098f7", borderColor:"#1098f7"}}>등록</Button>
-                <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
+                <div className="wBtns">
+                    <Button onClick={communityInsert} style={{marginRight: 5, backgroundColor:"#1098f7", borderColor:"#1098f7"}}>등록</Button>
+                    <Button style={{backgroundColor:"#828282", borderColor:"#828282"}} onClick={back}>취소</Button>
+                </div>
             </Form>
         </div>
         </div>

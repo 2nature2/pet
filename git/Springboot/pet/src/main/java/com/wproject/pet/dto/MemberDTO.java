@@ -18,12 +18,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberDTO {
-	private int member_id;
+	private int memberid;
 	private String userid;
 	private String password;
 	private String name;
 	private int tel;
-	private String address;
+//	private String address;
+	private String nickname;
 	private String email;
 	private Role role;
 	
