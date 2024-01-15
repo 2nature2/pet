@@ -58,7 +58,7 @@ public class Member {
 	private Role role;
 	 
 	 @Builder
-	 public Member(int mid,String userid, String password,String name,int tel, String email, String nickname) {
+	 public Member(int mid,String userid, String password,String name,String tel, String email, String nickname) {
 		 this.memberid=memberid;
 		 this.userid=userid;
 		 this.password=password;
