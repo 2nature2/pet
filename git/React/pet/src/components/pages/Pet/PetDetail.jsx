@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import '../../styles/Community.css';
+import '../../styles/Pet.css';
 import Kakao from "./Kakao";
 import { Button, Col, Form, FormControl, FormGroup, FormLabel, Modal, Row, Container } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
@@ -48,7 +49,7 @@ const PetDetail = () => {
         <div className="community">
             <div className="cboard">
                 <h3>1.동물정보</h3>
-                <img src={goAnimal.popfile}></img>
+                <img className="animalDetailImg" src={goAnimal.popfile}></img>
                 <p>공고번호 : {goAnimal.noticeNo}</p>
                 <p>품종 : {goAnimal.kindCd}</p>
                 <p>털색 : {goAnimal.colorCd}</p>

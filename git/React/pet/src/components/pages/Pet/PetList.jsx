@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Community.css';
+import '../../styles/Pet.css';
 
 const PetList = () => {
 
@@ -87,7 +88,7 @@ const PetList = () => {
                     data.response.body.items.item.map((animal) => (
                         <div key={animal.desertionNo}>
                             <a href={`/pet/detail/${animal.desertionNo}`}>
-                                <img src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}></img>
+                                <img className='animalListImg' src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}></img>
                             </a>
                             <p>공고번호 : {animal.noticeNo}</p>
                             <p>상태 : {animal.processState}</p>
