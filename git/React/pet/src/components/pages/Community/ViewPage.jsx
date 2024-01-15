@@ -348,7 +348,7 @@ const ViewPage = () => {
                                 : <Button id="bLike" onClick={()=>blike()} >♥ 좋아요({view.b_like})</Button>
                         }
                         {
-                            sessionStorage.length === 0
+                            sessionStorage.length === 0 || view.b_category === "공지사항"
                             ?<Button id="lBtn2" style={{visibility:"hidden"}}>신고</Button>
                             :<Button id="lBtn2" onClick={reportOpen}>신고</Button>
                         }        

@@ -35,7 +35,8 @@ public class Community {
 	private String content;
 	
 	@NotNull
-	private String b_writer;
+	@Column(name= "b_writer")
+	private String writer;
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.DATE)
