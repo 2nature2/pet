@@ -29,6 +29,8 @@ public class PetApplication {
                 adminUser.setUserid("admin");
                 adminUser.setPassword(passwordEncoder.encode("adminPassword!"));
                 adminUser.setRole("ROLE_ADMIN");
+                adminUser.setName("운영자");
+                adminUser.setNickname("운영자");
                 memberRepository.save(adminUser);
             }
         };
