@@ -2,9 +2,12 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import { useLocation } from "react-router-dom";
 
-const Adoption = () => {
+const Adoption = (goAnimal) => {
 
+  const location = useLocation();
+  const { noticeNo, careNm } = location.state;
 
     return (
         <Container className="panel" style={{ marginTop: "50px", width: "700px" }}>
@@ -46,8 +49,8 @@ const Adoption = () => {
             </Form.Label>
             <Form.Control
               type="text"
-              
-              name="password"
+              value={noticeNo}
+              readOnly
             />
           </Form.Group>
           <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextPassword">
@@ -56,11 +59,16 @@ const Adoption = () => {
             </Form.Label>
             <Form.Control
               type="text"
-              
-              name="password"
+              value={careNm}
+              readOnly
             />
           </Form.Group>
           </Form>
+       
+          <Button variant="secondary"  type="submit" style={{ marginRight: "auto" }}>
+              관할센터에 신청서 보내기
+            </Button>
+          
           </Container>
     )
 }
