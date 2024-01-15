@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Button, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
 import Swal from 'sweetalert2';
+import notice from '../../assets/notice.svg';
+import advneed from '../../assets/advneed.svg';
 
 const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElements, setTotalElements}) => {
     const movePage = useNavigate();
@@ -88,11 +90,13 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
 
     return (
         <div className='community'>
+            <img id='advneed' src={advneed}/>
             <div className='cboard'>
                 <div className='search'>
                     <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}} value={searchOption} onChange={handleSearchOptionChange}>
                         <option value='b_title' >제목</option>
                         <option value='b_content' >내용</option>
+                        <option value='b_writer' >작성자</option>
                     </select>
                     <input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
                     <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={handleSearch}>검색</Button>
@@ -115,13 +119,13 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                             .filter((list) => list.b_category === "공지사항")
                             .map((list, index) => (
                                 <tr className='tblData' style={{fontWeight: '600'}} key={index}>
-                                    <td>{list.bnum}</td>
-                                    <td>{list.b_category}</td>
-                                    <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
-                                    <td>{list.b_writer}</td>
-                                    <td>{list.b_date}</td>
-                                    <td>{list.b_like}</td>
-                                    <td>{list.hitcount}</td>
+                                    <td style={{backgroundColor:"#E9F5FF"}}><img src={notice}/></td>
+                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_category}</td>
+                                    <td style={{textAlign: 'justify', backgroundColor:"#E9F5FF"}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
+                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_writer}</td>
+                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_date}</td>
+                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_like}</td>
+                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.hitcount}</td>
                                 </tr>
                                 ))
                         }
