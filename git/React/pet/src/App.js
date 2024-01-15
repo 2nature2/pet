@@ -176,7 +176,7 @@ function App() {
             <Route path="/member/mypage" element={<MyPage />} />
             {/* <Route path="member/logout" element={<Logout />} /> */}
             <Route path="/loginFail" element={<LoginFail />} />
-            <Route path="/adoption" element={<Adoption/>}/>
+            <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/admin" element={<Admin/>}/>
       </Routes>
     </BrowserRouter>

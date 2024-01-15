@@ -51,7 +51,7 @@ const Kakao = () => {
     }, []);
 
   return (
-      <div id="map" style={{ width: '900px', height: '400px'}}></div>
+      <div id="map" style={{ width: '480px', height: '400px', display: 'flex', alignItems:'center' }}></div>
   );
 };
 

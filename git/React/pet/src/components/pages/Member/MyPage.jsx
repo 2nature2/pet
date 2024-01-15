@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import axios from "axios";
 import { Button, Container, Form, Row, Col, Modal  } from 'react-bootstrap';
+import Navigation from "../Navigation/Navigation";
+import { useNavigate } from 'react-router-dom';
 
 
 
 
 const MyPage=()=>{
-
-    // React 상태를 사용하여 입력 필드의 값을 관리합니다.
+   
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
       name: sessionStorage.getItem("name") || "",
       tel: sessionStorage.getItem("tel") || "",
@@ -77,9 +79,11 @@ const MyPage=()=>{
       },
     }
     
+    const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
 
-    // 입력 필드의 값이 변경될 때 상태를 업데이트합니다.
+    // 입력 필드의 값이 변경될 때 상태를 업데이트
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -88,13 +92,49 @@ const MyPage=()=>{
     }));
   };
 
-   // 폼을 제출할 때 세션 스토리지에 새로운 값을 저장합니다.
+   // 폼을 제출
    const handleSubmit = (e) => {
     e.preventDefault();
-
-    // 세션 스토리지에 새로운 값 저장
-    
-    // 추가적인 수정 로직 또는 서버에 전송 등의 작업 수행 가능
+    if(!formData.name){
+      alert("이름을 입력하세요")
+      return;
+    }
+    else if(!formData.userid){
+      alert("아이디를 입력하세요")
+      return;
+    }
+    if (formData.userid !== sessionStorage.getItem("userid")) {
+      if (!isIdChecked) {
+        alert("아이디 중복확인을 해주세요");
+        return;
+      }
+    }
+    else if(!formData.nickname){
+      alert("닉네임을 입력하세요.")
+      return;
+    }
+    if (formData.nickname !== sessionStorage.getItem("nickname")) {
+      if (!isNicknameChecked) {
+        alert("닉네임 중복확인을 해주세요");
+        return;
+      }
+    }
+    else if(!formData.tel){
+      alert("전화번호를 입력하세요.")
+      return;
+    }
+    else if(!telCheck.test(formData.tel)){
+      alert("전화번호 양식이 맞지않습니다.")
+      return;
+    }
+    else if(!formData.email){
+      alert("이메일을 입력하세요.")
+      return;
+    }
+    else if(!emailCheck.test(formData.email)){
+      alert("이메일 양식이 맞지않습니다.")
+      return;
+    }
     axios.post("/member/memberupdate", formData)
     .then((response)=>{
       if(response.data=="success"){
@@ -105,7 +145,8 @@ const MyPage=()=>{
         sessionStorage.setItem("userid", formData.userid);
         sessionStorage.setItem("email", formData.email);
 
-        window.location.href = '/'
+        // window.location.href = '/'
+        navigate("/")
       }else{
         alert("회원정보 수정 실패")
       }
