@@ -74,7 +74,11 @@ const WritePage = ({ insertCommunity }) => {
                     <Form.Label>CATEGORY</Form.Label>
                     <Form.Select name="b_category" value={formContent.b_category} onChange={getValue}>
                         <option value="" disabled defaultValue>==선택==</option>
-                        <option disabled>공지사항</option>
+                        {
+                            sessionStorage.getItem("role") === "ROLE_ADMIN"
+                            ?<option>공지사항</option>
+                            :<option disabled>공지사항</option>
+                        }
                         <option>질문</option>
                         <option>정보</option>
                         <option>후기</option>
@@ -89,7 +93,7 @@ const WritePage = ({ insertCommunity }) => {
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="b_writer">
                     <Form.Label>WRITER</Form.Label>
-                    <Form.Control readOnly type="text" name="b_writer" value={sessionStorage.getItem("name")} onChange={getValue} />
+                    <Form.Control readOnly type="text" name="b_writer" value={sessionStorage.getItem("nickname")} onChange={getValue} />
                 </Form.Group>
                 <div className="ck-content">
                 <CKEditor editor={ClassicEditor} id="b_content" data=""
@@ -133,7 +137,7 @@ const WritePage = ({ insertCommunity }) => {
                        setFormContent({
                         ...formContent,
                         b_content: editor.getData(),
-                        b_writer: sessionStorage.getItem("name")
+                        b_writer: sessionStorage.getItem("nickname")
                        });
                         // console.log({event,editor,formContent});
                     }}

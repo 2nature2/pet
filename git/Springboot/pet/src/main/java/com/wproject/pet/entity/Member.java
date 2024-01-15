@@ -59,7 +59,7 @@ public class Member {
 	 
 	 @Builder
 	 public Member(int mid,String userid, String password,String name,String tel, String email, String nickname) {
-		 this.memberid=memberid;
+		 this.memberid=mid;
 		 this.userid=userid;
 		 this.password=password;
 		 this.name=name;
@@ -67,7 +67,6 @@ public class Member {
 		 this.email=email;
 		 this.nickname=nickname;
 		 
-		
 		
 	 }
 
