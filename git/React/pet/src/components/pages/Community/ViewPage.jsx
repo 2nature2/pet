@@ -198,7 +198,7 @@ const ViewPage = () => {
                 },
                 body: JSON.stringify(commentDTO)
             })
-            .then((resp) => {
+            .then(() => {
                 setFormComment({
                     c_writer: '',
                     c_content: '',
@@ -360,7 +360,7 @@ const ViewPage = () => {
                             :<Button style={{ marginRight: 5, backgroundColor: "#1098f7", borderColor: "#1098f7", visibility:"hidden"}} onClick={updateForm}>수정</Button>
                         }
                         {
-                            sessionStorage.getItem("nickname")===view.b_writer
+                            sessionStorage.getItem("nickname")===view.b_writer || sessionStorage.getItem("role")==="ROLE_ADMIN"
                             ?<Button style={{ marginRight: 5, backgroundColor: "#b80042", borderColor: "#b80042" }} onClick={deleteBoard}>삭제</Button>
                             :<Button style={{ marginRight: 5, backgroundColor: "#b80042", borderColor: "#b80042", visibility:"hidden"}} onClick={deleteBoard}>삭제</Button>
                         }
@@ -385,7 +385,7 @@ const ViewPage = () => {
                         </Modal.Footer>
                     </Modal>
                 </div>
-                <div className="cmtboard">
+                <div className="cmtboard" id="cmtboard">
                     <FormLabel style={{ fontWeight: "bold" }}>댓글 {commentList.length}</FormLabel>
                     <Form.Group className="cInsert">
                         <Form.Control type="text" plaintext readOnly id="c_writer" value={formComment.c_writer} style={{ fontWeight: "bold" }} name="c_writer" placeholder="작성자" onChange={getComment} />
@@ -411,7 +411,7 @@ const ViewPage = () => {
                                             :<Button variant="outline-warning" size="sm" onClick={() => cReportOpen(comment.c_id)} style={{ marginRight: '5px' }}>신고</Button>
                                         }
                                         {
-                                            sessionStorage.getItem("nickname")===comment.c_writer
+                                            sessionStorage.getItem("nickname")===comment.c_writer || sessionStorage.getItem("role")==="ROLE_ADMIN"
                                             ?<Button variant="outline-danger" size="sm" onClick={() => deleteComment(comment.c_id)}>삭제</Button>
                                             :<Button variant="outline-danger" size="sm" style={{visibility: "hidden"}}>삭제</Button>
                                         }

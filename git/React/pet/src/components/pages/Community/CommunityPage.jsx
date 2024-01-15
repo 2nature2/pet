@@ -110,19 +110,35 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                         </tr>
                     </thead>
                     <tbody>
+                    {
+                            searchLists&&searchLists
+                            .filter((list) => list.b_category === "공지사항")
+                            .map((list, index) => (
+                                <tr className='tblData' style={{fontWeight: '600'}} key={index}>
+                                    <td>{list.bnum}</td>
+                                    <td>{list.b_category}</td>
+                                    <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
+                                    <td>{list.b_writer}</td>
+                                    <td>{list.b_date}</td>
+                                    <td>{list.b_like}</td>
+                                    <td>{list.hitcount}</td>
+                                </tr>
+                                ))
+                        }
                         {
-                            searchLists&&searchLists.map((list, index) => (
-                        <tr className='tblData' key={index}>
-                            <td>{list.bnum}</td>
-                         
-                            <td>{list.b_category}</td>
-                            <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
-                            <td>{list.b_writer}</td>
-                            <td>{list.b_date}</td>
-                            <td>{list.b_like}</td>
-                            <td>{list.hitcount}</td>
-                        </tr>
-                        ))
+                            searchLists&&searchLists
+                            .filter((list) => list.b_category !== "공지사항")
+                            .map((list, index) => (
+                                <tr className='tblData' style={{fontWeight: 'normal'}} key={index}>
+                                    <td>{list.bnum}</td>
+                                    <td>{list.b_category}</td>
+                                    <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
+                                    <td>{list.b_writer}</td>
+                                    <td>{list.b_date}</td>
+                                    <td>{list.b_like}</td>
+                                    <td>{list.hitcount}</td>
+                                </tr>
+                                ))
                         }
                     </tbody>
                 </Table>
