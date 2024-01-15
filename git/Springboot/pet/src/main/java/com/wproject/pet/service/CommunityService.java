@@ -35,7 +35,7 @@ public class CommunityService {
 		community.setB_category(communityDTO.getB_category());
 		community.setContent(communityDTO.getB_content());
 		community.setTitle(communityDTO.getB_title());
-		community.setB_writer(communityDTO.getB_writer());
+		community.setWriter(communityDTO.getB_writer());
 		communityRepository.save(community);
 	}
 	
@@ -48,7 +48,7 @@ public class CommunityService {
 	                            community.getB_category(),
 	                            community.getTitle(),
 	                            community.getContent(),
-	                            community.getB_writer(),
+	                            community.getWriter(),
 	                            community.getB_date(),
 	                            community.getB_like(),
 	                            community.getHitcount(),
@@ -79,6 +79,9 @@ public class CommunityService {
 			case "b_content":
 				lists = communityRepository.findByContentContaining(word.toLowerCase(), pageable);
 				break;
+			case "b_writer":
+				lists = communityRepository.findByWriterContaining(word.toLowerCase(), pageable);
+				break;
 			default: lists = communityRepository.findAll(pageable);
 		}
 		return convertToDtoPage(lists);	
@@ -97,7 +100,7 @@ public class CommunityService {
 					community.getB_category(),
 	                community.getTitle(),
 	                community.getContent(),
-	                community.getB_writer(),
+	                community.getWriter(),
 	                community.getB_date(),
 	                community.getB_like(),
 	                community.getHitcount(),

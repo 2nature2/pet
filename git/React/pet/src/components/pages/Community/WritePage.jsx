@@ -42,6 +42,13 @@ const WritePage = ({ insertCommunity }) => {
                 title: "제목을 입력해주세요.",
                 confirmButtonColor:"#b80042"
             });
+        }else if(formContent.b_title.trim().length>255){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "제목 글자수를 확인해주세요.",
+                confirmButtonColor:"#b80042"
+            });
         }else if(!formContent.b_content){
             Swal.fire({
                 icon: "warning",
@@ -77,7 +84,7 @@ const WritePage = ({ insertCommunity }) => {
                         {
                             sessionStorage.getItem("role") === "ROLE_ADMIN"
                             ?<option>공지사항</option>
-                            :<option disabled>공지사항</option>
+                            :<option style={{ display:'none'}}>공지사항</option>
                         }
                         <option>질문</option>
                         <option>정보</option>
