@@ -70,16 +70,4 @@ public class SecurityConfig{
     }
     
 
-//class FailAuthenticationEntryPoint implements AuthenticationEntryPoint {
-//
-//    @Override
-//    public void commence(HttpServletRequest request, HttpServletResponse response,
-//            AuthenticationException authException) throws IOException, ServletException {
-//
-//        response.setContentType("application/json");
-//        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); //SC_UNAUTHORIZED : 권한 없음
-//        response.getWriter().write("{\"code\": \"NP\", \"message\": \"Authorization Failed.\"}");
-//
-//    }
-//}
 }
