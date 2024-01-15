@@ -37,7 +37,6 @@ const handleLogout = async () => {
         <div className='nav'>
             <NavLink className='navmenu' to="/">MAIN</NavLink>
             <NavLink className='navmenu' to="/pet">PET</NavLink>
-            <NavLink className='navmenu' to="/adoption">ADOPTION</NavLink>
             <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
             {sessionStorage.getItem("role") === "ROLE_ADMIN" && (
       <NavLink className='navmenu' to="/admin/admin">ADMIN</NavLink>

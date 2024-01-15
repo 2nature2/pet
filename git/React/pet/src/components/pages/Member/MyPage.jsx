@@ -17,6 +17,8 @@ const MyPage=()=>{
       nickname: sessionStorage.getItem("nickname") || "",
       userid: sessionStorage.getItem("userid") || "",
       email: sessionStorage.getItem("email") || "",
+      //password : "",
+     // passwordCheck:""
     });
 
     // 중복확인 결과 상태
@@ -78,7 +80,8 @@ const MyPage=()=>{
         }
       },
     }
-    
+    const pwdCheck =/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+
     const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
@@ -118,6 +121,18 @@ const MyPage=()=>{
         alert("닉네임 중복확인을 해주세요");
         return;
       }
+    }
+    else if(!formData.password){
+      alert("비밀번호를 입력하세요")
+      return;
+    }
+    else if(!pwdCheck.test(formData.password)){
+      alert("비밀번호는 영문자,특수문자,숫자를 포함한 8~25자 사이로 설정해주세요 ")
+      return;
+    }
+    else if(formData.password!==formData.passwordCheck){
+      alert("비밀번호가 일치하지 않습니다.")
+      return;
     }
     else if(!formData.tel){
       alert("전화번호를 입력하세요.")
@@ -218,6 +233,22 @@ const MyPage=()=>{
             </Button>
           </Form.Group>
           </Row>
+          <Form.Group as={Col} controlId="password"  className="mb-3">
+            <Form.Label>비밀번호</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              onChange={handleChange}
+              value={formData.password}
+              placeholder="Enter Password"
+            />
+          </Form.Group>
+          <Form.Group as={Col} controlId="passwordcheck" className="mb-3">
+            <Form.Label>비밀번호 확인</Form.Label>
+            <Form.Control type="password" placeholder="Enter Password Check" name="passwordCheck"  onChange={handleChange}
+              value={formData.passwordCheck}/>
+          </Form.Group>
+
           <Form.Group as={Form.Row} className="mb-3" >
             <Form.Label column sm="2">
               전화번호

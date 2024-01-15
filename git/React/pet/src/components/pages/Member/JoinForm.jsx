@@ -254,12 +254,10 @@ const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
           <Form.Group as={Col} controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
-              type="text"
+              type="password"
               name="password"
               onChange={(e) => {
                 getValue(e);
-               // handlePassword(e);
-                // validatePassword(e);
               }}
               value={joinContent.password}
               placeholder="Enter Password"

@@ -42,7 +42,7 @@ public class MemberService {
 	public void update(int memberid,MemberDTO memberDTO) {
 		
 		Member member = memberRepository.findByMemberid(memberid);
-		
+		String encPassword = encoder.encode(memberDTO.getPassword());
 		 if (member != null) {
 		        member.setUserid(memberDTO.getUserid());
 		        member.setName(memberDTO.getName());
@@ -50,7 +50,7 @@ public class MemberService {
 		        member.setTel(memberDTO.getTel());
 		        member.setNickname(memberDTO.getNickname());
 		        member.setRole("ROLE_USER");
-		        
+		        member.setPassword(encPassword);
 		        // 업데이트된 회원 정보를 저장
 		        memberRepository.save(member);
 		    } 
