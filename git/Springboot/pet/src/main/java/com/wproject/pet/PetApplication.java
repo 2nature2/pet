@@ -27,7 +27,7 @@ public class PetApplication {
             if (memberRepository.findByUserid("admin") == null) {
                 Member adminUser = new Member();
                 adminUser.setUserid("admin");
-                adminUser.setPassword(passwordEncoder.encode("adminPassword"));
+                adminUser.setPassword(passwordEncoder.encode("adminPassword!"));
                 adminUser.setRole("ROLE_ADMIN");
                 memberRepository.save(adminUser);
             }

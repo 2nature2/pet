@@ -8,7 +8,7 @@ const ViewPage = () => {
 
     const movePage = useNavigate();
     const prevBnum = useRef(null);
-    const user = sessionStorage.getItem("name");
+    const user = sessionStorage.getItem("nickname");
 
     const prev = () => {
         window.history.back();
@@ -130,7 +130,7 @@ const ViewPage = () => {
     }
     const reportSend = () => {
         const boardReportDTO = {
-            b_reporter: sessionStorage.getItem("name"),
+            b_reporter: sessionStorage.getItem("nickname"),
             b_reason: boardReport.b_reason,
             b_id: bnum
         };
@@ -149,7 +149,7 @@ const ViewPage = () => {
             })
             .then((resp) => {
                 setBoardReport({
-                    b_reporter: sessionStorage.getItem("name"),
+                    b_reporter: sessionStorage.getItem("nickname"),
                     b_reason: boardReportDTO.b_reason,
                     b_id: bnum
                 });
@@ -158,7 +158,7 @@ const ViewPage = () => {
     }
 
     const [formComment, setFormComment] = useState({
-        c_writer: sessionStorage.getItem("name"),
+        c_writer: sessionStorage.getItem("nickname"),
         c_content: '',
         b_id: bnum
     })
@@ -355,12 +355,12 @@ const ViewPage = () => {
                     </div>
                     <div className="rBtn">
                         {
-                            sessionStorage.getItem("name")===view.b_writer
+                            sessionStorage.getItem("nickname")===view.b_writer
                             ?<Button style={{ marginRight: 5, backgroundColor: "#1098f7", borderColor: "#1098f7" }} onClick={updateForm}>수정</Button>
                             :<Button style={{ marginRight: 5, backgroundColor: "#1098f7", borderColor: "#1098f7", visibility:"hidden"}} onClick={updateForm}>수정</Button>
                         }
                         {
-                            sessionStorage.getItem("name")===view.b_writer
+                            sessionStorage.getItem("nickname")===view.b_writer
                             ?<Button style={{ marginRight: 5, backgroundColor: "#b80042", borderColor: "#b80042" }} onClick={deleteBoard}>삭제</Button>
                             :<Button style={{ marginRight: 5, backgroundColor: "#b80042", borderColor: "#b80042", visibility:"hidden"}} onClick={deleteBoard}>삭제</Button>
                         }
@@ -375,8 +375,7 @@ const ViewPage = () => {
                         <Modal.Body>
                             <FormGroup className="mb-3">
                                 <FormLabel>신고사유 :</FormLabel>
-                                {/* value에 로그인한 사람 id 들어가도록 */}
-                                <input type="hidden" value={sessionStorage.getItem("name")} name="b_reporter" />
+                                <input type="hidden" value={sessionStorage.getItem("nickname")} name="b_reporter" />
                                 <FormControl as='textarea' value={boardReport.b_reason} style={{ resize: "none" }} rows={5} minLength={10} name='b_reason' placeholder={defaultReport} onChange={getValue}></FormControl>
                             </FormGroup>
                         </Modal.Body>
@@ -412,7 +411,7 @@ const ViewPage = () => {
                                             :<Button variant="outline-warning" size="sm" onClick={() => cReportOpen(comment.c_id)} style={{ marginRight: '5px' }}>신고</Button>
                                         }
                                         {
-                                            sessionStorage.getItem("name")===comment.c_writer
+                                            sessionStorage.getItem("nickname")===comment.c_writer
                                             ?<Button variant="outline-danger" size="sm" onClick={() => deleteComment(comment.c_id)}>삭제</Button>
                                             :<Button variant="outline-danger" size="sm" style={{visibility: "hidden"}}>삭제</Button>
                                         }
@@ -430,8 +429,7 @@ const ViewPage = () => {
                             <Modal.Body>
                                 <FormGroup className="mb-3">
                                     <FormLabel>신고사유 :</FormLabel>
-                                    {/* value에 로그인한 사람 id 들어가도록 */}
-                                    <input type="hidden" value={sessionStorage.getItem("name")} name="c_reporter" />
+                                    <input type="hidden" value={sessionStorage.getItem("nickname")} name="c_reporter" />
                                     <FormControl as='textarea' value={cmtReport.c_reason} style={{ resize: "none" }} rows={5} minLength={10} name='c_reason' placeholder={defaultCmtReport} onChange={cmtGetValue}></FormControl>
                                 </FormGroup>
                             </Modal.Body>
