@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import styles from "../../styles/Login.css";
 import Navigation from "../Navigation/Navigation";
+
+const CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
+const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;
+
+export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
 const LoginForm = () => {
   const [loginContent, setLoginContent] = useState({
@@ -62,7 +68,13 @@ const LoginForm = () => {
               Sign In
             </Button>
           </div>
+         
         </Form>
+        <br/>
+        <a href={KAKAO_AUTH_URL} className="kakaobtn">
+       {/* <img src={process.env.PUBLIC_URL + `assets/Kakao.png`} /> */}
+       <img src={`/img/kakaologo.png`} />
+</a>
       </Container>
    
     </div>
