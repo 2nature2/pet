@@ -110,7 +110,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                         </tr>
                     </thead>
                     <tbody>
-                    {
+                        {
                             searchLists&&searchLists
                             .filter((list) => list.b_category === "공지사항")
                             .map((list, index) => (
