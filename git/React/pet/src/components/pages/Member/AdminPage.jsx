@@ -2,9 +2,6 @@ import { NavLink } from "react-router-dom";
 import SideBar from "../Navigation/SideBar";
 
 
-
-
-
 const AdminPage=()=>{
   
     
