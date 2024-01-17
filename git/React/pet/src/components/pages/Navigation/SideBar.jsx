@@ -1,29 +1,19 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import '../../styles/Sidebar.css';
 
 import SidebarItem from "./SidebarItem.jsx";
 
-function SideBar() {
-
-  const menus = [
-    { name: "회원 관리", path: "/admin/memberList" },
-    { name: "신고 관리", path: "/admin/reportList" }
-  ];
-
-  return (
-    <div className="sidebar">
-      {menus.map((menu, index) => {
-        return (
-          <Link to={menu.path} key={index}>
-            <SidebarItem
-              menu={menu}
-            />
-          </Link>
-        );
-      })}
-    </div>
-  );
-}
+const SideBar = () => {
+    
+    return (
+        <div className="admin-sidebar">
+        <NavLink to="/admin/adminPage/memberList">회원관리</NavLink>
+        <NavLink to="/admin/adminPage/reportList">신고관리</NavLink>
+        {/* 추가 메뉴 아이템들 */}
+      </div>
+      );
+    };
 
 export default SideBar;

@@ -6,7 +6,13 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,13 +22,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wproject.pet.config.auth.PrincipalDetail;
 import com.wproject.pet.config.auth.PrincipalUser;
+import com.wproject.pet.dto.CommunityDTO;
 import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.entity.Member;
 import com.wproject.pet.entity.Role;
@@ -131,6 +137,16 @@ public class MemberController {
 		principalDetailsUser.setNickname(memberDTO.getNickname());
 		principalDetailsUser.setTel(memberDTO.getTel());
 		return "success";
+	}
+	
+	//회원리스트
+	@GetMapping("/")
+	public ResponseEntity<Page<MemberDTO>> getPosts(
+			@PageableDefault(size = 5, sort = "memberid", direction = Direction.ASC) Pageable pageable,
+			@RequestParam(required = false, defaultValue = "0") int mpage) {
+		System.out.println("회원리스트");
+	  Page<MemberDTO> resultPage = memberService.findAll(PageRequest.of(mpage, pageable.getPageSize(), pageable.getSort()));
+	  return ResponseEntity.ok(resultPage);
 	}
 	
 
