@@ -8,7 +8,7 @@ function SideBar() {
 
   const menus = [
     { name: "회원 관리", path: "/admin/memberList" },
-    { name: "신고 관리", path: "/admin/reportList" }
+    { name: "신고 관리", path: "/admin/report" }
   ];
 
   return (

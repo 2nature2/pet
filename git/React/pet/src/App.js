@@ -180,7 +180,7 @@ function App() {
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
-            <Route path="/admin/reportList" element={<ReportManagement/>}/>
+            <Route path="/admin/report" element={<ReportManagement/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
     element={<LoginHandeler/>} //당신이 redirect_url에 맞춰 꾸밀 컴포넌트

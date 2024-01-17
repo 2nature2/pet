@@ -104,7 +104,20 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                         <option value='b_writer'>작성자</option>
                         <option value='b_category'>분류</option>
                     </select>
-                    <input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
+                    {
+                        searchOption === "b_category"
+                        ?<select style={{marginRight:10, textAlign:'center', padding: 5}} onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}>
+                            <option selected disabled>선택</option>
+                            <option>질문</option>
+                            <option>정보</option>
+                            <option>후기</option>
+                            <option>삽니다</option>
+                            <option>팝니다</option>
+                            <option>기타</option>
+                        </select>
+                        :<input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
+                    }
+                    
                     <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={handleSearch}>검색</Button>
                 </div>
                 <Table>
