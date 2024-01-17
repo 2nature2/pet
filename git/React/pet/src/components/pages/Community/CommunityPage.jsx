@@ -88,15 +88,27 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
         search(page);
     };
 
+    const noticeList = async(selectedPage) => {
+        try{
+            const currentPage = selectedPage -1;
+            const response = await axios.get(`/community/search?&size=20&page=${currentPage}&field=${"b_category"}&word=${"공지사항"}`);
+            setCommunityList(response.data.content);
+            setTotalElements(response.data.totalElements);
+            }catch(error){
+            console.error("검색 오류:", error);
+        }
+    };
+
     return (
         <div className='community'>
             <img id='advneed' src={advneed}/>
             <div className='cboard'>
                 <div className='search'>
                     <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}} value={searchOption} onChange={handleSearchOptionChange}>
-                        <option value='b_title' >제목</option>
-                        <option value='b_content' >내용</option>
-                        <option value='b_writer' >작성자</option>
+                        <option value='b_title'>제목</option>
+                        <option value='b_content'>내용</option>
+                        <option value='b_writer'>작성자</option>
+                        <option value='b_category'>분류</option>
                     </select>
                     <input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
                     <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={handleSearch}>검색</Button>
