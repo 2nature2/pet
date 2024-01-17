@@ -32,7 +32,7 @@ public class CommunityService {
 	@Transactional
 	public void insert(CommunityDTO communityDTO) {
 		Community community = new Community();
-		community.setB_category(communityDTO.getB_category());
+		community.setCategory(communityDTO.getB_category());
 		community.setContent(communityDTO.getB_content());
 		community.setTitle(communityDTO.getB_title());
 		community.setWriter(communityDTO.getB_writer());
@@ -45,7 +45,7 @@ public class CommunityService {
 	            communityPage.getContent().stream()
 	                    .map(community -> new CommunityDTO(
 	                            community.getBnum(),
-	                            community.getB_category(),
+	                            community.getCategory(),
 	                            community.getTitle(),
 	                            community.getContent(),
 	                            community.getWriter(),
@@ -82,6 +82,9 @@ public class CommunityService {
 			case "b_writer":
 				lists = communityRepository.findByWriterContaining(word.toLowerCase(), pageable);
 				break;
+			case "b_category":
+				lists = communityRepository.findByCategoryContaining(word, pageable);
+				break;
 			default: lists = communityRepository.findAll(pageable);
 		}
 		return convertToDtoPage(lists);	
@@ -97,7 +100,7 @@ public class CommunityService {
 			community.setHitcount(community.getHitcount()+1);
 			return new CommunityDTO(
 					community.getBnum(),
-					community.getB_category(),
+					community.getCategory(),
 	                community.getTitle(),
 	                community.getContent(),
 	                community.getWriter(),
@@ -115,7 +118,7 @@ public class CommunityService {
 	@Transactional
 	public void update(CommunityDTO communityDTO) {
 		Community community = communityRepository.findById(communityDTO.getBnum()).get();
-		community.setB_category(communityDTO.getB_category());
+		community.setCategory(communityDTO.getB_category());
 		community.setTitle(communityDTO.getB_title());
 		community.setContent(communityDTO.getB_content());
 		community.setB_date(communityDTO.getB_date());
