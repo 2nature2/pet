@@ -20,9 +20,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
 import MyPage from './components/pages/Member/MyPage';
 import LoginHandeler from './components/pages/Member/LoginHandeler';
+<<<<<<< HEAD
 import AdminPage from './components/pages/Admin/AdminPage';
 import MemberList from './components/pages/Admin/MemberList';
 import ReportList from './components/pages/Admin/ReportList';
+=======
+import AdminPage from './components/pages/Member/AdminPage';
+import ReportManagement from './components/pages/Admin/ReportManagement';
+>>>>>>> 063c3e1b7820fe244051ec9e30316bbc36ea2102
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -215,8 +220,12 @@ const [memberContent,setMemberContent]=useState({
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
+<<<<<<< HEAD
             <Route path="/admin/adminPage/memberList" element={<MemberList lists={memberlist} loadMemberList={loadMemberList} setMemberlist={setMemberlist} mtotalElements={mtotalElements} setMtotalElements={setMtotalElements}/>}/>
             <Route path="/admin/adminPage/reportList" element={<ReportList/>}/>
+=======
+            <Route path="/admin/report" element={<ReportManagement/>}/>
+>>>>>>> 063c3e1b7820fe244051ec9e30316bbc36ea2102
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
     element={<LoginHandeler/>} //당신이 redirect_url에 맞춰 꾸밀 컴포넌트

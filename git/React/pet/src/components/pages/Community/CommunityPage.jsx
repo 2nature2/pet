@@ -69,14 +69,19 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
 
     const [searchLists, setSearchLists] = useState(lists);
     const [searchOption, setSearchOption] = useState('b_title');
+    const [noticeList, setNoticeList] = useState([]);
 
     const handleSearchOptionChange = (e) => {
         setSearchOption(e.target.value);
     };
+    
     const search = async(selectedPage) => {
         try{
             const currentPage = selectedPage -1;
             const response = await axios.get(`/community/search?&size=20&page=${currentPage}&field=${searchOption}&word=${userInput}`);
+            const notices = await axios.get(`/community/search?&size=20&field=${"b_category"}&word=${"공지사항"}`);
+            console.log("notices", notices);
+            setNoticeList(notices.data.content);
             setCommunityList(response.data.content);
             setTotalElements(response.data.totalElements);
             }catch(error){
@@ -94,11 +99,25 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
             <div className='cboard'>
                 <div className='search'>
                     <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}} value={searchOption} onChange={handleSearchOptionChange}>
-                        <option value='b_title' >제목</option>
-                        <option value='b_content' >내용</option>
-                        <option value='b_writer' >작성자</option>
+                        <option value='b_title'>제목</option>
+                        <option value='b_content'>내용</option>
+                        <option value='b_writer'>작성자</option>
+                        <option value='b_category'>분류</option>
                     </select>
-                    <input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
+                    {
+                        searchOption === "b_category"
+                        ?<select style={{marginRight:10, textAlign:'center', padding: 5}} onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}>
+                            <option selected disabled>선택</option>
+                            <option>질문</option>
+                            <option>정보</option>
+                            <option>후기</option>
+                            <option>삽니다</option>
+                            <option>팝니다</option>
+                            <option>기타</option>
+                        </select>
+                        :<input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
+                    }
+                    
                     <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={handleSearch}>검색</Button>
                 </div>
                 <Table>
@@ -112,23 +131,22 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                             <th>좋아요</th>
                             <th>조회수</th>
                         </tr>
+                            {
+                                noticeList
+                                .map((list, index) => (
+                                    <tr className='tblData' key={index}>
+                                        <th style={{backgroundColor:"#E9F5FF"}}><img src={notice}/></th>
+                                        <th style={{backgroundColor:"#E9F5FF"}}>{list.b_category}</th>
+                                        <th style={{textAlign: 'justify', backgroundColor:"#E9F5FF"}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></th>
+                                        <th style={{backgroundColor:"#E9F5FF"}}>{list.b_writer}</th>
+                                        <th style={{backgroundColor:"#E9F5FF"}}>{list.b_date}</th>
+                                        <th style={{backgroundColor:"#E9F5FF"}}>{list.b_like}</th>
+                                        <th style={{backgroundColor:"#E9F5FF"}}>{list.hitcount}</th>
+                                    </tr>
+                                    ))
+                            }
                     </thead>
                     <tbody>
-                        {
-                            searchLists&&searchLists
-                            .filter((list) => list.b_category === "공지사항")
-                            .map((list, index) => (
-                                <tr className='tblData' style={{fontWeight: '600'}} key={index}>
-                                    <td style={{backgroundColor:"#E9F5FF"}}><img src={notice}/></td>
-                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_category}</td>
-                                    <td style={{textAlign: 'justify', backgroundColor:"#E9F5FF"}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
-                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_writer}</td>
-                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_date}</td>
-                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.b_like}</td>
-                                    <td style={{backgroundColor:"#E9F5FF"}}>{list.hitcount}</td>
-                                </tr>
-                                ))
-                        }
                         {
                             searchLists&&searchLists
                             .filter((list) => list.b_category !== "공지사항")
