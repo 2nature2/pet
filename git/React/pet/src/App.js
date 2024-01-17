@@ -19,8 +19,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
 import MyPage from './components/pages/Member/MyPage';
-import Admin from './components/pages/Member/Admin';
 import LoginHandeler from './components/pages/Member/LoginHandeler';
+import AdminPage from './components/pages/Member/AdminPage';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -178,7 +178,7 @@ function App() {
             {/* <Route path="member/logout" element={<Logout />} /> */}
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/pet/adoption" element={<Adoption/>}/>
-            <Route path="/admin/admin" element={<Admin/>}/>
+            <Route path="/admin/adminPage" element={<AdminPage/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
     element={<LoginHandeler/>} //당신이 redirect_url에 맞춰 꾸밀 컴포넌트

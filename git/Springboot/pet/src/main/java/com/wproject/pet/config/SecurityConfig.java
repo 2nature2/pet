@@ -1,12 +1,14 @@
 package com.wproject.pet.config;
 
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
@@ -21,6 +23,8 @@ import java.util.Arrays;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig{
+	
+	 
 	
     @Bean
     public FilterRegistrationBean<CorsFilter> corsFilter() {
@@ -61,6 +65,10 @@ public class SecurityConfig{
             .failureUrl("http://localhost:3000/loginFail")
             .and()
             .oauth2Login()
+            .defaultSuccessUrl("/login-success")
+//            .successHandler(oAuth2AuthenticationSuccessHandler)
+//            .userInfoEndpoint()
+//            .userService(userOAuth2Service)
             .and()
             .logout()
             .logoutUrl("/logout")
