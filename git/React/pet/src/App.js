@@ -21,6 +21,7 @@ import PetDetail from './components/pages/Pet/PetDetail';
 import MyPage from './components/pages/Member/MyPage';
 import LoginHandeler from './components/pages/Member/LoginHandeler';
 import AdminPage from './components/pages/Member/AdminPage';
+import ReportManagement from './components/pages/Admin/ReportManagement';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -179,6 +180,7 @@ function App() {
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
+            <Route path="/admin/report" element={<ReportManagement/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
     element={<LoginHandeler/>} //당신이 redirect_url에 맞춰 꾸밀 컴포넌트
