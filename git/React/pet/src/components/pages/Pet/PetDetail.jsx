@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
-import '../../styles/Community.css';
 import '../../styles/Pet.css';
 import Kakao from "./Kakao";
-import { Button, Col, Form, FormControl, FormGroup, FormLabel, Modal, Row, Container } from "react-bootstrap";
+import { Button, FormGroup, Modal, Container } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
 const CallButton = ({ phoneNumber }) => {
@@ -25,7 +23,7 @@ const CallButton = ({ phoneNumber }) => {
 const PetDetail = () => {
     const location = useLocation();
     const goAnimal = location.state;
-    const navigate=useNavigate();
+    // const navigate=useNavigate();
 
    
 

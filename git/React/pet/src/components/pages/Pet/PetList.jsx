@@ -1,7 +1,6 @@
 import React,{useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/Community.css';
 import '../../styles/Pet.css';
 
 const PetList = () => {
@@ -13,7 +12,7 @@ const PetList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const itemsPerPage = 9;
+    const itemsPerPage = 10;
 
     const navigateToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -38,37 +37,52 @@ const PetList = () => {
                 careNm: animal.careNm,
                 careAddr: animal.careAddr,
                 careTel: animal.careTel
-            }
+            },
+            key: animal.desertionNo
         });
     };
 
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
     const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPage}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
 
-    const fetchData = async () => {
-        try {
-            setError(null);
-            setData(null);
-            setIsLoading(true);
-
-            const response = await axios.get(encoded);
-
-            // console.log("Response Data:", response.data);
-
-            setData(response.data);
-            setTotalPages(Math.ceil(response.data.response.body.totalCount / itemsPerPage));
-        } catch (e) {
-            setError(e);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     useEffect(() => {
+        window.scrollTo(0,0);
+        let isMounted = true; // 컴포넌트가 마운트된 상태인지 확인하기 위한 변수
+
+        const fetchData = async () => {
+            try {
+                setError(null);
+                setData(null);
+                setIsLoading(true);
+
+                const response = await axios.get(encoded);
+
+                // console.log("Response Data:", response.data);
+
+                if(isMounted){
+                    setData(response.data);
+                    setTotalPages(Math.ceil(response.data.response.body.totalCount / itemsPerPage));
+                }
+            } catch (e) {
+                if(isMounted){
+                    setError(e);
+                } 
+            } finally {
+                if(isMounted){
+                    setIsLoading(false);
+                } 
+            }
+        };
+
         fetchData();
+
+        // Cleanup 함수
+        return () => {
+            isMounted = false;
+        }
         // console.log('process.env.REACT_APP_API_KEY 확인',process.env.REACT_APP_API_KEY)
         // console.log('encoded확인', encoded)
-    }, [currentPage]); // currentPage 가 변경될 때마다 API 호출
+    }, [currentPage, encoded, itemsPerPage]); // currentPage 가 변경될 때마다 API 호출
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
@@ -80,26 +94,27 @@ const PetList = () => {
     console.log("Fetched Data:", data);
 
     return (
-        <div className='community'>
-            <div className='cboard'>
-                <h2>아이들이 당신을 기다리고 있어요!</h2>
-                
+        <div className='pet-list-container'>
+            <h2>아이들이 당신을 기다리고 있어요!</h2>
                 {
                     data.response.body.items.item.map((animal) => (
-                        <div key={animal.desertionNo}>
+                        <div className='flex-list-container' key={animal.desertionNo}>
+                            <div className='flex-list-img'>
                             <a href={`/pet/detail/${animal.desertionNo}`}>
-                                <img className='animalListImg' src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}></img>
+                                <img className='flex-list-img' src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}></img>
                             </a>
+                            </div>
+                            <div className='flex-list-item'>
                             <p>공고번호 : {animal.noticeNo}</p>
                             <p>상태 : {animal.processState}</p>
                             <p>접수일시 : {animal.noticeSdt}</p>
                             <p>발견장소 : {animal.happenPlace}</p>
                             <p>종류 : {animal.kindCd}</p>
                             <p>특징 : {animal.specialMark}</p>
+                            </div>
                         </div>
                     ))
                 }
-            </div>
             <Pagination 
                 totalPages={totalPages}
                 currentPage={currentPage}
