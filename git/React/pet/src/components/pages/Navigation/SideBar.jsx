@@ -5,7 +5,6 @@ import '../../styles/Sidebar.css';
 
 import SidebarItem from "./SidebarItem.jsx";
 
-<<<<<<< HEAD
 const SideBar = () => {
     
     return (
@@ -16,28 +15,6 @@ const SideBar = () => {
       </div>
       );
     };
-=======
-function SideBar() {
 
-  const menus = [
-    { name: "회원 관리", path: "/admin/memberList" },
-    { name: "신고 관리", path: "/admin/report" }
-  ];
-
-  return (
-    <div className="sidebar">
-      {menus.map((menu, index) => {
-        return (
-          <Link to={menu.path} key={index}>
-            <SidebarItem
-              menu={menu}
-            />
-          </Link>
-        );
-      })}
-    </div>
-  );
-}
->>>>>>> 063c3e1b7820fe244051ec9e30316bbc36ea2102
 
 export default SideBar;
