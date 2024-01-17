@@ -60,11 +60,10 @@ public class CommunityService {
 	    );
 	}
 
-	
 	//전체보기 페이징 
 	public Page<CommunityDTO> findAll(Pageable pageable){
 		Page<Community> lists = communityRepository.findAll(pageable);
-		
+
 		return convertToDtoPage(lists);
 		}
 	
