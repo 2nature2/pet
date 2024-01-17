@@ -219,8 +219,6 @@ const [memberContent,setMemberContent]=useState({
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
             <Route path="/admin/adminPage/memberList" element={<MemberList lists={memberlist} loadMemberList={loadMemberList} setMemberlist={setMemberlist} mtotalElements={mtotalElements} setMtotalElements={setMtotalElements}/>}/>
-            <Route path="/admin/adminPage/reportList" element={<ReportList/>}/>
-
             <Route path="/admin/report" element={<ReportManagement/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
