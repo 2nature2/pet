@@ -46,10 +46,14 @@ const PetDetail = () => {
   
     return (
         <Container>
-        <div className="community">
-            <div className="cboard">
+        <div>
+            <div className="flex-detail-container">
+                <div className="flex-detail-img">
+                <img src={goAnimal.popfile}></img>
+                </div>
+
+                <div className="flex-detail-item">
                 <h3>1.동물정보</h3>
-                <img className="animalDetailImg" src={goAnimal.popfile}></img>
                 <p>공고번호 : {goAnimal.noticeNo}</p>
                 <p>품종 : {goAnimal.kindCd}</p>
                 <p>털색 : {goAnimal.colorCd}</p>
@@ -66,11 +70,12 @@ const PetDetail = () => {
                 <p>관할보호센터명 : {goAnimal.careNm}</p>
                 {/* <p>주소 : {goAnimal.careAddr}</p>
                 <p>전화번호 : {goAnimal.careTel}</p> */}
+                <Button variant="secondary"  onClick={() => adoptionOpen()}>관할센터 문의하기</Button>
+                </div>
 
             </div>
             {/* <Kakao /> */}
             <br/>
-            <Button variant="secondary"  onClick={() => adoptionOpen()}>관할센터 문의하기</Button>
         </div>
         <div>
         <Modal show={adoptionShow} onHide={adoptionClose}>
