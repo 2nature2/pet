@@ -1,11 +1,17 @@
 package com.wproject.pet.service;
 
+import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import com.wproject.pet.dto.CommunityDTO;
 import com.wproject.pet.dto.MemberDTO;
+import com.wproject.pet.entity.Community;
 import com.wproject.pet.entity.Member;
 import com.wproject.pet.entity.Role;
 import com.wproject.pet.repository.MemberRepository;
@@ -55,4 +61,30 @@ public class MemberService {
 		        memberRepository.save(member);
 		    } 
 	}
+	
+	//DTO변환
+	private Page<MemberDTO> convertToDtoPage(Page<Member> memberListPage) {
+	    return new PageImpl<>(
+	    		memberListPage.getContent().stream()
+	                    .map(member -> new MemberDTO(
+	                    		member.getEmail(),
+	                    		member.getName(),
+	                    		member.getNickname(),
+	                    		member.getTel(),
+	                    		member.getUserid(),
+	                    		member.getMemberid()
+	                    ))
+	                    .collect(Collectors.toList()),
+	                    memberListPage.getPageable(),
+	                    memberListPage.getTotalElements()
+	    );
+	}
+
+	
+	//회원리스트
+	public Page<MemberDTO> findAll(Pageable pageable){
+		Page<Member> lists = memberRepository.findAll(pageable);
+		
+		return convertToDtoPage(lists);
+		}
 }

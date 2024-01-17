@@ -20,8 +20,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
 import MyPage from './components/pages/Member/MyPage';
 import LoginHandeler from './components/pages/Member/LoginHandeler';
-import AdminPage from './components/pages/Member/AdminPage';
+
+import AdminPage from './components/pages/Admin/AdminPage';
+import MemberList from './components/pages/Admin/MemberList';
+
 import ReportManagement from './components/pages/Admin/ReportManagement';
+
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -160,6 +164,40 @@ function App() {
     console.error('Error fetching user info:', error);
   })
 },[]);
+//회원리스트
+const [memberlist,setMemberlist] = useState([]);
+const [memberContent,setMemberContent]=useState({
+  name : '',
+  email:'',
+  tel:'',
+  userid:'',
+  nickname:'',
+  memberid:''
+})
+  const [mpage,setMpage] = useState(0);
+  const [mtotalPages,setMtotalPages]=useState(0);
+  const [mtotalElements,setMtotalElements] = useState(0);
+
+  const loadMemberList = async () =>{
+      try{
+          const response = await axios.get(`/member/?mpage=${mpage}`);
+          setMemberlist(response.data.content);
+          console.log(memberlist)
+          setMtotalPages(response.data.totalPages);
+          setMtotalElements(response.data.totalElements);
+          return response.data;
+      }catch(error){
+          console.error('Error fetching data:', error);
+      }
+  }
+
+
+  useEffect(() => {
+      const fetchData = async () => {
+        await loadMemberList(page);
+      };
+      fetchData();
+    }, [page]);
 
 
   return (
@@ -180,6 +218,9 @@ function App() {
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
+            <Route path="/admin/adminPage/memberList" element={<MemberList lists={memberlist} loadMemberList={loadMemberList} setMemberlist={setMemberlist} mtotalElements={mtotalElements} setMtotalElements={setMtotalElements}/>}/>
+            <Route path="/admin/adminPage/reportList" element={<ReportList/>}/>
+
             <Route path="/admin/report" element={<ReportManagement/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
