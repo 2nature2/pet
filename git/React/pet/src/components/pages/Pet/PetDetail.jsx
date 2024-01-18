@@ -55,8 +55,8 @@ const PetDetail = () => {
                 <p>공고번호 : {goAnimal.noticeNo}</p>
                 <p>품종 : {goAnimal.kindCd}</p>
                 <p>털색 : {goAnimal.colorCd}</p>
-                <p>성별 : {goAnimal.sexCd}</p>
-                <p>중성화 여부 : {goAnimal.neuterYn}</p>
+                <p>성별 : {goAnimal.sexCd === 'F' ? '암컷' : '수컷'}</p>
+                <p>중성화 여부 : {goAnimal.neuterYn === 'Y' ? '중성화 완료' : '중성화 미완료'}</p>
                 <p>특징 : {goAnimal.specialMark}</p>
                 <br />
                 <h3>2. 구조정보</h3>
