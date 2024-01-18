@@ -2,6 +2,8 @@ import React,{useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Pet.css';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 const PetList = () => {
 
@@ -12,7 +14,7 @@ const PetList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const itemsPerPage = 10;
+    const itemsPerPage = 9;
 
     const navigateToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -95,7 +97,7 @@ const PetList = () => {
 
     return (
         <div className='pet-list-container'>
-            <h2>아이들이 당신을 기다리고 있어요!</h2>
+            {/* <h2>아이들이 당신을 기다리고 있어요!</h2> */}
                 {
                     data.response.body.items.item.map((animal) => (
                         <div className='flex-list-container' key={animal.desertionNo}>
@@ -115,53 +117,55 @@ const PetList = () => {
                         </div>
                     ))
                 }
-            <Pagination 
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onPageChange={navigateToPage}
+            <Stack direction='row' spacing={2} justifyContent='center'>
+            <Pagination colorCd='primary'
+                count={totalPages}
+                page={currentPage}
+                onChange={(event, page) => navigateToPage(page)}
             />
+            </Stack>
         </div>
     );
 }
-const Pagination = ({ totalPages, currentPage, onPageChange }) => {
-    const pagesToShow = 5;
-    const halfPagesToShow = Math.floor(pagesToShow / 2);
+// const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+//     const pagesToShow = 5;
+//     const halfPagesToShow = Math.floor(pagesToShow / 2);
 
-    let startPage = currentPage - halfPagesToShow;
-    let endPage = currentPage + halfPagesToShow;
+//     let startPage = currentPage - halfPagesToShow;
+//     let endPage = currentPage + halfPagesToShow;
 
-    if (startPage < 1){
-        startPage = 1;
-        endPage = Math.min(pagesToShow, totalPages);
-    }
-    if (endPage > totalPages){
-        startPage = Math.max(1, totalPages - pagesToShow + 1);
-        endPage = totalPages;
-    }
-    const hasPrevious = startPage > 1;
-    const hasNext = endPage < totalPages;
+//     if (startPage < 1){
+//         startPage = 1;
+//         endPage = Math.min(pagesToShow, totalPages);
+//     }
+//     if (endPage > totalPages){
+//         startPage = Math.max(1, totalPages - pagesToShow + 1);
+//         endPage = totalPages;
+//     }
+//     const hasPrevious = startPage > 1;
+//     const hasNext = endPage < totalPages;
 
-    return(
-        <div>
-            {hasPrevious && (
-                <button onClick={() => onPageChange(currentPage - 1)}>
-                    &lt;&lt; Previous
-                </button>
-            )}
+//     return(
+//         <div>
+//             {hasPrevious && (
+//                 <button onClick={() => onPageChange(currentPage - 1)}>
+//                     &lt;&lt; Previous
+//                 </button>
+//             )}
 
 
-            {Array.from({ length: endPage - startPage + 1 }).map((_, index) => (
-                <button key={startPage + index} onClick={() => onPageChange(startPage + index)}>
-                    {startPage + index}
-                </button>
-            ))}
+//             {Array.from({ length: endPage - startPage + 1 }).map((_, index) => (
+//                 <button key={startPage + index} onClick={() => onPageChange(startPage + index)}>
+//                     {startPage + index}
+//                 </button>
+//             ))}
 
-            {hasNext && (
-                <button onClick={() => onPageChange(currentPage + 1)}>
-                    Next &gt;&gt;
-                </button>
-            )}
-        </div>
-    )
-}
+//             {hasNext && (
+//                 <button onClick={() => onPageChange(currentPage + 1)}>
+//                     Next &gt;&gt;
+//                 </button>
+//             )}
+//         </div>
+//     )
+// }
 export default PetList;
