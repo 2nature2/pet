@@ -23,11 +23,7 @@ const CallButton = ({ phoneNumber }) => {
 const PetDetail = () => {
     const location = useLocation();
     const goAnimal = location.state;
-    // const navigate=useNavigate();
 
-   
-
-    
     // console.log("loaction", location);
     // console.log("goanimal", goAnimal);
 
@@ -66,8 +62,6 @@ const PetDetail = () => {
                 <br />
                 <h3>3. 동물보호센터 안내</h3>
                 <p>관할보호센터명 : {goAnimal.careNm}</p>
-                {/* <p>주소 : {goAnimal.careAddr}</p>
-                <p>전화번호 : {goAnimal.careTel}</p> */}
                 <Button variant="secondary"  onClick={() => adoptionOpen()}>관할센터 문의하기</Button>
                 </div>
 
