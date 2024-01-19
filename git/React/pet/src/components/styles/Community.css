@@ -19,7 +19,6 @@ button:active {
 .community {
     margin-inline: 5%;
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-    /* margin-top: 5%; */
 }
 
 #advneed {
@@ -126,11 +125,11 @@ button:active {
     text-align: center;
 }
 
-.pagination {
+.btns .pagination {
     margin-left: auto;
 }
 
-.pagination li {
+.btns .pagination li {
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -138,17 +137,17 @@ button:active {
     text-align: center;
 }
 
-.pagination li a {
+.btns .pagination li a {
     text-decoration: none;
     color: black;
     vertical-align: middle;
 }
 
-.pagination li.active a{
+.btns .pagination li.active a{
     color: white;
 }
 
-.pagination li.active {
+.btns .pagination li.active {
     background-color: #1098f7;
 }
 
@@ -174,8 +173,6 @@ button:active {
     border: 1px solid gray;
     border-radius: 10px;
     background-color: #d5d5d5;
-    /* -webkit-backdrop-filter: blur(15px);
-    backdrop-filter: blur(15px); */
 }
 
 .wBtns {
