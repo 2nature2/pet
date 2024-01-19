@@ -1,7 +1,6 @@
 package com.wproject.pet.controller;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -24,30 +23,23 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 	private final BoardReportService boardReportService;
 	private final CommentReportService commentReportService;
-	
-	@GetMapping("/report")
-	public ResponseEntity<ReportResponseDTO> getReports(
-			@PageableDefault(size = Integer.MAX_VALUE, sort = "brid", direction = Direction.DESC) Pageable boardPageable,
-            @PageableDefault(size = Integer.MAX_VALUE, sort = "cr_id", direction = Direction.DESC) Pageable commentPageable,
-            @RequestParam(required = false, defaultValue = "0") int boardPage,
-            @RequestParam(required = false, defaultValue = "0") int commentPage
+
+	@GetMapping("/boardReport")
+	public ResponseEntity<Page<BoardReportDTO>> getBoardReports(
+			 @PageableDefault(size = Integer.MAX_VALUE, sort = "brid", direction = Direction.DESC) Pageable pageable,
+			 @RequestParam(required = false, defaultValue = "0") int page
 			){
-		Page<BoardReportDTO> bResult = boardReportService.findAll(PageRequest.of(boardPage, boardPageable.getPageSize(), boardPageable.getSort()));
-		Page<CommentReportDTO> cResult = commentReportService.findAll(PageRequest.of(commentPage, commentPageable.getPageSize(), commentPageable.getSort()));
-		
-		ReportResponseDTO reportResponseDTO = new ReportResponseDTO(bResult, cResult);
-		
-		return ResponseEntity.ok(reportResponseDTO);
+		Page<BoardReportDTO> boardReports = boardReportService.findAll(pageable);
+		return ResponseEntity.ok(boardReports);
 	}
 	
-	public static class ReportResponseDTO {
-		private final Page<BoardReportDTO> boardReports;
-		private final Page<CommentReportDTO> commentReports;
-		
-		public ReportResponseDTO(Page<BoardReportDTO> boardReports, Page<CommentReportDTO> commentReports) {
-			this.boardReports = boardReports;
-			this.commentReports = commentReports;
-		}
+	@GetMapping("/commentReport")
+	public ResponseEntity<Page<CommentReportDTO>> getCommentReports(
+			@PageableDefault(size = Integer.MAX_VALUE, sort = "crid", direction = Direction.DESC) Pageable pageable,
+			@RequestParam(required = false, defaultValue = "0") int page
+			){
+		Page<CommentReportDTO> commentReports = commentReportService.findAll(pageable);
+		return ResponseEntity.ok(commentReports);
 	}
 	
 	

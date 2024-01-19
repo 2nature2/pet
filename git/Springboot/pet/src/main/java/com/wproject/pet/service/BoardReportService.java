@@ -25,8 +25,8 @@ public class BoardReportService {
 				breport.getContent().stream()
 					.map(report -> new BoardReportDTO(
 							report.getBrid(),
-							report.getB_reporter(),
 							report.getB_reason(),
+							report.getB_reporter(),
 							report.getCommunity()
 							))
 					.collect(Collectors.toList()),
