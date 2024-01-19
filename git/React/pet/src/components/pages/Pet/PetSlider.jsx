@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Slider from "react-slick";
-import { agoDate } from '../../../util/DateFormat';
+import { agoDate33 } from '../../../util/DateFormat';
 import '../../styles/Pet.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,11 +12,12 @@ export default function PetSlider() {
     const [ data, setData ] = useState(null);
 
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
-    const encoded = `${URL}?numOfRows=10&pageNo=10&noticeSdt=${agoDate(new Date(), 10)}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+    const encoded = `${URL}?noticeEdt=${agoDate33(new Date(), -1)}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
 
     const threeDaysAnimal = async () => {
         try {
             const response = await axios.get(encoded);
+            console.log('rerererer', response);
             setData(response.data);
         } catch (error) {
             console.error("Error fetching ThreeDaysData : ", error);
@@ -33,7 +34,8 @@ export default function PetSlider() {
         };
         
         fetchData();
-    }, [threeDaysAnimal]);
+        console.log("afafafafefefeefe", agoDate33(new Date(), -1));
+    }, []);
 
     // console.log("Animal333Days", encoded);
 
