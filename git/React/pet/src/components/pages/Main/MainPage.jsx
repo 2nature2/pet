@@ -4,7 +4,7 @@ import PetSlider from '../Pet/PetSlider';
 const MainPage = () => {
     return (
         <div>
-            {/* <PetSlider /> */}
+            <PetSlider />
         </div>
     );
 };
