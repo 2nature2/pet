@@ -23,9 +23,7 @@ import LoginHandeler from './components/pages/Member/LoginHandeler';
 
 import AdminPage from './components/pages/Admin/AdminPage';
 import MemberList from './components/pages/Admin/MemberList';
-
-import ReportManagement from './components/pages/Admin/ReportManagement';
-
+import ReportList from './components/pages/Admin/ReportList';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -139,31 +137,31 @@ function App() {
         console.error('Error:', error);
       });
   };
-
-   //로그인이 되어있는지 없는지 확인
-   useEffect(()=>{
+  //로그인이 되어있는지 없는지 확인
+  useEffect(()=>{
     console.log("세션 값 확인");
 
-  axios.get("/member/api/user")
-  .then((response) => {
-    // 서버 응답에서 사용자 정보를 가져와서 업데이트
-    console.log("세션 내용", response.data)
-    if(response.data!=null){
-      sessionStorage.setItem("name",response.data.name)
-      sessionStorage.setItem("userid",response.data.userid)
-      sessionStorage.setItem("email",response.data.email)
-      sessionStorage.setItem("tel",response.data.tel)
-      sessionStorage.setItem("role",response.data.role)
-      sessionStorage.setItem("nickname",response.data.nickname)
-    }
-    else{
-      sessionStorage.setItem("name",null)
-    }
-  })
-  .catch((error) => {
-    console.error('Error fetching user info:', error);
-  })
-},[]);
+    axios.get("/member/api/user")
+    .then((response) => {
+      // 서버 응답에서 사용자 정보를 가져와서 업데이트
+      console.log("세션 내용", response.data)
+      if(response.data!=null){
+        sessionStorage.setItem("name",response.data.name)
+        sessionStorage.setItem("userid",response.data.userid)
+        sessionStorage.setItem("email",response.data.email)
+        sessionStorage.setItem("tel",response.data.tel)
+        sessionStorage.setItem("role",response.data.role)
+        sessionStorage.setItem("nickname",response.data.nickname)
+      }
+      else{
+        sessionStorage.setItem("name",null)
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching user info:', error);
+    })
+  },[]);
+
 //회원리스트
 const [memberlist,setMemberlist] = useState([]);
 const [memberContent,setMemberContent]=useState({
@@ -173,7 +171,8 @@ const [memberContent,setMemberContent]=useState({
   userid:'',
   nickname:'',
   memberid:''
-})
+});
+
   const [mpage,setMpage] = useState(0);
   const [mtotalPages,setMtotalPages]=useState(0);
   const [mtotalElements,setMtotalElements] = useState(0);
@@ -190,7 +189,6 @@ const [memberContent,setMemberContent]=useState({
           console.error('Error fetching data:', error);
       }
   }
-
 
   useEffect(() => {
       const fetchData = async () => {
@@ -219,7 +217,7 @@ const [memberContent,setMemberContent]=useState({
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
             <Route path="/admin/adminPage/memberList" element={<MemberList lists={memberlist} loadMemberList={loadMemberList} setMemberlist={setMemberlist} mtotalElements={mtotalElements} setMtotalElements={setMtotalElements}/>}/>
-            <Route path="/admin/report" element={<ReportManagement/>}/>
+            <Route path="/admin/adminPage/report" element={<ReportList/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
     element={<LoginHandeler/>} //당신이 redirect_url에 맞춰 꾸밀 컴포넌트

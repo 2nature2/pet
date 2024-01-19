@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { Button, Container, Table } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
+import SideBar from "../Navigation/SideBar";
 
 const MemberList = ({lists, loadMemberList, setMemberlist, mtotalElements, setMtotalElements})=>{
     const movePage = useNavigate();
@@ -36,6 +36,7 @@ const MemberList = ({lists, loadMemberList, setMemberlist, mtotalElements, setMt
     
     return(
         <>
+        <SideBar/>
         <Container style={{marginTop:'100px', margininline: '10%'}}>
         <div>
             <Table>
@@ -50,7 +51,7 @@ const MemberList = ({lists, loadMemberList, setMemberlist, mtotalElements, setMt
                 <tbody>
                     {
                        lists.map((list,index)=>(
-                        <tr>
+                        <tr key={index}>
                             <td>{list.memberid}</td>
                             <td>{list.userid}</td>
                             <td>{list.name}</td>

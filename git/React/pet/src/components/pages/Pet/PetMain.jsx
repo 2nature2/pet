@@ -1,7 +1,6 @@
 import React,{useState} from 'react';
 import '../../styles/Community.css';
 import PetList from './PetList';
-import Pagination from 'react-js-pagination';
 import Category from './Category';
 import { agoDate } from '../../../util/DateFormat';
 

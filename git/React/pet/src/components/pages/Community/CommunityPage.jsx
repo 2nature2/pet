@@ -95,7 +95,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
 
     return (
         <div className='community'>
-            <img id='advneed' src={advneed}/>
+            <img id='advneed' alt='광고주 구합니다' src={advneed}/>
             <div className='cboard'>
                 <div className='search'>
                     <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}} value={searchOption} onChange={handleSearchOptionChange}>
@@ -117,7 +117,6 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                         </select>
                         :<input type='text' placeholder='내용을 입력하세요' onChange={getValue} onFocus={handleInputFocus} onBlur={handleInputBlur}></input>
                     }
-                    
                     <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}} onClick={handleSearch}>검색</Button>
                 </div>
                 <Table>
@@ -135,7 +134,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                                 noticeList
                                 .map((list, index) => (
                                     <tr className='tblData' key={index}>
-                                        <th style={{backgroundColor:"#E9F5FF"}}><img src={notice}/></th>
+                                        <th style={{backgroundColor:"#E9F5FF"}}><img src={notice} alt='notice'/></th>
                                         <th style={{backgroundColor:"#E9F5FF"}}>{list.b_category}</th>
                                         <th style={{textAlign: 'justify', backgroundColor:"#E9F5FF"}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></th>
                                         <th style={{backgroundColor:"#E9F5FF"}}>{list.b_writer}</th>
@@ -154,7 +153,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                                 <tr className='tblData' style={{fontWeight: 'normal'}} key={index}>
                                     <td>{list.bnum}</td>
                                     <td>{list.b_category}</td>
-                                    <td style={{textAlign: 'justify'}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
+                                    <td><a href={`/community/view/${list.bnum}`}>{list.b_title}<span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
                                     <td>{list.b_writer}</td>
                                     <td>{list.b_date}</td>
                                     <td>{list.b_like}</td>
