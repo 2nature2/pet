@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import '../../styles/Pet.css';
 import Kakao from "./Kakao";
 import { Button, FormGroup, Modal, Container } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
 
 const CallButton = ({ phoneNumber }) => {
     const handleCall = () => {
@@ -34,16 +33,16 @@ const PetDetail = () => {
         setAdoptionShow(true);
     }
 
-    const handleCall = () => {
-        window.location.href = `tel:${goAnimal.careTel}`;
-      };
+    // const handleCall = () => {
+    //     window.location.href = `tel:${goAnimal.careTel}`;
+    //   };
   
     return (
         <Container>
         <div>
             <div className="flex-detail-container">
                 <div className="flex-detail-img">
-                <img src={goAnimal.popfile}></img>
+                <img src={goAnimal.popfile} alt="animal_img"></img>
                 </div>
 
                 <div className="flex-detail-item">

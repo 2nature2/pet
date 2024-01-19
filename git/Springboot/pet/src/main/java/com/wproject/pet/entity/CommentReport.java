@@ -1,5 +1,6 @@
 package com.wproject.pet.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentReport {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int cr_id;
+	@Column(name = "cr_id")
+	private int crid;
 	@NotNull
 	private String c_reason;
 	@NotNull

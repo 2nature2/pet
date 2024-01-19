@@ -1,5 +1,6 @@
 package com.wproject.pet.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,7 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BoardReport {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int br_id;
+	@Column(name="br_id")
+	private int brid;
 	@NotNull
 	private String b_reason;
 	@NotNull

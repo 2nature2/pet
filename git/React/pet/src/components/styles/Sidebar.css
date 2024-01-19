@@ -12,12 +12,13 @@
     flex-direction: column;
   }
   
-  a {
+  .admin-sidebar a {
     color: #fff;
     text-decoration: none;
   }
-  
-  .active {
-    font-weight: bold;
+
+  .admin-sidebar a:active {
+      font-weight: bold;
   }
+
   
