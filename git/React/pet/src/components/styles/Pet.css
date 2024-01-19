@@ -22,6 +22,7 @@
 /* 상세페이지 */
 .flex-detail-container {
     display: flex;
+    justify-content: center;
     margin-top: 50px;
 }
 
@@ -58,7 +59,7 @@
 
 .flex-list-item {
     width: 200px;
-    margin-top: 35px;
+    margin-top: 20px;
     margin-left: 3%;
  }
 
