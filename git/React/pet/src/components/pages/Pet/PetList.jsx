@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../../styles/Pet.css';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import '../../styles/Pet.css';
 
 const PetList = () => {
 
@@ -94,26 +98,50 @@ const PetList = () => {
     console.log("Fetched Data:", data);
 
     return (
-        <div className='pet-list-container'>
+        <div className='card-list-containe'>
             {/* <h2>아이들이 당신을 기다리고 있어요!</h2> */}
             {
-                data.response.body.items.item
-                    .map((animal) => (
-                        <div className='flex-list-container' key={animal.desertionNo}>
-                            <div className='flex-list-img'>
-                                <a href={`/pet/detail/${animal.desertionNo}`}>
-                                    <img className='flex-list-img' src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}></img>
-                                </a>
-                            </div>
-                            <div className='flex-list-item'>
-                                <p>공고번호 : {animal.noticeNo}</p>
-                                <p>상태 : {animal.processState}</p>
-                                <p>접수일시 : {animal.noticeSdt}</p>
-                                <p>발견장소 : {animal.happenPlace}</p>
-                                <p>종류 : {animal.kindCd}</p>
-                                <p>특징 : {animal.specialMark}</p>
-                            </div>
-                        </div>
+                data.response.body.items.item.map((animal) => (
+                    <Row xs="auto" className='g-4'>
+                    {/* {Array.from({ length: 1}).map((_, idx) => ( */}
+                    <Col>
+                        <Card border='warning' style={{ width: '18rem' }}>
+                            <a href={`/pet/detail/${animal.desertionNo}`}>
+                            <Card.Img className='card-img' 
+                                src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}
+                                variant="top" />
+                            </a>
+                                <Card.Body>
+                                    <Card.Title>{animal.processState}</Card.Title>
+                                    <Card.Text>
+                                        {animal.kindCd }<br />
+                                        {animal.sexCd === 'F' ? '여아' : '남아'}<br />
+                                        {animal.neuterYn === 'Y' ? '중성화 완료' : '중성화 미완료'}
+                                    </Card.Text>
+                                </Card.Body>
+                                <ListGroup className="list-group-flush">
+                                    <ListGroup.Item>보호센터 : {animal.careNm}</ListGroup.Item>
+                                </ListGroup>
+                        </Card>
+                    </Col>
+                    {/* ))} */}
+                    </Row>
+
+                        // <div className='flex-list-container' key={animal.desertionNo}>
+                        //     <div className='flex-list-img'>
+                        //         <a href={`/pet/detail/${animal.desertionNo}`}>
+                        //             <img className='flex-list-img' src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}></img>
+                        //         </a>
+                        //     </div>
+                        //     <div className='flex-list-item'>
+                        //         <p>공고번호 : {animal.noticeNo}</p>
+                        //         <p>상태 : {animal.processState}</p>
+                        //         <p>접수일시 : {animal.noticeSdt}</p>
+                        //         <p>발견장소 : {animal.happenPlace}</p>
+                        //         <p>종류 : {animal.kindCd}</p>
+                        //         <p>특징 : {animal.specialMark}</p>
+                        //     </div>
+                        // </div>
                     ))
             }
             <Stack direction='row' spacing={2} justifyContent='center' marginTop={5} marginBottom={5}>

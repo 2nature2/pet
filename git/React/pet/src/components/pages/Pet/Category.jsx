@@ -62,7 +62,7 @@ export default function Category({query, onChange}){
                         value={kindCd}
                         onChange={onChange}>
                             <option value={""}>전체</option>
-                            <option value="[강아지]">강아지</option>
+                            <option value="[개]">강아지</option>
                             <option value="[고양이]">고양이</option>
                             <option value="[기타축종]">다른친구들</option>
                     </select>

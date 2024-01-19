@@ -43,7 +43,7 @@
    margin-left: 5%;
 }
 
-/* 펫 리스트 */
+/* 펫 리스트 bootstrap 적용 전*/
 .pet-list-container {
     display: flex;
     margin-top: 20px;
@@ -68,6 +68,18 @@
 }
 
 .flex-list-img a img{
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+/* 펫 리스트 bootstrap 적용 후*/
+.card-list-containe r{
+    margin-top: 20px;
+    justify-content: center;  
+}
+
+.card-img {
     width: 300px;
     height: 300px;
     object-fit: cover;
