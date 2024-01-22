@@ -162,40 +162,6 @@ function App() {
     })
   },[]);
 
-//회원리스트
-const [memberlist,setMemberlist] = useState([]);
-const [memberContent,setMemberContent]=useState({
-  name : '',
-  email:'',
-  tel:'',
-  userid:'',
-  nickname:'',
-  memberid:''
-});
-
-  const [mpage,setMpage] = useState(0);
-  const [mtotalPages,setMtotalPages]=useState(0);
-  const [mtotalElements,setMtotalElements] = useState(0);
-
-  const loadMemberList = async () =>{
-      try{
-          const response = await axios.get(`/member/?mpage=${mpage}`);
-          setMemberlist(response.data.content);
-          console.log(memberlist)
-          setMtotalPages(response.data.totalPages);
-          setMtotalElements(response.data.totalElements);
-          return response.data;
-      }catch(error){
-          console.error('Error fetching data:', error);
-      }
-  }
-
-  useEffect(() => {
-      const fetchData = async () => {
-        await loadMemberList(page);
-      };
-      fetchData();
-    }, [page]);
 
 
   return (
@@ -216,7 +182,7 @@ const [memberContent,setMemberContent]=useState({
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
-            <Route path="/admin/adminPage/memberList" element={<MemberList lists={memberlist} loadMemberList={loadMemberList} setMemberlist={setMemberlist} mtotalElements={mtotalElements} setMtotalElements={setMtotalElements}/>}/>
+            <Route path="/admin/adminPage/memberList" element={<MemberList/>}/>
             <Route path="/admin/adminPage/report" element={<ReportList/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
