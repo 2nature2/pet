@@ -15,7 +15,7 @@
 
 .rMenu {
     display: flex;
-    margin-top: 5%;
+    margin-top: 3%;
 }
 
 .rMenu button {
@@ -32,8 +32,7 @@
 }
 
 .rMenu button:hover {
-    border: 1px solid transparent;
-    background-color: #B89E97;
+    border: 1px solid black;
 }
 
 .rboard table {
@@ -61,18 +60,15 @@
 }
 
 .rboard .pagination {
-    margin-left: 40%;
+    margin-top: 3%;
+    margin-left: 45%;
+    text-align: center;
 }
 
 .rboard .pagination li {
-    width: 20px;
-    height: 20px;
-    text-align: center;
+    width: 25px;
 }
 
-.rboard .pagination li:first-child, .rboard .pagination li:last-child {
-    text-align: center;
-}
 
 .rboard .pagination li a {
     text-decoration: none;
@@ -83,7 +79,7 @@
 }
 
 .rboard .pagination li.active a {
-    color: #B89E97;
-    font-weight: 700;
+    background-color: #B89E97;
+    font-weight: 500;
 }
 
