@@ -7,33 +7,37 @@
 }
 
 .rboard{
-    display: flex;
+    /* display: flex; */
     margin-top: 3%;
     margin-bottom: 3%;
     width: 100%;
 }
 
-.rboard legend {
-    background-color: #f7cd10;
+.rMenu {
+    display: flex;
+    margin-top: 3%;
+}
+
+.rMenu button {
+    border: 1px solid black;
+    background-color: transparent;
+    color: black;
     width: fit-content;
     padding-inline: 10px;
     font-size: 20px;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.rMenu button:hover {
+    border: 1px solid black;
 }
 
 .rboard table {
     table-layout: fixed;
     height: 90%;
-}
-
-.bReport {
-    width: 50%;
-}
-
-.cReport {
-    margin-left: 5%;
-    width: 50%;
 }
 
 .bReport td:first-child, .cReport td:first-child,
@@ -55,19 +59,27 @@
     white-space: nowrap;
 }
 
-.rboard .pagination li {
-    width: 20px;
-    height: 20px;
+.rboard .pagination {
+    margin-top: 3%;
+    margin-left: 45%;
     text-align: center;
 }
+
+.rboard .pagination li {
+    width: 25px;
+}
+
 
 .rboard .pagination li a {
     text-decoration: none;
     color: black;
+    background-color: #DECCCC;
+    padding-inline: 5px;
+    border-radius: 10px;
 }
 
 .rboard .pagination li.active a {
-    color: #1098f7;
-    font-weight: 700;
+    background-color: #B89E97;
+    font-weight: 500;
 }
 
