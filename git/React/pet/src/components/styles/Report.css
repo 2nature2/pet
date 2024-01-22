@@ -55,6 +55,10 @@
     white-space: nowrap;
 }
 
+.rboard .pagination {
+    margin-left: 40%;
+}
+
 .rboard .pagination li {
     width: 20px;
     height: 20px;
@@ -64,10 +68,13 @@
 .rboard .pagination li a {
     text-decoration: none;
     color: black;
+    background-color: #DECCCC;
+    padding-inline: 5px;
+    border-radius: 10px;
 }
 
 .rboard .pagination li.active a {
-    color: #1098f7;
+    color: #B89E97;
     font-weight: 700;
 }
 
