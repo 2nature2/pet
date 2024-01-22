@@ -5,14 +5,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wproject.pet.dto.BoardReportDTO;
 import com.wproject.pet.dto.CommentReportDTO;
+import com.wproject.pet.dto.CommunityDTO;
 import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.service.BoardReportService;
 import com.wproject.pet.service.CommentReportService;
@@ -57,6 +64,33 @@ public class AdminController {
 	  Page<MemberDTO> resultPage = memberService.findAll(pageable);
 	  return ResponseEntity.ok(resultPage);
 	}
+	
+	//회원리스트 검색
+	@GetMapping("/member/search")
+	public ResponseEntity<Page<MemberDTO>> search(
+			@RequestParam(required = false, defaultValue = "") String field,
+			@RequestParam(required = false, defaultValue = "") String word, 
+			@RequestParam(name = "page", defaultValue = "0") int page,
+			@PageableDefault(size = Integer.MAX_VALUE, sort = "bnum", direction = Direction.DESC) Pageable pageable){
+		try {
+	        Page<MemberDTO> searchResult = memberService.search(field, word, pageable);
+	        return ResponseEntity.ok(searchResult);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	    }
+	}
+	
+	//회원 탈퇴
+	@DeleteMapping("/withdraw/{userid}")
+	@CrossOrigin(origins = "http://localhost:3000") 
+	public void memberDelete(@PathVariable String userid) {
+		System.out.println("회원탈퇴");
+		memberService.delete(userid);
+	}
+	
+	
+	
 	
 	
 }
