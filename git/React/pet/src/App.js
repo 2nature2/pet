@@ -179,9 +179,10 @@ const [memberContent,setMemberContent]=useState({
 
   const loadMemberList = async () =>{
       try{
-          const response = await axios.get(`/member/?mpage=${mpage}`);
+          const response = await axios.get(`/admin/memberList/?mpage=${mpage}`);
+          console.log(response.data)
           setMemberlist(response.data.content);
-          console.log(memberlist)
+          
           setMtotalPages(response.data.totalPages);
           setMtotalElements(response.data.totalElements);
           return response.data;
@@ -192,10 +193,11 @@ const [memberContent,setMemberContent]=useState({
 
   useEffect(() => {
       const fetchData = async () => {
-        await loadMemberList(page);
+        await loadMemberList(mpage);
       };
       fetchData();
-    }, [page]);
+    }, [mpage]);
+
 
 
   return (

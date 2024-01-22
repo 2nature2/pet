@@ -138,16 +138,8 @@ public class MemberController {
 		principalDetailsUser.setTel(memberDTO.getTel());
 		return "success";
 	}
+
 	
-	//회원리스트
-	@GetMapping("/")
-	public ResponseEntity<Page<MemberDTO>> getPosts(
-			@PageableDefault(size = 5, sort = "memberid", direction = Direction.ASC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "0") int mpage) {
-		System.out.println("회원리스트");
-	  Page<MemberDTO> resultPage = memberService.findAll(PageRequest.of(mpage, pageable.getPageSize(), pageable.getSort()));
-	  return ResponseEntity.ok(resultPage);
-	}
 	
 
 }

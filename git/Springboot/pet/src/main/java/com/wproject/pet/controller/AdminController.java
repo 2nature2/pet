@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wproject.pet.dto.BoardReportDTO;
 import com.wproject.pet.dto.CommentReportDTO;
+import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.service.BoardReportService;
 import com.wproject.pet.service.CommentReportService;
+import com.wproject.pet.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 	private final BoardReportService boardReportService;
 	private final CommentReportService commentReportService;
+	private final MemberService memberService;
 	
 	@GetMapping("/report")
 	public ResponseEntity<ReportResponseDTO> getReports(
@@ -48,6 +51,16 @@ public class AdminController {
 			this.boardReports = boardReports;
 			this.commentReports = commentReports;
 		}
+	}
+	
+	//회원리스트
+	@GetMapping("/memberList/")
+	public ResponseEntity<Page<MemberDTO>> getPosts(
+			@PageableDefault(size = 5, sort = "memberid", direction = Direction.ASC) Pageable pageable,
+			@RequestParam(required = false, defaultValue = "0") int mpage) {
+		System.out.println("회원리스트:"+mpage);
+	  Page<MemberDTO> resultPage = memberService.findAll(PageRequest.of(mpage, pageable.getPageSize(), pageable.getSort()));
+	  return ResponseEntity.ok(resultPage);
 	}
 	
 	

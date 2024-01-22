@@ -23,7 +23,7 @@ const MemberList = ({lists, loadMemberList, setMemberlist, mtotalElements, setMt
         };
         fetchData();
     }, [mpage, userInput]);
-
+ 
     
     const handlePageChange = async(selectedPage) => {
         try{
@@ -49,18 +49,21 @@ const MemberList = ({lists, loadMemberList, setMemberlist, mtotalElements, setMt
                     </tr>
                 </thead>
                 <tbody>
-                    {
-                       lists.map((list,index)=>(
-                        <tr key={index}>
-                            <td>{list.memberid}</td>
-                            <td>{list.userid}</td>
-                            <td>{list.name}</td>
-                            <td>{list.tel}</td>
-                        </tr>
-                        ))
-                    }
-              
-                </tbody>
+  {lists && lists.length > 0 ? (
+    lists.map((list, index) => (
+      <tr key={index}>
+        <td>{list.memberid}</td>
+        <td>{list.userid}</td>
+        <td>{list.name}</td>
+        <td>{list.tel}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="4">데이터가 없습니다.</td>
+    </tr>
+  )}
+</tbody>
             </Table>
         </div>
         <div className='btns'>
