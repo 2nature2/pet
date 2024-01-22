@@ -28,38 +28,33 @@ public class AdminController {
 	private final CommentReportService commentReportService;
 	private final MemberService memberService;
 	
-	@GetMapping("/report")
-	public ResponseEntity<ReportResponseDTO> getReports(
-			@PageableDefault(size = Integer.MAX_VALUE, sort = "brid", direction = Direction.DESC) Pageable boardPageable,
-            @PageableDefault(size = Integer.MAX_VALUE, sort = "cr_id", direction = Direction.DESC) Pageable commentPageable,
-            @RequestParam(required = false, defaultValue = "0") int boardPage,
-            @RequestParam(required = false, defaultValue = "0") int commentPage
+	@GetMapping("/boardReport")
+	public ResponseEntity<Page<BoardReportDTO>> getBoardReports(
+			 @PageableDefault(size = Integer.MAX_VALUE, sort = "brid", direction = Direction.DESC) Pageable pageable,
+			 @RequestParam(required = false, defaultValue = "0") int page
+
 			){
-		Page<BoardReportDTO> bResult = boardReportService.findAll(PageRequest.of(boardPage, boardPageable.getPageSize(), boardPageable.getSort()));
-		Page<CommentReportDTO> cResult = commentReportService.findAll(PageRequest.of(commentPage, commentPageable.getPageSize(), commentPageable.getSort()));
-		
-		ReportResponseDTO reportResponseDTO = new ReportResponseDTO(bResult, cResult);
-		
-		return ResponseEntity.ok(reportResponseDTO);
+		System.out.println("신고리스트:"+page);
+		Page<BoardReportDTO> boardReports = boardReportService.findAll(pageable);
+		return ResponseEntity.ok(boardReports);
 	}
 	
-	public static class ReportResponseDTO {
-		private final Page<BoardReportDTO> boardReports;
-		private final Page<CommentReportDTO> commentReports;
-		
-		public ReportResponseDTO(Page<BoardReportDTO> boardReports, Page<CommentReportDTO> commentReports) {
-			this.boardReports = boardReports;
-			this.commentReports = commentReports;
-		}
+	@GetMapping("/commentReport")
+	public ResponseEntity<Page<CommentReportDTO>> getCommentReports(
+			@PageableDefault(size = Integer.MAX_VALUE, sort = "crid", direction = Direction.DESC) Pageable pageable,
+			@RequestParam(required = false, defaultValue = "0") int page
+			){
+		Page<CommentReportDTO> commentReports = commentReportService.findAll(pageable);
+		return ResponseEntity.ok(commentReports);
 	}
 	
 	//회원리스트
-	@GetMapping("/memberList/")
+	@GetMapping("/memberList")
 	public ResponseEntity<Page<MemberDTO>> getPosts(
 			@PageableDefault(size = 5, sort = "memberid", direction = Direction.ASC) Pageable pageable,
-			@RequestParam(required = false, defaultValue = "0") int mpage) {
-		System.out.println("회원리스트:"+mpage);
-	  Page<MemberDTO> resultPage = memberService.findAll(PageRequest.of(mpage, pageable.getPageSize(), pageable.getSort()));
+			@RequestParam(required = false, defaultValue = "0") int page) {
+		System.out.println("회원리스트:"+page);
+	  Page<MemberDTO> resultPage = memberService.findAll(pageable);
 	  return ResponseEntity.ok(resultPage);
 	}
 	

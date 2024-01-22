@@ -4,3 +4,9 @@ export const agoDate = (date, ago) => {
     agoDate.setDate(date.getDate() - ago);
     return agoDate.toISOString().substring(0,10);
 };
+
+export const agoDate33 = (date, ago) => {
+    let agoDate = new Date(date);
+    agoDate.setDate(date.getDate() - ago);
+    return agoDate.toISOString().substring(0, 10);
+};

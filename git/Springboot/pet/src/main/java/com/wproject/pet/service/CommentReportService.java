@@ -24,8 +24,8 @@ public class CommentReportService {
 				creport.getContent().stream()
 				.map(report -> new CommentReportDTO(
 						report.getCrid(),
-						report.getC_reporter(),
 						report.getC_reason(),
+						report.getC_reporter(),
 						report.getCommunity(),
 						report.getComment()
 						))
