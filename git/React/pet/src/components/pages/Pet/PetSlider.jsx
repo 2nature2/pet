@@ -12,14 +12,15 @@ export default function PetSlider() {
     const [ data, setData ] = useState([]);
 
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
-    const encoded = `${URL}?bgnde=${agoDate(new Date(), 13)}&endde=${agoDate(new Date(), 13)}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+    const encoded = `${URL}?_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
 
     const threeDaysAnimal = async () => {
         try {
             const response = await axios.get(encoded);
             setData(response.data.response.body.items.item);
+
             console.log('response 확인', response.data.response.body.items.item);
-            console.log('encoded주소 확인', encoded);
+
         } catch (error) {
             console.error("Error fetching ThreeDaysData : ", error);
         }
@@ -34,7 +35,7 @@ export default function PetSlider() {
             }
         };
         fetchData();
-        console.log("ago", agoDate(new Date(), 9));
+        console.log("기한", agoDate(new Date(), -1));
     }, []);
 
     // console.log("Animal333Days", encoded);
