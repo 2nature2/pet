@@ -57,8 +57,8 @@ const ReportList = () => {
   return(
       <div className="reports">
         <div className="rMenu">
-          <Button onClick={()=>setReportState('boardReport')}>게시글 신고내역</Button>
-          <Button onClick={()=>setReportState('commentReport')}>댓글 신고내역</Button>
+          <Button onClick={()=>setReportState('boardReport')} style={reportState === 'boardReport'? {backgroundColor: '#B89E97', color: 'white', fontWeight:'500'} : {backgroundColor: 'transparent', color: 'black', border: '1px solid black'}}>게시글 신고내역</Button>
+          <Button onClick={()=>setReportState('commentReport')} style={reportState === 'commentReport'? {backgroundColor: '#B89E97', color: 'white',fontWeight:'500'} : {backgroundColor: 'transparent', color: 'black', border: '1px solid black'}}>댓글 신고내역</Button>
         </div>
         <div className="rboard">
           {
