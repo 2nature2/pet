@@ -18,7 +18,7 @@ const PetList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
 
-    const itemsPerPage = 9;
+    const itemsPerPage = 12;
 
     const navigateToPage = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -100,12 +100,10 @@ const PetList = () => {
     return (
         <div className='card-list-containe'>
             {/* <h2>아이들이 당신을 기다리고 있어요!</h2> */}
-            {
-                data.response.body.items.item.map((animal) => (
-                    <Row xs="auto" className='g-4'>
-                    {/* {Array.from({ length: 1}).map((_, idx) => ( */}
-                    <Col>
-                        <Card border='warning' style={{ width: '18rem' }}>
+            <Row xs={1} md={3} className='g-4'>
+                {data.response.body.items.item.map((animal) => (
+                    <Col key={animal.desertionNo}>
+                        <Card border='warning'>
                             <a href={`/pet/detail/${animal.desertionNo}`}>
                             <Card.Img className='card-img' 
                                 src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}
@@ -124,9 +122,6 @@ const PetList = () => {
                                 </ListGroup>
                         </Card>
                     </Col>
-                    {/* ))} */}
-                    </Row>
-
                         // <div className='flex-list-container' key={animal.desertionNo}>
                         //     <div className='flex-list-img'>
                         //         <a href={`/pet/detail/${animal.desertionNo}`}>
@@ -142,8 +137,8 @@ const PetList = () => {
                         //         <p>특징 : {animal.specialMark}</p>
                         //     </div>
                         // </div>
-                    ))
-            }
+                    ))}
+            </Row>
             <Stack direction='row' spacing={2} justifyContent='center' marginTop={5} marginBottom={5}>
                 <Pagination color='primary'
                     count={totalPages}
