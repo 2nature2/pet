@@ -20,6 +20,7 @@ const MyPage=()=>{
       //password : "",
      // passwordCheck:""
     });
+    const [userid,setUserid]=useState(formData.userid);
 
     // 중복확인 결과 상태
     const [isIdDuplicated, setIsIdDuplicated] = useState(false);
@@ -172,6 +173,20 @@ const MyPage=()=>{
     });
   };
 
+  const withdrawbtn=()=>{
+
+    fetch(`/member/withdraw/${userid}`, {
+      method: 'DELETE',
+  })
+      .then(() => {
+          
+          alert("탈퇴 완료")
+          sessionStorage.clear()
+          navigate("/")
+           
+      })
+  }
+
     return(
         <Container className="panel" style={{ marginTop: "50px", width: "700px"}}>
           <h4>회원정보 수정</h4>
@@ -273,8 +288,11 @@ const MyPage=()=>{
           </Form.Group>
 
          
-          <Button variant="secondary"  type="submit">
+          <Button variant="secondary"  type="submit" style={{marginRight:'10px'}}>
               수정
+            </Button>
+            <Button variant="danger"  type="button" onClick={withdrawbtn}>
+              회원탈퇴하기
             </Button>
           </Form>
 

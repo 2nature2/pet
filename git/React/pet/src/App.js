@@ -178,7 +178,6 @@ function App() {
             <Route path="/member/join" element={<JoinForm join={join} />} />
             <Route path="/member/login" element={<LoginForm  />} />
             <Route path="/member/mypage" element={<MyPage />} />
-            {/* <Route path="member/logout" element={<Logout />} /> */}
             <Route path="/loginFail" element={<LoginFail />} />
             <Route path="/pet/adoption" element={<Adoption/>}/>
             <Route path="/admin/adminPage" element={<AdminPage/>}/>

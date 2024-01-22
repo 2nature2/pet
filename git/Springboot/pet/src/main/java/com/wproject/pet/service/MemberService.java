@@ -83,8 +83,34 @@ public class MemberService {
 	
 	//회원리스트
 	public Page<MemberDTO> findAll(Pageable pageable){
-		Page<Member> lists = memberRepository.findAll(pageable);
+		Page<Member> lists = memberRepository.findMember(pageable);
 		
 		return convertToDtoPage(lists);
 		}
+	
+	//회원 리스트 검색
+	public Page<MemberDTO> search(String field, String word, Pageable pageable){
+		Page<Member> lists;
+		
+		switch(field){
+			case "m_name":
+				lists = memberRepository.findByNameContaining(word.toLowerCase(), pageable);
+				break;
+			case "m_userid":
+				lists = memberRepository.findByUseridContaining(word.toLowerCase(), pageable);
+				break;
+			case "m_tel":
+				lists = memberRepository.findByTelContaining(word.toLowerCase(), pageable);
+				break;
+			
+			default: lists = memberRepository.findAll(pageable);
+		}
+		return convertToDtoPage(lists);	
+	}
+	//회원 삭제
+	@Transactional
+	public void delete(String userid) {
+		Member member = memberRepository.findByUserid(userid);
+		memberRepository.deleteByUserid(member.getUserid());
+	}
 }
