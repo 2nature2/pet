@@ -24,6 +24,7 @@ import LoginHandeler from './components/pages/Member/LoginHandeler';
 import AdminPage from './components/pages/Admin/AdminPage';
 import MemberList from './components/pages/Admin/MemberList';
 import ReportList from './components/pages/Admin/ReportList';
+import Find from './components/pages/Member/Find';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -183,6 +184,7 @@ function App() {
             <Route path="/admin/adminPage" element={<AdminPage/>}/>
             <Route path="/admin/adminPage/memberList" element={<MemberList/>}/>
             <Route path="/admin/adminPage/report" element={<ReportList/>}/>
+            <Route path="/member/find" element={<Find/>}/>
             <Route
     path="/login/oauth2/callback/kakao" //redirect_url
     element={<LoginHandeler/>} //당신이 redirect_url에 맞춰 꾸밀 컴포넌트

@@ -113,4 +113,10 @@ public class MemberService {
 		Member member = memberRepository.findByUserid(userid);
 		memberRepository.deleteByUserid(member.getUserid());
 	}
+	
+	//아이디 찾기
+	public String searchId(String name, String tel) {
+		String search = memberRepository.searchId(name,tel);
+		return search;
+	}
 }
