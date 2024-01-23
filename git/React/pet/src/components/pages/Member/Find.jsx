@@ -95,10 +95,11 @@ const Find = () =>{
                 <input type='text' placeholder='전화번호를 입력하세요'  name='tel' onChange={getIdValue} value={idContent.tel} />
             </div>
             <Button style={{width:'120px'}} onClick={findId}>ID 찾기</Button>
+            
         </div>
         
            :
-            
+            <div>
                 <div className='stateform'>
             <div className='textform'>
                 <input type='text' placeholder='아이디를 입력하세요' name='userid' onChange={getPwValue} value={pwContent.userid}/>
@@ -106,7 +107,8 @@ const Find = () =>{
             </div>
             <Button style={{width:'120px'}} onClick={findPw}>PW 찾기</Button>
                 </div>
-             
+             <p className='notice'>메일 발송까지 몇초간 소요됩니다. 잠시만 기다려주세요</p>
+             </div>
           }
         </div>
       </div>

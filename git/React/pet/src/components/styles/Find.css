@@ -58,3 +58,9 @@
     border-width: 1px;
     font-family: "omyu-pretty";
 }
+
+.notice{
+    padding: 5%;
+    font-family: "omyu-pretty";
+    color: red;
+}
