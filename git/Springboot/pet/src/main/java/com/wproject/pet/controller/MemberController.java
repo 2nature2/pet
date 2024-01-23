@@ -35,6 +35,7 @@ import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.entity.Member;
 import com.wproject.pet.entity.Role;
 import com.wproject.pet.repository.MemberRepository;
+import com.wproject.pet.service.MailService;
 import com.wproject.pet.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,7 @@ public class MemberController {
 	private final MemberService memberService;
 	private final MemberRepository memberRepository;
 	private final BCryptPasswordEncoder encoder;
+	private final MailService mailService;
 	
 	
 	
@@ -161,6 +163,25 @@ public class MemberController {
 			String findId = memberService.searchId(member.getName(),member.getTel());
 			return findId;
 		}else {
+			return "fail";
+		}
+		
+	}
+	
+	//비밀번호 찾기
+	@PostMapping("/pwfind")
+	@ResponseBody
+	public String pwfind(@RequestBody MemberDTO memberDTO) {
+		System.out.println("pwfind");
+		Member member = new Member();
+		member.setUserid(memberDTO.getUserid());
+		member.setEmail(memberDTO.getEmail());
+		System.out.println("이메일 인증 이메일 : " + memberDTO.getEmail());
+		if(memberRepository.searchPw(member.getUserid(),member.getEmail())!=null) {
+			mailService.pwfind(member.getEmail(),member.getUserid());
+			return "success";
+		}
+		else {
 			return "fail";
 		}
 		
