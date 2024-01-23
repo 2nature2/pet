@@ -25,6 +25,9 @@ public interface MemberRepository extends JpaRepository<Member,Integer> {
 	public Page<Member> findByNameContaining(String word,Pageable pageable);
 	public Page<Member> findByUseridContaining(String word,Pageable pageable);
 	public Page<Member> findByTelContaining(String word,Pageable pageable);
+	
+	@Query(value = "select userid from member where name=:name and tel=:tel", nativeQuery = true)
+	public String searchId(String name, String tel);
 
 
 }

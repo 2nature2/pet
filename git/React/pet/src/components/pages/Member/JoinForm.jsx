@@ -134,6 +134,10 @@ const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
       alert("아이디를 입력하세요")
       return;
     }
+    else if(joinContent.userid=="fail"){
+      alert("사용 할 수 없는 아이디입니다.")
+      return;
+    }
     else if(!isIdChecked){
       alert('아이디 중복확인을 먼저 수행하세요.');
       return;

@@ -149,6 +149,22 @@ public class MemberController {
 			memberService.delete(userid);
 		}
 
+	//아이디 찾기
+	@PostMapping("/idfind")
+	@ResponseBody
+	public String idfind(@RequestBody MemberDTO memberDTO) {
+		System.out.println("아이디 찾기"+ memberDTO.getName());
+		Member member = new Member();
+		member.setName(memberDTO.getName());
+		member.setTel(memberDTO.getTel());
+		if(memberService.searchId(member.getName(),member.getTel())!=null) {
+			String findId = memberService.searchId(member.getName(),member.getTel());
+			return findId;
+		}else {
+			return "fail";
+		}
+		
+	}
 	
 	
 

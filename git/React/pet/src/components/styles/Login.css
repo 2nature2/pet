@@ -162,3 +162,8 @@
   .dupEmail {
     font-size: 12px;
   }
+
+  .find {
+    display: flex;
+    justify-content: flex-end; 
+  }

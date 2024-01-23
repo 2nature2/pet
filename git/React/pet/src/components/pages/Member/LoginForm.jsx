@@ -57,6 +57,7 @@ const LoginForm = () => {
             <Form.Control
               type="password"
               onChange={getValue}
+              className="styles.passwordInput"
               value={loginContent.password}
               placeholder="Password"
               name="password"
@@ -68,13 +69,14 @@ const LoginForm = () => {
               Sign In
             </Button>
           </div>
-         
+          <br/>
+         <a href="/member/find" className="find">아이디/비밀번호 찾기</a>
         </Form>
         <br/>
-        <a href={KAKAO_AUTH_URL} className="kakaobtn">
-       {/* <img src={process.env.PUBLIC_URL + `assets/Kakao.png`} /> */}
+        {/* <a href={KAKAO_AUTH_URL} className="kakaobtn">
+       <img src={process.env.PUBLIC_URL + `assets/Kakao.png`} />
        <img src={`/img/kakaologo.png`} />
-</a>
+        </a> */}
       </Container>
    
     </div>
