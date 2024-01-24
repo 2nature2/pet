@@ -18,7 +18,7 @@ export default function PetMain() {
 
     return(
         <div className='community'>
-            <Category query={query} onChange={handleChange} />
+            {/* <Category query={query} onChange={handleChange} /> */}
             <PetList />
         </div>
     )
