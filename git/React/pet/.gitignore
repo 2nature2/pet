@@ -30,3 +30,8 @@ REACT_APP_REDIRECT_URL="http://localhost:3000/login/oauth2/code/kakao"
 # api key
 .env
 >>>>>>> c6a53f3c8baf4c2e0cacf7ac2b7557a63c395233
+
+# repository 에 필요없는 파일명. by Pet.
+flask_notUse.jsx
+PetTest.jsx
+Pet.jsx
