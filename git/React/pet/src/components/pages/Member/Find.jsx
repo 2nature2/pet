@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "react-bootstrap";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 import '../../styles/Find.css';
 import { getValue } from '@testing-library/user-event/dist/utils';
 
 const Find = () =>{
+    const navigate = useNavigate();
     const [findState,setFindState] = useState('idfind');
     const [idContent, setIdContent] = useState({
         name:'',
         tel:''
     })
+    const [pwContent, setPwContent] = useState({
+        userid:'',
+        email:''
+    })
 
-    const getValue = (e) => {
+    const getIdValue = (e) => {
         setIdContent({
           ...idContent,
           [e.target.name]: e.target.value,
         });
       };
+
+      const getPwValue = (e) => {
+        setPwContent({
+          ...pwContent,
+          [e.target.name]: e.target.value,
+        });
+      };
+
+
     const findId= async ()=>{
         try{
             const response = await axios.post(`/member/idfind`,{
@@ -42,6 +57,28 @@ const Find = () =>{
           }
     }
 
+    const findPw = async () => {
+        try{
+            const response = await axios.post(`/member/pwfind`,{
+                userid:pwContent.userid,
+                email:pwContent.email
+            })
+            if(response.data=="success"){
+                alert("메일로 발송된 임시비밀번호로 로그인후 마이페이지에서 변경해주세요");
+                navigate("/member/login")
+            }
+            else{
+                alert("일치하는 회원정보가 없습니다.");
+            }
+            setPwContent({
+                userid:'',
+                email:''
+            })
+        }catch (error) {
+            console.error('pwfind오류:', error);
+          }
+    }
+
     return(
         <div className="findtap">
         <div className="fMenu">
@@ -54,22 +91,24 @@ const Find = () =>{
             ?
             <div className='stateform'>
             <div className='textform'>
-                <input type='text' placeholder='이름을 입력하세요' name='name' onChange={getValue} value={idContent.name}/>
-                <input type='text' placeholder='전화번호를 입력하세요'  name='tel' onChange={getValue} value={idContent.tel} />
+                <input type='text' placeholder='이름을 입력하세요' name='name' onChange={getIdValue} value={idContent.name}/>
+                <input type='text' placeholder='전화번호를 입력하세요'  name='tel' onChange={getIdValue} value={idContent.tel} />
             </div>
-            <Button style={{width:'120px'}} onClick={findId}>ID찾기</Button>
+            <Button style={{width:'120px'}} onClick={findId}>ID 찾기</Button>
+            
         </div>
         
            :
-            
+            <div>
                 <div className='stateform'>
             <div className='textform'>
-                <input type='text' placeholder='아이디를 입력하세요' name='userid' onChange={getValue} value={idContent.userid}/>
-                <input type='text' placeholder='이메일을 입력하세요'  name='email' onChange={getValue} value={idContent.email} />
+                <input type='text' placeholder='아이디를 입력하세요' name='userid' onChange={getPwValue} value={pwContent.userid}/>
+                <input type='text' placeholder='이메일을 입력하세요'  name='email' onChange={getPwValue} value={pwContent.email} />
             </div>
-            <Button style={{width:'120px'}} onClick={findId}>PW 찾기</Button>
+            <Button style={{width:'120px'}} onClick={findPw}>PW 찾기</Button>
                 </div>
-             
+             <p className='notice'>메일 발송까지 몇초간 소요됩니다. 잠시만 기다려주세요</p>
+             </div>
           }
         </div>
       </div>

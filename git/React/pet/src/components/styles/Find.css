@@ -25,6 +25,7 @@
     display: flex;
     margin-top: 3%;
     margin-left: 8px;
+    font-family: "omyu-pretty";
 }
 .fMenu button {
     border: 1px solid black;
@@ -37,6 +38,7 @@
     border-top-left-radius: 10px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    font-family: "omyu-pretty";
 }
 
 
@@ -44,7 +46,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: "omyu-pretty";
 }
+
 
 .textform input{
     margin: 10px;
@@ -52,4 +56,11 @@
     height: 40px;
     width: 80%;
     border-width: 1px;
+    font-family: "omyu-pretty";
+}
+
+.notice{
+    padding: 5%;
+    font-family: "omyu-pretty";
+    color: red;
 }

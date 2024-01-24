@@ -8,7 +8,8 @@ import '../../styles/Pet.css';
 
 const PetList = () => {
 
-    const [data, setData] = useState(null); // 요청의 결과
+    const [data, setData] = useState([]); // 요청의 결과
+
     const [isLoading, setIsLoading] = useState(true); // 로딩 상태
     const [error, setError] = useState(false); // 에러
 
