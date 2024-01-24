@@ -120,7 +120,8 @@ const ViewPage = () => {
     const [boardReport, setBoardReport] = useState({
         b_reporter: '',
         b_reason: '',
-        b_id: bnum
+        b_id: bnum,
+        reportStatus: ''
     });
     const getValue = (e) => {
         setBoardReport((prevBoardReport) => ({
@@ -132,7 +133,8 @@ const ViewPage = () => {
         const boardReportDTO = {
             b_reporter: sessionStorage.getItem("nickname"),
             b_reason: boardReport.b_reason,
-            b_id: bnum
+            b_id: bnum,
+            reportStatus:''
         };
         fetch(`/community/report/${view.bnum}`, {
             method: 'POST',
@@ -151,7 +153,8 @@ const ViewPage = () => {
                 setBoardReport({
                     b_reporter: sessionStorage.getItem("nickname"),
                     b_reason: boardReportDTO.b_reason,
-                    b_id: bnum
+                    b_id: bnum,
+                    reportStatus: ''
                 });
                 reportClose();
             })
@@ -247,10 +250,10 @@ const ViewPage = () => {
         fetch(`/comment/delete/${c_id}`, {
             method: 'DELETE',
         })
-            .then(() => {
-                window.location.reload();
-                // window.location = document.referrer;
-            })
+        .then(() => {
+            window.location.reload();
+            // window.location = document.referrer;
+        })
     }
     const [cShow, setCShow] = useState(false);
     const cReportClose = () => setCShow(false);
