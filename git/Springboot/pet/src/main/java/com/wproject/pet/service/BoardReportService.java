@@ -1,6 +1,9 @@
 package com.wproject.pet.service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -27,6 +30,7 @@ public class BoardReportService {
 							report.getBrid(),
 							report.getB_reason(),
 							report.getB_reporter(),
+							report.getReportStatus(),
 							report.getCommunity()
 							))
 					.collect(Collectors.toList()),
@@ -37,11 +41,30 @@ public class BoardReportService {
 	
 	
 	public Page<BoardReportDTO> findAll(Pageable pageable){
-		
 		Page<BoardReport> breports = boardReportRepository.findAll(pageable);
 		
 		return convertToDto(breports);
 	}
 	
+	@Transactional
+	public BoardReportDTO view(int brid){
+		System.out.println("View method called for br_id: " + brid);
+		Optional<BoardReport> boardPage = boardReportRepository.findById(brid);
+		BoardReport boardReport = boardPage.get();
+		return new BoardReportDTO(
+				boardReport.getBrid(),
+				boardReport.getB_reason(),
+				boardReport.getB_reporter(),
+				boardReport.getReportStatus(),
+				boardReport.getCommunity()
+				);
+	}
+	
+	@Transactional
+	public void statusChange(int brid) {
+		BoardReport boardReport = boardReportRepository.findById(brid).get();
+		boardReport.setReportStatus("yes");
+		boardReportRepository.save(boardReport);
+	}
 
 }

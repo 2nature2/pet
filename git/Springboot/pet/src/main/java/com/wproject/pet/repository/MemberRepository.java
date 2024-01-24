@@ -28,6 +28,9 @@ public interface MemberRepository extends JpaRepository<Member,Integer> {
 	
 	@Query(value = "select userid from member where name=:name and tel=:tel", nativeQuery = true)
 	public String searchId(String name, String tel);
+	
+	@Query(value = "select memberid from member where userid=:userid and email=:email", nativeQuery = true)
+	public String searchPw(String userid, String email);
 
 
 }

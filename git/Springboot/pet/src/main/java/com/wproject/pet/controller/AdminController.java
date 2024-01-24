@@ -1,25 +1,25 @@
 package com.wproject.pet.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wproject.pet.dto.BoardReportDTO;
 import com.wproject.pet.dto.CommentReportDTO;
-import com.wproject.pet.dto.CommunityDTO;
 import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.service.BoardReportService;
 import com.wproject.pet.service.CommentReportService;
@@ -44,6 +44,19 @@ public class AdminController {
 		System.out.println("신고리스트:"+page);
 		Page<BoardReportDTO> boardReports = boardReportService.findAll(pageable);
 		return ResponseEntity.ok(boardReports);
+	}
+	
+	@GetMapping("/boardReport/view/{brid}")
+	public ResponseEntity<Map<String, Object>> view(@PathVariable int brid){
+		BoardReportDTO boardReportDTO = boardReportService.view(brid);
+		Map<String, Object> response = new HashMap<>();
+		response.put("boardReport", boardReportDTO);
+		return ResponseEntity.ok(response);
+	}
+	
+	@PutMapping("/status/{brid}")
+	public void statusChange(@PathVariable int brid) {
+		boardReportService.statusChange(brid);
 	}
 	
 	@GetMapping("/commentReport")

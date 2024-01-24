@@ -146,6 +146,7 @@ public class CommunityService {
 		boardReport.setB_reporter(boardReportDTO.getB_reporter());
 		boardReport.setB_reason(boardReportDTO.getB_reason());
 		boardReport.setCommunity(community);
+		boardReport.setReportStatus("no");
 		boardReportRepository.save(boardReport);
 	}
 }

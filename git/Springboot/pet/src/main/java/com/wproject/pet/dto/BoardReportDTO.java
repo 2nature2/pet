@@ -11,6 +11,7 @@ public class BoardReportDTO {
 	private int br_id;
 	private String b_reason;
 	private String b_reporter;
+	private String reportStatus;
 	private Community community;
 	
 }

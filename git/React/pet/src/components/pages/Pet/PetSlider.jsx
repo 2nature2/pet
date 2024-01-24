@@ -18,7 +18,7 @@ export default function PetSlider() {
         try {
             const response = await axios.get(encoded);
             setData(response.data.response.body.items.item);
-
+           
             console.log('response 확인', response.data.response.body.items.item);
 
         } catch (error) {
