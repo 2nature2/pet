@@ -40,10 +40,21 @@
     height: 90%;
 }
 
+.bReport th:first-child, .cReport th:first-child,
 .bReport td:first-child, .cReport td:first-child,
+.bReport th:nth-child(2), .cReport th:nth-child(2),
 .bReport td:nth-child(2), .cReport td:nth-child(2) {
     text-align: center;
     width: 15%;
+}
+
+.bReport th:nth-child(3), .cReport th:nth-child(3),
+.bReport td:nth-child(3), .cReport td:nth-child(3) {
+    width: 70%;
+    overflow: hidden;
+    word-wrap: nowrap;
+    text-overflow: ellipsis;
+    cursor: pointer;
 }
 
 .bReport th, .cReport th {

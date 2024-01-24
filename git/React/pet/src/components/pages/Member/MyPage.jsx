@@ -153,11 +153,11 @@ const MyPage=()=>{
     }
     axios.post("/member/memberupdate", formData)
     .then((response)=>{
-      if(response.data=="success"){
+      if(response.data==="success"){
         alert("회원정보 수정 완료")
         sessionStorage.setItem("name", formData.name);
-         sessionStorage.setItem("tel", formData.tel);
-         sessionStorage.setItem("nickname", formData.nickname);
+        sessionStorage.setItem("tel", formData.tel);
+        sessionStorage.setItem("nickname", formData.nickname);
         sessionStorage.setItem("userid", formData.userid);
         sessionStorage.setItem("email", formData.email);
 
