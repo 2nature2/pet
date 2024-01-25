@@ -196,8 +196,18 @@ const ReportList = () => {
           <Button onClick={()=>setReportState('commentReport')} style={reportState === 'commentReport'? {backgroundColor: '#B89E97', color: 'white',fontWeight:'500'} : {backgroundColor: 'transparent', color: 'black', border: '1px solid black'}}>댓글 신고내역</Button>
         </div>
         <div className="rSubMenu" style={{float: 'right'}}>
-          <Button variant="outline-dark" onClick={()=>setReportStatus('no')}>미처리</Button>
-          <Button variant="outline-dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
+          {
+            reportStatus === 'no'
+            ?<>
+            <Button variant="dark" onClick={()=>setReportStatus('no')}>미처리</Button>
+            <Button variant="outline-dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
+            </>
+            :
+            <>
+            <Button variant="outline-dark" onClick={()=>setReportStatus('no')}>미처리</Button>
+            <Button variant="dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
+            </>
+          }
         </div>
         <div className="rboard">
           {
