@@ -53,7 +53,8 @@ const JoinForm = ({ join }) => {
             setIsIdDuplicated(false);
             setIdCheckMessage('사용 가능한 아이디입니다.');
             setIsIdChecked(true); // 중복확인 수행 상태로 설정
-          } else if (response.data === 'fail') {
+          } 
+          else if (response.data === 'fail') {
             setIsIdDuplicated(true);
             setIdCheckMessage('이미 사용 중인 아이디입니다.');
             setIsIdChecked(false); // 중복확인 미수행 상태로 설정
