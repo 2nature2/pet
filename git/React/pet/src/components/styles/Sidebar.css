@@ -1,24 +1,32 @@
 
-  /* AdminSidebar.css */
-.admin-sidebar {
-    width: 200px;
-    height: 100%;
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-  
-    /* 세로로 정렬 추가 */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .admin-sidebar a {
-    color: #fff;
-    text-decoration: none;
-  }
 
-  .admin-sidebar a:active {
-      font-weight: bold;
-  }
-
+.sidebar{
+  width: 10%;
+  height: 100vh;
+  background-color: #fff;
+  margin-top: 5%;
+  border-right: 1px solid black; 
+  font-family: "omyu-pretty";
   
+}
+
+.flex-container {
+  display: flex;
+}
+
+
+.sidebar p{
+  padding: 10px;
+  margin: 20px;
+  padding-top: 20%;
+  color: black;
+  font-size: large;
+}
+
+.sideLink{
+  text-decoration: none; 
+}
+
+.sideLink.active {
+  font-weight: bold; 
+}

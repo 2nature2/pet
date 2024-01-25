@@ -97,9 +97,9 @@ const MemberList = ()=>{
 
 
     return(
-        <>
+        <div className="flex-container" style={{display: 'flex'}}>
         <SideBar/>
-        <Container style={{marginTop:'100px', margininline: '10%'}}>
+        <Container style={{marginTop:'100px', margininline: '10%', width:'80%'}}>
         <div>
         <div className='search'>
         <select name='search' style={{marginRight:10, textAlign:'center', padding: 5}}  value={searchOption} onChange={handleSearchOptionChange}>
@@ -161,7 +161,7 @@ const MemberList = ()=>{
                     </Modal.Footer>
                 </Modal>
             </Container>
-        </>
+        </div>
     )
 }
 

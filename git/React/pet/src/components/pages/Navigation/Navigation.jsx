@@ -49,7 +49,7 @@ const handleLogout = async () => {
         ) : (
           <>
             {sessionStorage.getItem("role") === "ROLE_ADMIN" ? (
-              <NavLink className='navmenu' to="/admin/adminPage">ADMIN</NavLink>
+              <NavLink className='navmenu' to="/admin/adminpage/memberlist">ADMIN</NavLink>
             ) : (
               <NavLink className='navmenu' to="/member/mypage">MY-PAGE</NavLink>
             )}
