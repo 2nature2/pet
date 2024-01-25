@@ -37,28 +37,29 @@ const MemberList = ()=>{
         setShowModal(true);
     };
 
-    useEffect(()=>{
-        const fetchData = async()=>{
-            
-            try{
-                const loadMemberList = await fetch(`/admin/memberList?page=${page}`);
-                const Data = await loadMemberList.json();
-
-                setMemberList(Data.content);
-                setTotalPages(Data.totalPages);
-                setTotalElements(Data.totalElements);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            let endpoint = `/admin/memberList?page=${page}`;
+            if (searching) {
+              endpoint = `/admin/member/search?page=${page}&field=${searchOption}&word=${userInput}`;
             }
-            catch(error){
-                console.error('Error fetching data:', error);
-            }
-        }
+            const loadMemberList = await fetch(endpoint);
+            const Data = await loadMemberList.json();
+            setMemberList(Data.content);
+            setTotalPages(Data.totalPages);
+            setTotalElements(Data.totalElements);
+          } catch (error) {
+            console.error('데이터 가져오기 오류:', error);
+          }
+        };
         fetchData();
-        console.log('memberList', memberList);
-       
-      },[page]);
+      }, [page, searching, searchOption, userInput]);
+
       const handlePageChange = async(selectedPage) => {
         const currentPage = Math.max(selectedPage, 1);
         setPage(currentPage-1);
+      
       }
 
       const handleWithdraw =  () => {
@@ -75,19 +76,21 @@ const MemberList = ()=>{
 
     
     const handleSearch = () => {
-        search(page);
+        setPage(0); // 검색 시 페이지를 0으로 초기화
+        setSearching(true);
+        search(0);
     };
 
     const search = async(selectedPage) => {
-        try{
-            const currentPage = selectedPage -1;
-            console.log("검색테스트1")
-            const response = await axios.get(`/admin/member/search?&size=20&page=${currentPage}&field=${searchOption}&word=${userInput}`);
-            console.log("검색테스트2")
-            // setNoticeList(notices.data.content);
-            // setCommunityList(response.data.content);
-            // setTotalElements(response.data.totalElements);
-            }catch(error){
+        try {
+            const currentPage = selectedPage;
+            const endpoint = `/admin/member/search?page=${currentPage}&field=${searchOption}&word=${userInput}`;
+            const response = await axios.get(endpoint);
+    
+            setMemberList(response.data.content);
+            setTotalPages(response.data.totalPages);
+            setTotalElements(response.data.totalElements);
+        } catch (error) {
             console.error("검색 오류:", error);
         }
     };
