@@ -12,6 +12,7 @@ public class CommentReportDTO {
 	private int cr_id;
 	private String c_reason;
 	private String c_reporter;
+	private String reportStatus;
 	private Community community;
 	private Comment comment;
 
