@@ -39,7 +39,7 @@ const LoginForm = () => {
         >
           <Form.Group as={Form.Row} className="mb-3" controlId="formPlaintextId">
             <Form.Label column sm="2">
-              UserID
+              ID
             </Form.Label>
             <Form.Control
               type="text"
@@ -64,19 +64,17 @@ const LoginForm = () => {
             />
           </Form.Group>
           <br />
-          <div className="d-grid gap-1">
-            <Button variant="secondary"  type="submit"> {/* 수정: type을 submit에서 button으로 변경 */}
-              Sign In
-            </Button>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <button variant="secondary"  type="submit" style={{backgroundColor: 'transparent', border: 'none',display: 'flex', alignItems: 'center'}}> 
+              <img src="../img/button.png" style={{width:'80px', height:'80px'}}/>
+            </button>
+           
           </div>
           <br/>
          <a href="/member/find" className="find">아이디/비밀번호 찾기</a>
         </Form>
         <br/>
-        {/* <a href={KAKAO_AUTH_URL} className="kakaobtn">
-       <img src={process.env.PUBLIC_URL + `assets/Kakao.png`} />
-       <img src={`/img/kakaologo.png`} />
-        </a> */}
+      
       </Container>
    
     </div>

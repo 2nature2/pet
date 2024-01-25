@@ -69,11 +69,11 @@ const PetDetail = () => {
             <br/>
         </div>
         <div>
-        <Modal show={adoptionShow} onHide={adoptionClose}>
+        <Modal show={adoptionShow} onHide={adoptionClose} >
                         <Modal.Header closeButton>
                             <Modal.Title>관할센터 문의하기</Modal.Title>
                         </Modal.Header>
-                        <Modal.Body style={{ display: 'flex', alignItems:'center' }}>
+                        <Modal.Body style={{ display: 'flex', alignItems:'center', width:'80%' }}>
                             <FormGroup className="mb-3">
                                 <h6>🌟관할보호센터 : {goAnimal.careNm} </h6>
                                 <h6>🌟위치  </h6>
