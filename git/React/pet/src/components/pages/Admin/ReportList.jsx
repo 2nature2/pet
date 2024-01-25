@@ -3,6 +3,7 @@ import '../../styles/Report.css';
 import { Button, FormControl, FormGroup, Modal, Table } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import { useNavigate, useParams } from "react-router-dom";
+import SideBar from "../Navigation/SideBar";
 
 const ReportList = () => {
    
@@ -127,6 +128,8 @@ const ReportList = () => {
   }
 
   return(
+    <div className="flex-container" style={{display: 'flex'}}>
+        <SideBar/>
       <div className="reports">
         <div className="rMenu">
           <Button onClick={()=>setReportState('boardReport')} style={reportState === 'boardReport'? {backgroundColor: '#B89E97', color: 'white', fontWeight:'500'} : {backgroundColor: 'transparent', color: 'black', border: '1px solid black'}}>게시글 신고내역</Button>
@@ -219,6 +222,7 @@ const ReportList = () => {
               }
           </Modal>
         </div>
+      </div>
       </div>
   )
 }

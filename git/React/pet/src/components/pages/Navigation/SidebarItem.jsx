@@ -1,15 +1,12 @@
 import React from "react";
 
-const SidebarItem=({ menu, isActive })=> {
-    return isActive === true ? (
-      <div className="sidebar-item active">
-        <p>{menu.name}</p>
-      </div>
-    ) : (
-      <div className="sidebar-item ">
-        <p>{menu.name}</p>
-      </div>
-    );
+const SidebarItem=({ menu })=> {
+
+      return (
+        <div className="sidebar-item">
+          <p>{menu.name}</p>
+        </div>
+      );
   }
 
   export default SidebarItem;
