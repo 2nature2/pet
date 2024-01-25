@@ -64,6 +64,7 @@ public class CommentService {
 		commentReport.setC_reason(commentReportDTO.getC_reason());
 		commentReport.setComment(comment);
 		commentReport.setCommunity(comment.getCommunity());
+		commentReport.setReportStatus("no");
 		commentReportRepository.save(commentReport);
 	}
 }

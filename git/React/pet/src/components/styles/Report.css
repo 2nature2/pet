@@ -93,3 +93,32 @@
     background-color: #B89E97;
     font-weight: 500;
 }
+
+.reportContainer {
+    display: grid;
+    grid-template-columns: 20px 2fr;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.arrow {
+    height: 30px;
+}
+
+.reportView {
+    margin-top: 2%;
+    padding-inline: 5%;
+    border-left: 5px solid #B89E97;
+    background-color: #DECCCC80;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #d9d9d9;
+}
+
+.reportView :first-child {
+    padding-top: 3%;
+}
+
+.reportView :nth-child(2) {
+    padding-bottom: 3%;
+}
+

@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +27,8 @@ public class CommentReport {
 	private String c_reason;
 	@NotNull
 	private String c_reporter;
+	@ColumnDefault("'no'")
+	private String reportStatus;
 	@ManyToOne
 	@JoinColumn(name="b_id")
 	@NotNull

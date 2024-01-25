@@ -39,7 +39,6 @@ public class BoardReportService {
 				);
 	}
 	
-	
 	public Page<BoardReportDTO> findAll(Pageable pageable){
 		Page<BoardReport> breports = boardReportRepository.findAll(pageable);
 		

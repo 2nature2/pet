@@ -136,29 +136,39 @@ const ViewPage = () => {
             b_id: bnum,
             reportStatus:''
         };
-        fetch(`/community/report/${view.bnum}`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(boardReportDTO)
-        })
-            .then((resp) => {
-                if (!resp.ok) {
-                    throw new Error(`Network response was not ok: ${resp.status}`);
-                }
-                return resp.text();
+        
+        if(boardReport.b_reason.length>255){
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "글자수를 확인해주세요.",
+                confirmButtonColor:"#b80042"
             })
-            .then((resp) => {
-                setBoardReport({
-                    b_reporter: sessionStorage.getItem("nickname"),
-                    b_reason: boardReportDTO.b_reason,
-                    b_id: bnum,
-                    reportStatus: ''
-                });
-                reportClose();
+        }else{
+            fetch(`/community/report/${view.bnum}`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(boardReportDTO)
             })
-    }
+                .then((resp) => {
+                    if (!resp.ok) {
+                        throw new Error(`Network response was not ok: ${resp.status}`);
+                    }
+                    return resp.text();
+                })
+                .then((resp) => {
+                    setBoardReport({
+                        b_reporter: sessionStorage.getItem("nickname"),
+                        b_reason: boardReportDTO.b_reason,
+                        b_id: bnum,
+                        reportStatus: ''
+                    });
+                    reportClose();
+                })
+            } 
+        }
 
     const [formComment, setFormComment] = useState({
         c_writer: sessionStorage.getItem("nickname"),

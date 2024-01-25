@@ -6,7 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import SideBar from "../Navigation/SideBar";
 
 const ReportList = () => {
-   
+  
+  const movePage = useNavigate();
   const [boardReports, setBoardReports] = useState([]);
   const [commentReports, setCommentReports] = useState([]);
   const [bPage, setBPage] = useState(1);
@@ -16,6 +17,11 @@ const ReportList = () => {
   const [bTotalElements, setBTotalElements] = useState(0);
   const [cTotalElements, setCTotalElements] = useState(0);
 
+
+  const [reportState, setReportState] = useState('boardReport');
+  const [reportStatus, setReportStatus] = useState('no');
+  const [show ,setShow] = useState(false);
+
   const [boardReport, setBoardReport] = useState({
     brid: '',
     b_reporter: '',
@@ -24,63 +30,80 @@ const ReportList = () => {
     reportStatus: ''
   })
   const [commentReport, setCommentReport] = useState({
+    crid: '',
     c_reporter: '',
     c_reason: '',
     community: '',
-    comment: ''
+    comment: '',
+    reportStatus: ''
   })
 
-  useEffect(() => {
-    const fetchData = async() => {
-      try {
-        const bResponse = await fetch('/admin/boardReport');
-        const cResponse = await fetch('/admin/commentReport');
-        const bData = await bResponse.json();
-        const cData = await cResponse.json();
+  const fetchData = async() => {
+    try {
+      const bResponse = await fetch('/admin/boardReport');
+      const cResponse = await fetch('/admin/commentReport');
+      const bData = await bResponse.json();
+      const cData = await cResponse.json();
+      
+      setBoardReports(bData.content);
+      setBTotalElements(bData.totalElements);
+      setBTotalPages(Math.ceil(bData.totalElements / 10));
+      setCommentReports(cData.content);
+      setCTotalElements(cData.totalElements);
+      setCTotalPages(Math.ceil(cData.totalElements / 10));
 
-        setBoardReports(bData.content);
-        setCommentReports(cData.content);
-
-        setBTotalPages(bData.totalPages);
-        setBTotalElements(bData.totalElements);
-        setCTotalPages(cData.totalPages);
-        setCTotalElements(cData.totalElements);
-
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      if(reportState === 'boardReport') {
+        const filteredBR = bData.content.filter((report) => report.reportStatus === reportStatus);
+        setBTotalElements(filteredBR.length);
+        setBTotalPages(Math.ceil(filteredBR.length / 10));
+        console.log('filteredBR',filteredBR);
       }
-    };
+
+      if(reportState === 'commentReport') {
+        const filteredCR = cData.content.filter((report) => report.reportStatus === reportStatus);
+        setCTotalElements(filteredCR.length);
+        setCTotalPages(Math.ceil(filteredCR.length / 10));
+        console.log('filtertedCR', filteredCR);
+      }
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+  
+  useEffect(() => {
     fetchData();
-    console.log('boardReports', boardReports);
-    console.log('commentReports', commentReports);
-  }, []);
+  }, [reportState, reportStatus, bPage, cPage]);
 
   const handleBPageChange = async(selectedPage) => {
     try{
       const currentPage = Math.max(selectedPage, 1);
       setBPage(currentPage);
-      console.log('bPage:', bPage);
+      console.log('bPage:', currentPage);
+      await fetchData();
     } catch(error) {
       console.error("페이지 변경 오류", error);
     }
   }
 
-  const handleCPageChange = (selectedPage) => {
+  const handleCPageChange = async(selectedPage) => {
     try{
       const currentPage = Math.max(selectedPage, 1);
       setCPage(currentPage);
-      console.log('cPage:', cPage);
+      console.log('cPage:', currentPage);
+      await fetchData();
     } catch(error) {
       console.error("페이지 변경 오류", error);
     }
   }
 
-  const [reportState, setReportState] = useState('boardReport');
-  
-  const [show ,setShow] = useState(false);
-  const reportOpen = (brid) => {
-    console.log("brid확인" , brid);
-    viewBoardReport(brid);
+  const reportOpen = (id) => {
+    console.log("id확인" , id);
+    {
+      reportState === 'boardReport'
+      ?viewBoardReport(id)
+      :viewCommentReport(id)
+    }
     setShow(true);
   }
   const reportClose = () => setShow(false);
@@ -108,14 +131,51 @@ const ReportList = () => {
         community: data.boardReport.community,
         reportStatus: data.boardReport.reportStatus
       }));
-      console.log("data 확인: ", data);
-      console.log("BOARDREPORT 확인:", boardReport);
     })
   }
   
-  const movePage = useNavigate();
-  const stausChange = (brid) => {
-   fetch(`/admin/status/${brid}`, {
+  const boardStausChange = (brid) => {
+   fetch(`/admin/boardReport/status/${brid}`, {
+    method: 'PUT',
+    headers: {
+      'Content-type' : 'application/json'
+    },
+   })
+   .then(()=> {
+    reportClose();
+    window.location.reload();
+   })
+  }
+
+  const { crid } = useParams(); //필요여부 확인
+  const viewCommentReport = (crid) => {
+    fetch(`/admin/commentReport/view/${crid}`, {
+      method: 'GET',
+      headers: {
+        'Content-type' : 'application/json'
+      },
+    })
+    .then((resp) => {
+      if (!resp.ok) {
+        throw new Error(`Network response was not ok: ${resp.status}`);
+      }
+      return resp.json();
+    })
+    .then((data) => {
+      setCommentReport((prevCommentReport) => ({
+        ...prevCommentReport,
+        crid: data.commentReport.cr_id,
+        c_reporter: data.commentReport.c_reporter,
+        c_reason: data.commentReport.c_reason,
+        community: data.commentReport.community,
+        comment: data.commentReport.comment,
+        reportStatus: data.commentReport.reportStatus
+      }));
+    })
+  }
+  
+  const commentStausChange = (crid) => {
+   fetch(`/admin/commentReport/status/${crid}`, {
     method: 'PUT',
     headers: {
       'Content-type' : 'application/json'
@@ -135,6 +195,10 @@ const ReportList = () => {
           <Button onClick={()=>setReportState('boardReport')} style={reportState === 'boardReport'? {backgroundColor: '#B89E97', color: 'white', fontWeight:'500'} : {backgroundColor: 'transparent', color: 'black', border: '1px solid black'}}>게시글 신고내역</Button>
           <Button onClick={()=>setReportState('commentReport')} style={reportState === 'commentReport'? {backgroundColor: '#B89E97', color: 'white',fontWeight:'500'} : {backgroundColor: 'transparent', color: 'black', border: '1px solid black'}}>댓글 신고내역</Button>
         </div>
+        <div className="rSubMenu" style={{float: 'right'}}>
+          <Button variant="outline-dark" onClick={()=>setReportStatus('no')}>미처리</Button>
+          <Button variant="outline-dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
+        </div>
         <div className="rboard">
           {
             reportState === 'boardReport'
@@ -150,18 +214,37 @@ const ReportList = () => {
                   </thead>
                   <tbody>
                     {
-                      boardReports.map((report, index) => (
-                        <tr key={index}>
-                          <td>{report.br_id}</td>
-                          <td>{report.b_reporter}</td>
-                          {
-                            report.reportStatus === "no"
-                            ?<td onClick={()=>reportOpen(report.br_id)}>{report.b_reason}</td>
-                            :<td style={{textDecoration:'line-through', cursor: 'default'}}>{report.b_reason}</td>
-                          }
-                          
-                        </tr>
-                      ))
+                      reportStatus === 'no'
+                      ?
+                      <>
+                        {
+                          boardReports
+                          .filter((report) => report.reportStatus === "no")
+                          .slice((bPage - 1) * 10, bPage * 10)
+                          .map((report, index) => (
+                            <tr key={index}>
+                              <td>{report.br_id}</td>
+                              <td>{report.b_reporter}</td>
+                              <td onClick={()=>reportOpen(report.br_id)}>{report.b_reason}</td>
+                            </tr>
+                          ))
+                        }
+                      </>
+                      :
+                      <>
+                      {
+                          boardReports
+                          .filter((report) => report.reportStatus === "yes")
+                          .slice((bPage - 1) * 10, bPage * 10)
+                          .map((report, index) => (
+                            <tr key={index}>
+                              <td>{report.br_id}</td>
+                              <td>{report.b_reporter}</td>
+                              <td onClick={()=>reportOpen(report.br_id)}>{report.b_reason}</td>
+                            </tr>
+                          ))
+                        }
+                      </>
                     }
                   </tbody>
                 </Table>
@@ -179,13 +262,37 @@ const ReportList = () => {
                   </thead>
                   <tbody>
                     {
-                      commentReports.map((report, index) => (
-                        <tr key={index}>
-                          <td>{report.cr_id}</td>
-                          <td>{report.c_reporter}</td>
-                          <td>{report.c_reason}</td>
-                        </tr>
-                      ))
+                      reportStatus === 'no'
+                      ?
+                      <>
+                      {
+                        commentReports
+                        .filter((report) => report.reportStatus === "no")
+                        .slice((cPage - 1) * 10, cPage * 10)
+                        .map((report, index) => (
+                          <tr key={index}>
+                            <td>{report.cr_id}</td>
+                            <td>{report.c_reporter}</td>
+                            <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
+                          </tr>
+                        ))
+                      }
+                      </>
+                      :
+                      <>
+                      {
+                        commentReports
+                        .filter((report) => report.reportStatus === "yes")
+                        .slice((cPage - 1) * 10, cPage * 10)
+                        .map((report, index) => (
+                          <tr key={index}>
+                            <td>{report.cr_id}</td>
+                            <td>{report.c_reporter}</td>
+                            <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
+                          </tr>
+                        ))
+                      }
+                      </>
                     }
                   </tbody>
                 </Table>
@@ -203,22 +310,62 @@ const ReportList = () => {
                 ?
                 <>
                 <Modal.Body>
-                  <FormGroup className="mb-3">
-                    <FormControl type="text" plaintext readOnly value={boardReport.b_reporter}/>
-                    <FormControl as="textarea" plaintext readOnly value={boardReport.b_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
+                  <FormGroup style={{border:'1px solid #d9d9d9', borderRadius:'5px', padding: '15px' ,resize: "none"}}>
+                      <FormControl type="text" plaintext readOnly value={boardReport.community.writer} style={{ fontWeight: "bold" }}/>
+                      <div className="ck-content" type="text" plaintext readOnly dangerouslySetInnerHTML={{__html: boardReport.community.content}} style={{ resize: "none" }}/>
                   </FormGroup>
+                  <div className="reportContainer">
+                    <FormControl className="arrow" type="text" plaintext readOnly value={"↳"}/>
+                    <FormGroup className="reportView">
+                      <FormControl type="text" plaintext readOnly value={boardReport.b_reporter} style={{ fontWeight: "bold" }}/>
+                      <FormControl as="textarea" plaintext readOnly value={boardReport.b_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
+                    </FormGroup>
+                  </div>
                 </Modal.Body>
-                <Modal.Footer>
-                  <Button variant="outline-dark" onClick={()=>movePage(`/community/view/${boardReport.community.bnum}`)}>원글가기</Button>
-                  <Button variant="outline-dark" onClick={()=>stausChange(boardReport.brid)}>처리완료</Button>
-                </Modal.Footer>
+                {
+                  boardReport.reportStatus === "no"
+                  ?
+                  <Modal.Footer>
+                    <Button variant="outline-dark" onClick={()=>movePage(`/community/view/${boardReport.community.bnum}`)}>원글가기</Button>
+                    <Button variant="outline-dark" onClick={()=>boardStausChange(boardReport.brid)}>처리완료</Button>
+                  </Modal.Footer>
+                  :
+                  <Modal.Footer>
+                    <Button variant="outline-dark" disabled onClick={()=>movePage(`/community/view/${boardReport.community.bnum}`)}>원글가기</Button>
+                    <Button variant="outline-dark" disabled onClick={()=>boardStausChange(boardReport.brid)}>처리완료</Button>
+                  </Modal.Footer>
+                }
                 </>
                 :
-                <Modal.Body>
-                  <FormGroup className="mb-3">
-                    <FormControl as='textarea'readOnly style={{ resize: "none" }} rows={5} minLength={10} name='b_reason'/>
-                  </FormGroup>
-                </Modal.Body>
+                <>
+                  <Modal.Body>
+                      <FormGroup style={{border:'1px solid #d9d9d9', borderRadius:'5px', padding: '15px' ,resize: "none"}}>
+                        <FormControl type="text" plaintext readOnly value={commentReport.comment.c_writer} style={{ fontWeight: "bold" }}/>
+                        <FormControl as="textarea" plaintext readOnly value={commentReport.comment.c_content} style={{ resize: "none" }}/>
+                      </FormGroup>
+                      <div className="reportContainer">
+                        <FormControl className="arrow" type="text" plaintext readOnly value={"↳"}/>
+                        <FormGroup className="reportView">
+                          <FormControl type="text" plaintext readOnly value={commentReport.c_reporter} style={{ fontWeight: 'bold' }}/>
+                          <FormControl as="textarea" plaintext readOnly value={commentReport.c_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
+                        </FormGroup>
+                      </div>
+                  </Modal.Body>
+                  {
+                    commentReport.reportStatus === "no"
+                    ?
+                    <Modal.Footer>
+                      <Button variant="outline-dark" onClick={()=>movePage(`/community/view/${commentReport.community.bnum}`)}>원글가기</Button>
+                      <Button variant="outline-dark" onClick={()=>commentStausChange(commentReport.crid)}>처리완료</Button>
+                    </Modal.Footer>
+                    :
+                    <Modal.Footer>
+                      <Button variant="outline-dark" disabled onClick={()=>movePage(`/community/view/${commentReport.community.bnum}`)}>원글가기</Button>
+                      <Button variant="outline-dark" disabled onClick={()=>commentStausChange(commentReport.crid)}>처리완료</Button>
+                  </Modal.Footer>
+                  }
+                  
+                </>
               }
           </Modal>
         </div>

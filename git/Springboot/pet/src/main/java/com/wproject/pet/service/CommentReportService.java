@@ -1,6 +1,9 @@
 package com.wproject.pet.service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -26,6 +29,7 @@ public class CommentReportService {
 						report.getCrid(),
 						report.getC_reason(),
 						report.getC_reporter(),
+						report.getReportStatus(),
 						report.getCommunity(),
 						report.getComment()
 						))
@@ -42,4 +46,25 @@ public class CommentReportService {
 		return convertToDto(creports);
 	}
 
+	@Transactional
+	public CommentReportDTO view(int crid) {
+		System.out.println("View method called for cr_id: " + crid);
+		Optional<CommentReport> commentPage = commentReportRepository.findById(crid);
+		CommentReport commentReport = commentPage.get();
+		return new CommentReportDTO(
+				commentReport.getCrid(),
+				commentReport.getC_reason(),
+				commentReport.getC_reporter(),
+				commentReport.getReportStatus(),
+				commentReport.getCommunity(),
+				commentReport.getComment()
+				);
+	}
+	
+	@Transactional
+	public void statusChange(int crid) {
+		CommentReport commentReport = commentReportRepository.findById(crid).get();
+		commentReport.setReportStatus("yes");
+		commentReportRepository.save(commentReport);
+	}
 }

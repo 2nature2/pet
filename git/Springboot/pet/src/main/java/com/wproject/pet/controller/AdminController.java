@@ -40,7 +40,6 @@ public class AdminController {
 	public ResponseEntity<Page<BoardReportDTO>> getBoardReports(
 			 @PageableDefault(size = Integer.MAX_VALUE, sort = "brid", direction = Direction.DESC) Pageable pageable,
 			 @RequestParam(required = false, defaultValue = "0") int page
-
 			){
 		System.out.println("신고리스트:"+page);
 		Page<BoardReportDTO> boardReports = boardReportService.findAll(pageable);
@@ -48,15 +47,15 @@ public class AdminController {
 	}
 	
 	@GetMapping("/boardReport/view/{brid}")
-	public ResponseEntity<Map<String, Object>> view(@PathVariable int brid){
+	public ResponseEntity<Map<String, Object>> bView(@PathVariable int brid){
 		BoardReportDTO boardReportDTO = boardReportService.view(brid);
 		Map<String, Object> response = new HashMap<>();
 		response.put("boardReport", boardReportDTO);
 		return ResponseEntity.ok(response);
 	}
 	
-	@PutMapping("/status/{brid}")
-	public void statusChange(@PathVariable int brid) {
+	@PutMapping("/boardReport/status/{brid}")
+	public void bStatusChange(@PathVariable int brid) {
 		boardReportService.statusChange(brid);
 	}
 	
@@ -67,6 +66,19 @@ public class AdminController {
 			){
 		Page<CommentReportDTO> commentReports = commentReportService.findAll(pageable);
 		return ResponseEntity.ok(commentReports);
+	}
+	
+	@GetMapping("/commentReport/view/{crid}")
+	public ResponseEntity<Map<String, Object>> cView(@PathVariable int crid){
+		CommentReportDTO commentReportDTO = commentReportService.view(crid);
+		Map<String, Object> response = new HashMap<>();
+		response.put("commentReport", commentReportDTO);
+		return ResponseEntity.ok(response);
+	}
+	
+	@PutMapping("/commentReport/status/{crid}")
+	public void cStatusChange(@PathVariable int crid) {
+		commentReportService.statusChange(crid);
 	}
 	
 	//회원리스트
@@ -102,9 +114,5 @@ public class AdminController {
 		System.out.println("회원탈퇴");
 		memberService.delete(userid);
 	}
-	
-	
-	
-	
 	
 }
