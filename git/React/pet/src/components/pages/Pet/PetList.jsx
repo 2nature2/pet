@@ -135,7 +135,11 @@ const PetList = () => {
                 )
             // 세종특별자치시
             case '5690000':
-                return null;
+                return (
+                    <>
+                        <option value=''>없음</option>
+                    </>
+                );
             // 대전광역시
             case '6300000':
                 return (
@@ -404,21 +408,26 @@ const PetList = () => {
 
     const URL = "http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic";
     // const sidoURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sido?&numOfRows=17&pageNo=1&serviceKey=${process.env.REACT_APP_API_KEY}`;
-    // const sigunguURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu?upr_cd=5690000&numOfRows=100&pageNo=1&serviceKey=${process.env.REACT_APP_API_KEY}`;
+    // const sigunguURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/sigungu?upr_cd=6260000&numOfRows=100&pageNo=1&serviceKey=${process.env.REACT_APP_API_KEY}`;
 
     // console.log('시도 확인', sidoURL);
     // console.log('시군구 확인', sigunguURL);
 
     const filterDataByCategory  = (category) => {
-        return data.response.body.items.item.filter(item => {
-            if(category === '기타축종'){
-                return !item.kindCd.includes('[개]') && !item.kindCd.includes('[고양이]');
-            } else if (category === null){
-                return true;
-            } else {
-                return item.kindCd.includes(`[${category}]`);
-            }
-        });
+        if(!data.response.body.items.item) {
+            return null;
+        }else {
+            return data.response.body.items.item.filter(item => {
+                if(category === '기타축종'){
+                    return !item.kindCd.includes('[개]') && !item.kindCd.includes('[고양이]');
+                } else if (category === null){
+                    return true;
+                } else {
+                    return item.kindCd.includes(`[${category}]`);
+                }
+            });
+        }
+        
     };
 
     useEffect(() => {
@@ -430,11 +439,16 @@ const PetList = () => {
             const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPage}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
     
             let categoryFilter = '';
-            if (category === '개'){
+            if (category === '개&upkind=417000'){
+                categoryFilter =`&upkind=417000`; 
                 return `${encoded}&upkind=417000`;
-            } else if (category === '고양이'){
+            }
+            else if (category === '고양이&upkind=422400'){
+                categoryFilter = `&upkind=422400`;
                 return `${encoded}&upkind=422400`;
-            } else if (category === '기타축종'){
+            } 
+            else if (category === '기타축종&upkind=429900'){
+                categoryFilter = `&upkind=429900`;
                 return `${encoded}&upkind=429900`;
             }
             
@@ -448,7 +462,12 @@ const PetList = () => {
                 cityFilter = `&org_cd=${cityCode}`;
             }
             
-            return `${encoded}${categoryFilter}${regionFilter}${cityFilter}`;
+            if(cityCode===''){
+                return `${encoded}${categoryFilter}${regionFilter}`;
+            }else{
+                return `${encoded}${categoryFilter}${regionFilter}${cityFilter}`;
+            }
+            // return `${encoded}${categoryFilter}${regionFilter}${cityFilter}`;
 
         };
 
@@ -530,27 +549,29 @@ const PetList = () => {
                 <button onClick={() => setSelectedCategory('기타축종')}><img alt='etc' src={process.env.PUBLIC_URL + '/img/etc_64.png'} /></button>
             </div>
             <Row xs={1} md={3} className='g-4'>
-                {filterDataByCategory(selectedCategory, selectedSido, selectedCity).length > 0 ? (
-                    filterDataByCategory(selectedCategory, selectedSido, selectedCity).map((animal) => (
-                        <Col key={animal.desertionNo}>
-                            <Card border='warning'>
-                                <a href={`/pet/detail/${animal.desertionNo}`}>
-                                <Card.Img className='card-img' 
-                                    src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}
-                                    variant="top" />
-                                </a>
-                                    <Card.Body>
-                                        <Card.Title>{animal.processState}</Card.Title>
-                                        <Card.Text>
-                                            {animal.kindCd }<br />
-                                            {animal.sexCd === 'F' ? '여아' : '남아'} · {animal.neuterYn === 'Y' ? '중성화 완료' : '중성화 미완료'}
-                                        </Card.Text>
-                                    </Card.Body>
-                                    <ListGroup className="list-group-flush">
-                                        <ListGroup.Item>보호센터 : {animal.careNm}</ListGroup.Item>
-                                    </ListGroup>
-                            </Card>
-                        </Col>
+                {
+                    filterDataByCategory(selectedCategory, selectedSido, selectedCity) !== null &&
+                        filterDataByCategory(selectedCategory, selectedSido, selectedCity).length > 0 ? (
+                            filterDataByCategory(selectedCategory, selectedSido, selectedCity).map((animal) => (
+                                <Col key={animal.desertionNo}>
+                                    <Card border='warning'>
+                                        <a href={`/pet/detail/${animal.desertionNo}`}>
+                                        <Card.Img className='card-img' 
+                                            src={animal.popfile} alt={`Pet ${animal.desertionNo}`} onClick={() => goAnimal(animal)}
+                                            variant="top" />
+                                        </a>
+                                            <Card.Body>
+                                                <Card.Title>{animal.processState}</Card.Title>
+                                                <Card.Text>
+                                                    {animal.kindCd }<br />
+                                                    {animal.sexCd === 'F' ? '여아' : '남아'} · {animal.neuterYn === 'Y' ? '중성화 완료' : '중성화 미완료'}
+                                                </Card.Text>
+                                            </Card.Body>
+                                            <ListGroup className="list-group-flush">
+                                                <ListGroup.Item>보호센터 : {animal.careNm}</ListGroup.Item>
+                                            </ListGroup>
+                                    </Card>
+                                </Col>
                     ))
                 ) : (
                     <p>해당 지역에는 아이들이 없습니다.</p>
