@@ -26,6 +26,8 @@ const MemberList = ()=>{
         setUserInput(e.target.value.toLowerCase());
     }
 
+  
+
     const handleSearchOptionChange = (e) => {
         setSearchOption(e.target.value);
     };
@@ -62,23 +64,13 @@ const MemberList = ()=>{
       
       }
 
-      const handleWithdraw =  () => {
-        
-        fetch(`/admin/withdraw/${userid}`, {
-            method: 'DELETE',
-        })
-            .then(() => {
-                handleModalClose();
-                alert("탈퇴 완료")
-                // window.location = document.referrer;
-            })
-    }
+  
 
     
     const handleSearch = () => {
-        setPage(0); // 검색 시 페이지를 0으로 초기화
+        setPage(0); 
         setSearching(true);
-        search(0);
+         search(0);
     };
 
     const search = async(selectedPage) => {
@@ -96,6 +88,18 @@ const MemberList = ()=>{
     };
 
 
+    const handleWithdraw =  () => {
+        
+        fetch(`/admin/withdraw/${userid}`, {
+            method: 'DELETE',
+        })
+            .then(() => {
+                handleModalClose();
+                alert("탈퇴 완료")
+                // window.location = document.referrer;
+            })
+    }
+
     return(
         <div className="flex-container" style={{display: 'flex'}}>
         <SideBar/>
@@ -109,7 +113,7 @@ const MemberList = ()=>{
                     </select>
                     <input type='text' placeholder='내용을 입력하세요' 
                      onChange={getValue} 
-                    // onFocus={handleInputFocus} onBlur={handleInputBlur}
+                    
                     ></input>
                     
                     <Button style={{backgroundColor:"#1098f7", borderColor:"#1098f7"}}  onClick={handleSearch}>검색</Button>

@@ -103,7 +103,7 @@ public class MemberService {
 				lists = memberRepository.findByTelContaining(word.toLowerCase(), pageable);
 				break;
 			
-			default: lists = memberRepository.findAll(pageable);
+			default: lists = memberRepository.findMember(pageable);
 		}
 		return convertToDtoPage(lists);	
 	}

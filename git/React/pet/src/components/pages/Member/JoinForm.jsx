@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Form, Row, Col, Modal  } from 'react-bootstrap';
 import axios from 'axios';
 import DaumPostcode from 'react-daum-postcode';
+import '../../styles/Join.css';
+import { useNavigate } from 'react-router-dom';
 
 const JoinForm = ({ join }) => {
   const [joinContent, setJoinContent] = useState({
@@ -14,6 +16,7 @@ const JoinForm = ({ join }) => {
     passwordCheck:'',
   
   });
+  const navigate = useNavigate();
 
 
   //==============우편번호찾기//아이디 중복확인=======================
@@ -196,13 +199,19 @@ const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
     });
     setIsIdChecked(false);
     setIsAddrChecked(false);
+  //  navigate("/member/login");
 
   };
 
 
   return (
-    <Container style={{ marginTop: "50px", marginBottom: "50px" }}>
-      <Form  style={{ marginTop: "50px", width: "80%", margin: "0 auto" }}>
+    <Container className='container'>
+      <div className='wel'>
+        <p>Welcome~ </p>
+      
+      <img src='../img/dog.png' style={{width:'13%', height:'13%', marginLeft:'40px'}}/>
+      </div>
+      <Form  >
       <Form.Group as={Col} controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -228,9 +237,9 @@ const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
           </Form.Group>
           <Form.Group as={Col} controlId="btn" style={{ marginTop: '6px' }}>
             <br />
-            <Button variant="primary" type="button" onClick={handle.clickButton}>
+            <button className="w-btn w-btn-indigo" variant="primary" type="button" onClick={handle.clickButton}>
               중복확인
-            </Button>
+            </button>
           </Form.Group>
 
           <Form.Group as={Col} controlId="userid">
@@ -248,9 +257,9 @@ const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
 
           <Form.Group as={Col} controlId="btn" style={{ marginTop: '6px' }}>
             <br />
-            <Button variant="primary" type="button" onClick={handle.clickButtonNickname}>
+            <button className="w-btn w-btn-indigo" variant="primary" type="button" onClick={handle.clickButtonNickname}>
               중복확인
-            </Button>
+            </button>
           </Form.Group>
         </Row>
 
@@ -317,9 +326,9 @@ const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
           />
         </Form.Group>
 <br/>
-        <Button variant="primary" onClick={memberInsert}>
+        <button type='button' className='w-btn w-btn-skin' variant="primary" onClick={memberInsert}>
           회원가입
-        </Button>
+        </button>
       </Form>
       {/* 우편번호 찾기 모달 */}
       <Modal show={showModal} onHide={handle.closeModal}>

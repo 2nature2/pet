@@ -128,8 +128,18 @@ function App() {
       .then((resp) => resp.text())
       .then((result) => {
         if (result === 'success') {
-          alert('등록완료');
-          window.location.href = '/member/login';
+          Swal.fire({
+            imageUrl: '../img/hello.png',
+            title: "우린 이제 가족!",
+            imageWidth: 400,
+            imageHeight: 200,
+            confirmButtonColor: "#D1B2FF",
+            confirmButtonText: '좋아!',
+          }).then(function () {
+            window.location.href = '/member/login';
+          });
+          //alert('등록완료');
+          
         } else {
           alert('등록실패');
         }
