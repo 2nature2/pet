@@ -79,7 +79,11 @@ public class MemberController {
 		 if (memberRepository.findByUserid(member.getUserid()) != null) {
 			 System.out.println("fail");
 	            return "fail";
-	        } else {
+	        }
+//		 else if(memberRepository.findByUserid(member.getUserid()) == null){
+//			 return "null";
+//		 }
+		 else {
 	        	System.out.println("success"+member.getUserid());
 	            return "success";
 	        }

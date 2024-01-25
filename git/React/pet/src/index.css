@@ -16,3 +16,10 @@ code {
   font-family: "omyu-pretty";
   src: url('./components/styles/font/omyu-pretty.ttf');
 }
+
+@font-face {
+  font-family: 'gangwon';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduSaeeum_OTFMediumA.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}

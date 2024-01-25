@@ -22,8 +22,14 @@ public interface MemberRepository extends JpaRepository<Member,Integer> {
 	@Query(value = "select * from member where role='ROLE_USER'", nativeQuery = true)
 	Page<Member> findMember(Pageable pageable);
 	
+	
+	@Query(value = "select * from member where name LIKE %:word% and role='ROLE_USER'", nativeQuery = true)
 	public Page<Member> findByNameContaining(String word,Pageable pageable);
+	
+	@Query(value = "select * from member where userid LIKE %:word% and role='ROLE_USER'", nativeQuery = true)
 	public Page<Member> findByUseridContaining(String word,Pageable pageable);
+	
+	@Query(value = "select * from member where tel LIKE %:word% and role='ROLE_USER'", nativeQuery = true)
 	public Page<Member> findByTelContaining(String word,Pageable pageable);
 	
 	@Query(value = "select userid from member where name=:name and tel=:tel", nativeQuery = true)

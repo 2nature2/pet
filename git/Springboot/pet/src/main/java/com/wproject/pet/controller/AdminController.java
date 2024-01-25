@@ -85,7 +85,7 @@ public class AdminController {
 			@RequestParam(required = false, defaultValue = "") String field,
 			@RequestParam(required = false, defaultValue = "") String word, 
 			@RequestParam(name = "page", defaultValue = "0") int page,
-			@PageableDefault(size = 5, sort = "memberid", direction = Direction.DESC) Pageable pageable){
+			@PageableDefault(size = 5, sort = "memberid", direction = Direction.ASC) Pageable pageable){
 		try {
 	        Page<MemberDTO> searchResult = memberService.search(field, word, pageable);
 	        return ResponseEntity.ok(searchResult);
