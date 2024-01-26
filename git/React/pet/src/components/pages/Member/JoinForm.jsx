@@ -128,6 +128,8 @@ const emailCheck = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
 
+
+
 //=====================================================
   const memberInsert = () => {
     //유효성검사
@@ -204,7 +206,22 @@ const telCheck = /^\d{3}-\d{3,4}-\d{4}$/;
 
   };
 
-
+  useEffect(() => {
+    if (joinContent.tel.length === 11) {
+      setJoinContent({
+        ...joinContent,
+        tel: joinContent.tel.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
+      });
+    } else if (joinContent.tel.length === 13) {
+      setJoinContent({
+        ...joinContent,
+        tel: joinContent.tel
+          .replace(/-/g, '')
+          .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
+      });
+    }
+  }, [joinContent.tel]);
+  
   return (
     <Container className='container'>
       <div className='wel'>

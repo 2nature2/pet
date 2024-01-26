@@ -64,3 +64,30 @@
     font-family: "omyu-pretty";
     color: red;
 }
+
+.fboard .loading-container {
+    
+    width: 20%; 
+    height: 20%; 
+    text-align: left;
+    margin-top: 0px;
+    padding: 0%;
+
+}
+
+.loading-container img {
+    width: 40px; /* 너비 조정 */
+    height: 40px; /* 높이 조정 */
+    animation: rotate 2s linear infinite;
+    padding: 0%;
+}
+
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
