@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Container, Table, Button, Modal } from 'react-bootstrap';
 import Pagination from 'react-js-pagination';
-import SideBar from "../Navigation/SideBar";
+import SideBar from "../Navigation/SideBar.jsx";
 import axios from 'axios';
 import '../../styles/MemberList.css';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 
 const MemberList = ()=>{
@@ -39,6 +40,30 @@ const MemberList = ()=>{
         setShowModal(true);
     };
 
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+        try {
+          console.log("로그아웃")
+          const response = await fetch('/logout', {
+            method: 'POST',
+          });
+      
+          if (response.ok) {
+            console.log('로그아웃 성공');
+      
+            //로컬 스토리지에서 토큰 제거
+           sessionStorage.clear();
+      
+            navigate("/");
+           // window.location.href("/")
+          } else {
+            console.error('로그아웃 실패');
+          }
+        } catch (error) {
+          console.error('로그아웃 중 오류 발생', error);
+        }
+      };
+
     useEffect(() => {
         const fetchData = async () => {
           try {
@@ -46,17 +71,27 @@ const MemberList = ()=>{
            
             if (searching) {
               endpoint = `/admin/member/search?page=${page}&field=${searchOption}&word=${userInput}`;
+              //setSearching(false);
             }
             const loadMemberList = await fetch(endpoint);
             const Data = await loadMemberList.json();
             setMemberList(Data.content);
             setTotalPages(Data.totalPages);
             setTotalElements(Data.totalElements);
+            
           } catch (error) {
             console.error('데이터 가져오기 오류:', error);
+            Swal.fire({
+                icon: "warning",
+                iconColor: "red",
+                title: "응답이 없어 로그아웃 처리되었습니다.",
+                confirmButtonColor:"#b80042"
+            })
+            handleLogout();
           }
         };
         fetchData();
+       
       }, [page, searching, searchOption, userInput]);
 
       const handlePageChange = async(selectedPage) => {
