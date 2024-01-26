@@ -1,4 +1,4 @@
-import SideBar from "../Navigation/SideBar";
+import SideBar from "../Navigation/SideBar.jsx";
 import '../../styles/Sidebar.css';
 
 const AdminPage=()=>{

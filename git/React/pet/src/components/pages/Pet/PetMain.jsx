@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import '../../styles/Community.css';
-import PetList from './PetList';
-import Category from './Category';
+import PetList from './PetList.jsx';
+import Category from './Category.jsx';
 import { agoDate } from '../../../util/DateFormat';
 
 export default function PetMain() {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import axios from "axios";
 import { Button, Container, Form, Row, Col, Modal  } from 'react-bootstrap';
-import Navigation from "../Navigation/Navigation";
+import Navigation from "../Navigation/Navigation.jsx";
 import { useNavigate } from 'react-router-dom';
 
 

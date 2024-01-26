@@ -21,9 +21,9 @@ const handleLogout = async () => {
       console.log('로그아웃 성공');
 
       //로컬 스토리지에서 토큰 제거
-     sessionStorage.clear()
+     sessionStorage.clear();
 
-      navigate("/")
+      navigate("/");
      // window.location.href("/")
     } else {
       console.error('로그아웃 실패');
@@ -52,6 +52,7 @@ const handleLogout = async () => {
               <NavLink className='navmenu' to="/admin/adminpage/memberlist">ADMIN</NavLink>
             ) : (
               <NavLink className='navmenu' to="/member/mypage">MY-PAGE</NavLink>
+
             )}
             <NavLink className='navmenu' to="#" onClick={handleLogout}>LOGOUT</NavLink>
           </>
