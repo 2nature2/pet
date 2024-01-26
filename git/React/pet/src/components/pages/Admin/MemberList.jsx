@@ -68,6 +68,7 @@ const MemberList = ()=>{
         const fetchData = async () => {
           try {
             let endpoint = `/admin/memberList?page=${page}`;
+           
             if (searching) {
               endpoint = `/admin/member/search?page=${page}&field=${searchOption}&word=${userInput}`;
             }
@@ -97,12 +98,13 @@ const MemberList = ()=>{
       }
 
   
+  
 
     
     const handleSearch = () => {
         setPage(0); 
         setSearching(true);
-         search(0);
+         //search(0);
     };
 
     const search = async(selectedPage) => {
