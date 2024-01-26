@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 
 import '../../styles/Sidebar.css';
-import SidebarItem from "./SidebarItem";
+import SidebarItem from "./SidebarItem.jsx";
 
 const SideBar = () => {
     

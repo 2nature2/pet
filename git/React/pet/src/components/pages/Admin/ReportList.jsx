@@ -3,7 +3,8 @@ import '../../styles/Report.css';
 import { Button, FormControl, FormGroup, Modal, Table } from "react-bootstrap";
 import Pagination from "react-js-pagination";
 import { useNavigate, useParams } from "react-router-dom";
-import SideBar from "../Navigation/SideBar";
+import SideBar from "../Navigation/SideBar.jsx";
+import Swal from "sweetalert2";
 
 const ReportList = () => {
   
@@ -16,7 +17,6 @@ const ReportList = () => {
   const [cTotalPages, setCTotalPages] = useState(0);
   const [bTotalElements, setBTotalElements] = useState(0);
   const [cTotalElements, setCTotalElements] = useState(0);
-
 
   const [reportState, setReportState] = useState('boardReport');
   const [reportStatus, setReportStatus] = useState('no');
@@ -38,6 +38,24 @@ const ReportList = () => {
     reportStatus: ''
   })
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/logout', {
+        method: 'POST'
+      });
+
+      if (response.ok) {
+        console.log('로그아웃 성공');
+        sessionStorage.clear();
+        movePage("/");
+      } else {
+        console.error('로그아웃 실패');
+      }
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생', error);
+    }
+  };
+
   const fetchData = async() => {
     try {
       const bResponse = await fetch('/admin/boardReport');
@@ -56,30 +74,35 @@ const ReportList = () => {
         const filteredBR = bData.content.filter((report) => report.reportStatus === reportStatus);
         setBTotalElements(filteredBR.length);
         setBTotalPages(Math.ceil(filteredBR.length / 10));
-        console.log('filteredBR',filteredBR);
       }
 
       if(reportState === 'commentReport') {
         const filteredCR = cData.content.filter((report) => report.reportStatus === reportStatus);
         setCTotalElements(filteredCR.length);
         setCTotalPages(Math.ceil(filteredCR.length / 10));
-        console.log('filtertedCR', filteredCR);
       }
 
     } catch (error) {
       console.error('Error fetching data:', error);
+      Swal.fire({
+        icon: "warning",
+        iconColor: "red",
+        title: "응답이 없어 로그아웃 처리되었습니다.",
+        confirmButtonColor:"#b80042"
+      });
+      handleLogout();
     }
   };
   
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, [reportState, reportStatus, bPage, cPage]);
 
   const handleBPageChange = async(selectedPage) => {
     try{
       const currentPage = Math.max(selectedPage, 1);
       setBPage(currentPage);
-      console.log('bPage:', currentPage);
       await fetchData();
     } catch(error) {
       console.error("페이지 변경 오류", error);
@@ -90,7 +113,6 @@ const ReportList = () => {
     try{
       const currentPage = Math.max(selectedPage, 1);
       setCPage(currentPage);
-      console.log('cPage:', currentPage);
       await fetchData();
     } catch(error) {
       console.error("페이지 변경 오류", error);
@@ -98,17 +120,16 @@ const ReportList = () => {
   }
 
   const reportOpen = (id) => {
-    console.log("id확인" , id);
-    {
-      reportState === 'boardReport'
-      ?viewBoardReport(id)
-      :viewCommentReport(id)
-    }
+    
+    reportState === 'boardReport'
+    ?viewBoardReport(id)
+    :viewCommentReport(id)
+    
     setShow(true);
   }
   const reportClose = () => setShow(false);
 
-  const { brid } = useParams(); //필요여부 확인
+  const { brid } = useParams();
   const viewBoardReport = (brid) => {
     fetch(`/admin/boardReport/view/${brid}`, {
       method: 'GET',
@@ -189,7 +210,7 @@ const ReportList = () => {
 
   return(
     <div className="flex-container" style={{display: 'flex'}}>
-        <SideBar/>
+      <SideBar/>
       <div className="reports">
         <div className="rMenu">
           <Button onClick={()=>setReportState('boardReport')} style={reportState === 'boardReport'? {backgroundColor: '#B89E97', color: 'white', fontWeight:'500'} : {backgroundColor: 'transparent', color: 'black', border: '1px solid black'}}>게시글 신고내역</Button>
@@ -199,13 +220,13 @@ const ReportList = () => {
           {
             reportStatus === 'no'
             ?<>
-            <Button variant="dark" onClick={()=>setReportStatus('no')}>미처리</Button>
-            <Button variant="outline-dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
+              <Button variant="dark" onClick={()=>setReportStatus('no')} style={{marginRight:'5px'}}>미처리</Button>
+              <Button variant="outline-dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
             </>
             :
             <>
-            <Button variant="outline-dark" onClick={()=>setReportStatus('no')}>미처리</Button>
-            <Button variant="dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
+              <Button variant="outline-dark" onClick={()=>setReportStatus('no')} style={{marginRight:'5px'}}>미처리</Button>
+              <Button variant="dark" onClick={()=>setReportStatus('yes')}>처리완료</Button>
             </>
           }
         </div>
@@ -237,12 +258,12 @@ const ReportList = () => {
                               <td>{report.b_reporter}</td>
                               <td onClick={()=>reportOpen(report.br_id)}>{report.b_reason}</td>
                             </tr>
-                          ))
+                            ))
                         }
                       </>
                       :
                       <>
-                      {
+                        {
                           boardReports
                           .filter((report) => report.reportStatus === "yes")
                           .slice((bPage - 1) * 10, bPage * 10)
@@ -252,7 +273,7 @@ const ReportList = () => {
                               <td>{report.b_reporter}</td>
                               <td onClick={()=>reportOpen(report.br_id)}>{report.b_reason}</td>
                             </tr>
-                          ))
+                            ))
                         }
                       </>
                     }
@@ -275,33 +296,33 @@ const ReportList = () => {
                       reportStatus === 'no'
                       ?
                       <>
-                      {
-                        commentReports
-                        .filter((report) => report.reportStatus === "no")
-                        .slice((cPage - 1) * 10, cPage * 10)
-                        .map((report, index) => (
-                          <tr key={index}>
-                            <td>{report.cr_id}</td>
-                            <td>{report.c_reporter}</td>
-                            <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
-                          </tr>
-                        ))
-                      }
+                        {
+                          commentReports
+                          .filter((report) => report.reportStatus === "no")
+                          .slice((cPage - 1) * 10, cPage * 10)
+                          .map((report, index) => (
+                            <tr key={index}>
+                              <td>{report.cr_id}</td>
+                              <td>{report.c_reporter}</td>
+                              <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
+                            </tr>
+                          ))
+                        }
                       </>
                       :
                       <>
-                      {
-                        commentReports
-                        .filter((report) => report.reportStatus === "yes")
-                        .slice((cPage - 1) * 10, cPage * 10)
-                        .map((report, index) => (
-                          <tr key={index}>
-                            <td>{report.cr_id}</td>
-                            <td>{report.c_reporter}</td>
-                            <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
-                          </tr>
-                        ))
-                      }
+                        {
+                          commentReports
+                          .filter((report) => report.reportStatus === "yes")
+                          .slice((cPage - 1) * 10, cPage * 10)
+                          .map((report, index) => (
+                            <tr key={index}>
+                              <td>{report.cr_id}</td>
+                              <td>{report.c_reporter}</td>
+                              <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
+                            </tr>
+                          ))
+                        }
                       </>
                     }
                   </tbody>
@@ -319,47 +340,47 @@ const ReportList = () => {
                 reportState === 'boardReport'
                 ?
                 <>
-                <Modal.Body>
-                  <FormGroup style={{border:'1px solid #d9d9d9', borderRadius:'5px', padding: '15px' ,resize: "none"}}>
-                      <FormControl type="text" plaintext readOnly value={boardReport.community.writer} style={{ fontWeight: "bold" }}/>
-                      <div className="ck-content" type="text" plaintext readOnly dangerouslySetInnerHTML={{__html: boardReport.community.content}} style={{ resize: "none" }}/>
-                  </FormGroup>
-                  <div className="reportContainer">
-                    <FormControl className="arrow" type="text" plaintext readOnly value={"↳"}/>
-                    <FormGroup className="reportView">
-                      <FormControl type="text" plaintext readOnly value={boardReport.b_reporter} style={{ fontWeight: "bold" }}/>
-                      <FormControl as="textarea" plaintext readOnly value={boardReport.b_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
+                  <Modal.Body>
+                    <FormGroup style={{border:'1px solid #d9d9d9', borderRadius:'5px', padding: '15px' ,resize: "none"}}>
+                        <FormControl type="text" plaintext readOnly value={boardReport.community.writer} style={{ fontWeight: "bold" }}/>
+                        <div className="ck-content" type="text" plaintext readOnly dangerouslySetInnerHTML={{__html: boardReport.community.content}} style={{ resize: "none" }}/>
                     </FormGroup>
-                  </div>
-                </Modal.Body>
-                {
-                  boardReport.reportStatus === "no"
-                  ?
-                  <Modal.Footer>
-                    <Button variant="outline-dark" onClick={()=>movePage(`/community/view/${boardReport.community.bnum}`)}>원글가기</Button>
-                    <Button variant="outline-dark" onClick={()=>boardStausChange(boardReport.brid)}>처리완료</Button>
-                  </Modal.Footer>
-                  :
-                  <Modal.Footer>
-                    <Button variant="outline-dark" disabled onClick={()=>movePage(`/community/view/${boardReport.community.bnum}`)}>원글가기</Button>
-                    <Button variant="outline-dark" disabled onClick={()=>boardStausChange(boardReport.brid)}>처리완료</Button>
-                  </Modal.Footer>
-                }
+                    <div className="reportContainer">
+                      <FormControl className="arrow" type="text" plaintext readOnly value={"↳"}/>
+                      <FormGroup className="reportView">
+                        <FormControl type="text" plaintext readOnly value={boardReport.b_reporter} style={{ fontWeight: "bold" }}/>
+                        <FormControl as="textarea" plaintext readOnly value={boardReport.b_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
+                      </FormGroup>
+                    </div>
+                  </Modal.Body>
+                  {
+                    boardReport.reportStatus === "no"
+                    ?
+                    <Modal.Footer>
+                      <Button variant="outline-dark" onClick={()=>movePage(`/community/view/${boardReport.community.bnum}`)}>원글가기</Button>
+                      <Button variant="outline-dark" onClick={()=>boardStausChange(boardReport.brid)}>처리완료</Button>
+                    </Modal.Footer>
+                    :
+                    <Modal.Footer>
+                      <Button variant="outline-dark" disabled onClick={()=>movePage(`/community/view/${boardReport.community.bnum}`)}>원글가기</Button>
+                      <Button variant="outline-dark" disabled onClick={()=>boardStausChange(boardReport.brid)}>처리완료</Button>
+                    </Modal.Footer>
+                  }
                 </>
                 :
                 <>
                   <Modal.Body>
-                      <FormGroup style={{border:'1px solid #d9d9d9', borderRadius:'5px', padding: '15px' ,resize: "none"}}>
-                        <FormControl type="text" plaintext readOnly value={commentReport.comment.c_writer} style={{ fontWeight: "bold" }}/>
-                        <FormControl as="textarea" plaintext readOnly value={commentReport.comment.c_content} style={{ resize: "none" }}/>
+                    <FormGroup style={{border:'1px solid #d9d9d9', borderRadius:'5px', padding: '15px' ,resize: "none"}}>
+                      <FormControl type="text" plaintext readOnly value={commentReport.comment.c_writer} style={{ fontWeight: "bold" }}/>
+                      <FormControl as="textarea" plaintext readOnly value={commentReport.comment.c_content} style={{ resize: "none" }}/>
+                    </FormGroup>
+                    <div className="reportContainer">
+                      <FormControl className="arrow" type="text" plaintext readOnly value={"↳"}/>
+                      <FormGroup className="reportView">
+                        <FormControl type="text" plaintext readOnly value={commentReport.c_reporter} style={{ fontWeight: 'bold' }}/>
+                        <FormControl as="textarea" plaintext readOnly value={commentReport.c_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
                       </FormGroup>
-                      <div className="reportContainer">
-                        <FormControl className="arrow" type="text" plaintext readOnly value={"↳"}/>
-                        <FormGroup className="reportView">
-                          <FormControl type="text" plaintext readOnly value={commentReport.c_reporter} style={{ fontWeight: 'bold' }}/>
-                          <FormControl as="textarea" plaintext readOnly value={commentReport.c_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
-                        </FormGroup>
-                      </div>
+                    </div>
                   </Modal.Body>
                   {
                     commentReport.reportStatus === "no"
@@ -372,9 +393,8 @@ const ReportList = () => {
                     <Modal.Footer>
                       <Button variant="outline-dark" disabled onClick={()=>movePage(`/community/view/${commentReport.community.bnum}`)}>원글가기</Button>
                       <Button variant="outline-dark" disabled onClick={()=>commentStausChange(commentReport.crid)}>처리완료</Button>
-                  </Modal.Footer>
+                    </Modal.Footer>
                   }
-                  
                 </>
               }
           </Modal>

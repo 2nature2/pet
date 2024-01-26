@@ -427,7 +427,6 @@ const PetList = () => {
                 }
             });
         }
-        
     };
 
     useEffect(() => {
@@ -439,15 +438,15 @@ const PetList = () => {
             const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPage}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
     
             let categoryFilter = '';
-            if (category === '개&upkind=417000'){
+            if (category === '개'){
                 categoryFilter =`&upkind=417000`; 
                 return `${encoded}&upkind=417000`;
             }
-            else if (category === '고양이&upkind=422400'){
+            else if (category === '고양이'){
                 categoryFilter = `&upkind=422400`;
                 return `${encoded}&upkind=422400`;
             } 
-            else if (category === '기타축종&upkind=429900'){
+            else if (category === '기타축종'){
                 categoryFilter = `&upkind=429900`;
                 return `${encoded}&upkind=429900`;
             }
@@ -550,7 +549,7 @@ const PetList = () => {
             </div>
             <Row xs={1} md={3} className='g-4'>
                 {
-                    filterDataByCategory(selectedCategory, selectedSido, selectedCity) !== null &&
+                    // filterDataByCategory(selectedCategory, selectedSido, selectedCity) !== null &&
                         filterDataByCategory(selectedCategory, selectedSido, selectedCity).length > 0 ? (
                             filterDataByCategory(selectedCategory, selectedSido, selectedCity).map((animal) => (
                                 <Col key={animal.desertionNo}>
