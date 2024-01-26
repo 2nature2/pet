@@ -127,6 +127,7 @@ button:active {
 
 .btns .pagination {
     margin-left: auto;
+    
 }
 
 .btns .pagination li {
@@ -135,20 +136,31 @@ button:active {
     height: 30px;
     border-radius: 15px;
     text-align: center;
+    padding: 7px;
+    
 }
 
 .btns .pagination li a {
     text-decoration: none;
     color: black;
     vertical-align: middle;
+    
+   
+    
 }
 
 .btns .pagination li.active a{
     color: white;
+    
+   
 }
 
 .btns .pagination li.active {
-    background-color: #1098f7;
+    /* background-color: #1098f7; */
+    background: url('./sole2.png');
+    background-size: 100% 100%;
+    padding: 7px;
+    
 }
 
 /*WritePage*/

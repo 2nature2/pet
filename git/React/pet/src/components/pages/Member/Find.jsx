@@ -153,14 +153,12 @@ const Find = () =>{
             
             {loading ? (
             <div className="loading-container">
-              <img src="../img/loading.png" alt="Loading" />
+              <img className="loading-main" src="../img/loading.png" alt="Loading" />
             </div>
           ) : (
             <Button style={{width:'120px'}} onClick={findPw}>PW 찾기</Button>
           )}
                 </div>
-              
-
              <p className='notice'>메일 발송까지 몇초간 소요됩니다. 잠시만 기다려주세요</p>
              </div>
           }
