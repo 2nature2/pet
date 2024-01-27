@@ -29,7 +29,7 @@ const PetList = () => {
         setSelectedSido(event.target.value);
         setSelectedCity('');  
     };
-
+    
     const handleCityChange = (event) => {
         setSelectedCity(event.target.value);
     };
@@ -413,23 +413,549 @@ const PetList = () => {
     // console.log('시도 확인', sidoURL);
     // console.log('시군구 확인', sigunguURL);
 
-    const filterDataByCategory  = (category) => {
-        if(!data.response.body.items.item) {
+    const filterDataByCategory = (category, regionCode, cityCode) => {
+        if (!data.response.body.items.item) {
             return null;
-        }else {
+        } else {
             return data.response.body.items.item.filter(item => {
-                if(category === '기타축종'){
-                    return !item.kindCd.includes('[개]') && !item.kindCd.includes('[고양이]');
-                } else if (category === null){
-                    return true;
-                } else {
-                    return item.kindCd.includes(`[${category}]`);
-                }
+                const categoryFilter =
+                    category === '기타축종'
+                        ? !item.kindCd.includes('[개]') && !item.kindCd.includes('[고양이]')
+                        : !item.kindCd.includes(`[${category}]`);
+        
+                const sidoSplit = item.orgNm.split(' ')[0];
+                const siGunguSplit = item.orgNm.split(' ')[1];
+
+                const sidoReplacements = 
+                    sidoSplit.replace("서울특별시", "6110000")
+                        .replace("부산광역시", "6260000")
+                        .replace("대구광역시", "6270000")
+                        .replace("인천광역시", "6280000")
+                        .replace("광주광역시", "6290000")
+                        .replace("세종특별자치시", "5690000")
+                        .replace("대전광역시", "6300000")
+                        .replace("울산광역시", "6310000")
+                        .replace("경기도", "6410000")
+                        .replace("강원특별자치도", "6530000")
+                        .replace("충청북도", "6430000")
+                        .replace("충청남도", "6440000")
+                        .replace("전북특별자치도", "6540000")
+                        .replace("전라남도", "6460000")
+                        .replace("경상북도", "6470000")
+                        .replace("경상남도", "6480000")
+                        .replace("제주특별자치도", "6500000");
+                
+                function siGunguReplacements(sidoReplacements, siGunguSplit){
+                    // 서울특별시
+                    if (sidoReplacements === "6110000" && siGunguSplit === "가정보호"){
+                        return "6119999"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "강남구") {
+                        return "3220000"
+                    } else if (sidoReplacements === "3240000" && siGunguSplit === "강동구") {
+                        return "3240000"
+                    } else if (sidoReplacements === "3080000" && siGunguSplit === "강북구") {
+                        return "3080000"
+                    } else if (sidoReplacements === "3150000" && siGunguSplit === "강서구") {
+                        return "3150000"
+                    } else if (sidoReplacements === "3200000" && siGunguSplit === "관악구") {
+                        return "3200000"
+                    } else if (sidoReplacements === "3040000" && siGunguSplit === "광진구") {
+                        return "3040000"
+                    } else if (sidoReplacements === "3160000" && siGunguSplit === "구로구") {
+                        return "3160000"
+                    } else if (sidoReplacements === "3170000" && siGunguSplit === "금천구") {
+                        return "3170000"
+                    } else if (sidoReplacements === "3100000" && siGunguSplit === "노원구") {
+                        return "3100000"
+                    } else if (sidoReplacements === "3090000" && siGunguSplit === "도봉구") {
+                        return "3090000"
+                    } else if (sidoReplacements === "3050000" && siGunguSplit === "동대문구") {
+                        return "3050000"
+                    } else if (sidoReplacements === "3190000" && siGunguSplit === "동작구") {
+                        return "3190000"
+                    } else if (sidoReplacements === "3130000" && siGunguSplit === "마포구") {
+                        return "3130000"
+                    } else if (sidoReplacements === "3120000" && siGunguSplit === "서대문구") {
+                        return "3120000"
+                    } else if (sidoReplacements === "6119998" && siGunguSplit === "서울특별시") {
+                        return "6119998"
+                    } else if (sidoReplacements === "3210000" && siGunguSplit === "서초구") {
+                        return "3210000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "성동구") {
+                        return "3030000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "성북구") {
+                        return "3070000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "송파구") {
+                        return "3230000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "양천구") {
+                        return "3140000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "영등포구") {
+                        return "3180000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "용산구") {
+                        return "3020000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "은평구") {
+                        return "3110000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "종로구") {
+                        return "3000000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "중구") {
+                        return "3010000"
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "중랑구") {
+                        return "3060000"
+                    // 부산광역시
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "강서구") {
+                        return "3360000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "금정구") {
+                        return "3350000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "기장군") {
+                        return "3400000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "남구") {
+                        return "3310000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "동구") {
+                        return "3270000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "동래구") {
+                        return "3300000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "부산진구") {
+                        return "3290000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "북구") {
+                        return "3320000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "사상구") {
+                        return "3390000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "사하구") {
+                        return "3340000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "서구") {
+                        return "3260000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "수영구") {
+                        return "3380000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "연제구") {
+                        return "3370000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "영도구") {
+                        return "3280000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "중구") {
+                        return "3250000"
+                    } else if (sidoReplacements === "6260000" && siGunguSplit === "해운대구") {
+                        return "3330000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "군위군") {
+                        return "5141000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "남구") {
+                        return "3440000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "달서구") {
+                        return "3470000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "달성군") {
+                        return "3480000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "동구") {
+                        return "3420000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "북구") {
+                        return "3450000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "서구") {
+                        return "3430000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "수성구") {
+                        return "3460000"
+                    } else if (sidoReplacements === "6270000" && siGunguSplit === "중구") {
+                        return "3410000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "강화군") {
+                        return "3410000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "계양구") {
+                        return "3550000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "남동구") {
+                        return "3530000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "동구") {
+                        return "3500000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "미추홀구") {
+                        return "3150000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "부평구") {
+                        return "3540000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "서구") {
+                        return "3560000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "연수구") {
+                        return "3520000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "웅진군") {
+                        return "3580000"
+                    } else if (sidoReplacements === "6280000" && siGunguSplit === "중구") {
+                        return "3490000"
+                    } else if (sidoReplacements === "6290000" && siGunguSplit === "광산구") {
+                        return "3630000"
+                    } else if (sidoReplacements === "6290000" && siGunguSplit === "광주광역시") {
+                        return "6299998"
+                    } else if (sidoReplacements === "6290000" && siGunguSplit === "남구") {
+                        return "3610000"
+                    } else if (sidoReplacements === "6290000" && siGunguSplit === "동구") {
+                        return "3590000"
+                    } else if (sidoReplacements === "6290000" && siGunguSplit === "북구") {
+                        return "3620000"
+                    } else if (sidoReplacements === "6290000" && siGunguSplit === "서구") {
+                        return "3600000"
+                    } else if (sidoReplacements === "5690000" && siGunguSplit === " ") {
+                        return "5690000"  // 세종특별자치시 리턴 확인 필요!
+                    } else if (sidoReplacements === "6300000" && siGunguSplit === "대덕구") {
+                        return "3680000"
+                    // 대전 시작~!
+                    } else if (sidoReplacements === "6300000" && siGunguSplit === "동구") {
+                        return "3640000"
+                    } else if (sidoReplacements === "6300000" && siGunguSplit === "서구") {
+                        return "3660000"
+                    } else if (sidoReplacements === "6300000" && siGunguSplit === "유성구") {
+                        return "3670000"
+                    } else if (sidoReplacements === "6300000" && siGunguSplit === "중구") {
+                        return "3650000"
+                    } else if (sidoReplacements === "6310000" && siGunguSplit === "남구") {
+                        return "3700000"
+                    } else if (sidoReplacements === "6310000" && siGunguSplit === "동구") {
+                        return "3710000"
+                    } else if (sidoReplacements === "6310000" && siGunguSplit === "북구") {
+                        return "3720000"
+                    } else if (sidoReplacements === "6310000" && siGunguSplit === "울주군") {
+                        return "3730000"
+                    } else if (sidoReplacements === "6310000" && siGunguSplit === "중구") {
+                        return "3690000"
+                    // 경기도 시작
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "가평군") {
+                        return "4160000" 
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "고양시") {
+                        return "3940000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "과천시") {
+                        return "3970000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "광명시") {
+                        return "3900000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "광주시") {
+                        return "5540000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "구리시") {
+                        return "3980000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "군포시") {
+                        return "4020000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "기흥구") {
+                        return "5630000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "김포시") {
+                        return "4090000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "남양주시") {
+                        return "3990000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "동두천시") {
+                        return "3920000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "부천시") {
+                        return "3860000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "성남시") {
+                        return "3780000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "수원시") {
+                        return "3740000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "시흥시") {
+                        return "4010000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "안산시") {
+                        return "3930000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "안성시") {
+                        return "4080000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "안양시") {
+                        return "3830000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "양주시") {
+                        return "5590000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "양평군") {
+                        return "4170000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "여주시") {
+                        return "5700000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "연천군") {
+                        return "4140000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "오산시") {
+                        return "4000000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "용인시") {
+                        return "4050000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "의왕시") {
+                        return "4030000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "의정부시") {
+                        return "3820000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "이천시") {
+                        return "4070000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "파주시") {
+                        return "4060000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "평택시") {
+                        return "3910000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "포천시") {
+                        return "5600000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "하남시") {
+                        return "4040000"
+                    } else if (sidoReplacements === "6410000" && siGunguSplit === "화성시") {
+                        return "5530000"
+                    // 강원특별자치도
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "강릉시") {
+                        return "4201000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "고성군") {
+                        return "4341000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "강릉시") {
+                        return "4201000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "동해시") {
+                        return "4211000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "삼척시") {
+                        return "4241000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "속초시") {
+                        return "4231000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "양주군") {
+                        return "4321000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "양양군") {
+                        return "4351000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "영월군") {
+                        return "4271000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "원주시") {
+                        return "4191000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "인제군") {
+                        return "4331000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "정선군") {
+                        return "4291000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "철원군") {
+                        return "4301000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "춘천시") {
+                        return "4181000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "태백시") {
+                        return "4221000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "평창군") {
+                        return "4281000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "홍천군") {
+                        return "4251000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "화천군") {
+                        return "4311000"
+                    } else if (sidoReplacements === "6530000" && siGunguSplit === "횡성군") {
+                        return "4261000"
+                    // 충청북도
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "괴산군") {
+                        return "4460000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "단양군") {
+                        return "4480000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "보은군") {
+                        return "4420000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "영동군") {
+                        return "4440000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "옥천군") {
+                        return "4430000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "음성군") {
+                        return "4470000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "제천시") {
+                        return "4400000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "증평군") {
+                        return "5570000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "진천군") {
+                        return "4450000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "청주시") {
+                        return "5710000"
+                    } else if (sidoReplacements === "6430000" && siGunguSplit === "충주시") {
+                        return "4390000"
+                    // 충청남도
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "계룡시") {
+                        return "5580000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "공주시") {
+                        return "4500000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "금산군") {
+                        return "4550000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "논산시") {
+                        return "4540000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "당진시") {
+                        return "5680000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "보령시") {
+                        return "4510000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "부여군") {
+                        return "4570000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "서산시") {
+                        return "4530000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "서천군") {
+                        return "4580000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "아산시") {
+                        return "4520000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "연기군") {
+                        return "4560000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "예산군") {
+                        return "4610000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "천안시") {
+                        return "4490000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "청양군") {
+                        return "4590000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "태안군") {
+                        return "4620000"
+                    } else if (sidoReplacements === "6440000" && siGunguSplit === "홍성군") {
+                        return "4600000"
+                    // 전북특별자치도
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "고창군") {
+                        return "4781000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "군산시") {
+                        return "4671000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "김제시") {
+                        return "4711000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "남원시") {
+                        return "4701000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "무주군") {
+                        return "4741000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "부안군") {
+                        return "4791000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "순창군") {
+                        return "4771000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "완주군") {
+                        return "4721000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "익산시") {
+                        return "4681000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "임실군") {
+                        return "4761000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "장수군") {
+                        return "4751000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "전주시") {
+                        return "4641000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "정읍시") {
+                        return "4691000"
+                    } else if (sidoReplacements === "6540000" && siGunguSplit === "진안군") {
+                        return "4731000"
+                    // 전라남도
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "강진군") {
+                        return "4920000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "고흥군") {
+                        return "4880000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "곡성군") {
+                        return "4860000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "광양시") {
+                        return "4840000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "구례군") {
+                        return "4870000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "나주시") {
+                        return "4830000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "담양군") {
+                        return "4850000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "목포시") {
+                        return "4800000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "무안군") {
+                        return "4950000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "보성군") {
+                        return "4890000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "순천시") {
+                        return "4820000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "신안시") {
+                        return "5010000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "여수시") {
+                        return "4810000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "영광군") {
+                        return "4970000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "영암군") {
+                        return "4940000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "완도군") {
+                        return "4990000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "장성군") {
+                        return "4980000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "자흥군") {
+                        return "4910000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "진도군") {
+                        return "5000000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "함평군") {
+                        return "4960000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "해남군") {
+                        return "4930000"
+                    } else if (sidoReplacements === "6460000" && siGunguSplit === "화순군") {
+                        return "4900000"
+                    // 경상북도
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "경산시") {
+                        return "5130000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "경상북도") {
+                        return "6479998"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "경주시") {
+                        return "5050000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "고령군") {
+                        return "5200000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "구미시") {
+                        return "5080000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "김천시") {
+                        return "5060000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "문경시") {
+                        return "5120000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "봉화군") {
+                        return "5240000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "상주시") {
+                        return "5110000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "성주군") {
+                        return "5210000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "안동시") {
+                        return "5070000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "영덕군") {
+                        return "518000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "영양군") {
+                        return "5170000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "영주시") {
+                        return "5090000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "영천시") {
+                        return "5100000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "예천군") {
+                        return "5230000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "울릉군") {
+                        return "5260000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "울진군") {
+                        return "5250000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "의성군") {
+                        return "5150000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "청도군") {
+                        return "5190000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "청송군") {
+                        return "5160000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "칠곡군") {
+                        return "5220000"
+                    } else if (sidoReplacements === "6470000" && siGunguSplit === "포항시") {
+                        return "5020000"
+                    // 경상남도
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "거제시") {
+                        return "5370000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "거창군") {
+                        return "5470000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "고성군") {
+                        return "5420000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "김해시") {
+                        return "5350000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "남해군") {
+                        return "5430000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "밀양시") {
+                        return "5360000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "사천시") {
+                        return "5340000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "산청군") {
+                        return "5450000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "양산시") {
+                        return "5380000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "의령군") {
+                        return "5390000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "진주시") {
+                        return "5310000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "창녕군") {
+                        return "5410000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "창원시") {
+                        return "5320000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "창원시") {
+                        return "5280000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "창원시") {
+                        return "5670000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "통영시") {
+                        return "5330000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "하동군") {
+                        return "5440000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "함안군") {
+                        return "5400000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "함양군") {
+                        return "5460000"
+                    } else if (sidoReplacements === "6480000" && siGunguSplit === "합천군") {
+                        return "5460000"
+                    // 제주특별자치도
+                    } else if (sidoReplacements === "6500000" && siGunguSplit === "서귀포시") {
+                        return "6520000"
+                    } else if (sidoReplacements === "6500000" && siGunguSplit === "제주시") {
+                        return "6510000"
+                    } else if (sidoReplacements === "6500000" && siGunguSplit === "제주특별자치도") {
+                        return "6500000"
+                    };
+
+
+                };
+                const siGunguResult = siGunguReplacements;
+
+                const regionFilter = !regionCode || sidoReplacements === regionCode;
+                const cityFilter = !cityCode || siGunguResult === cityCode;
+        
+                const result = categoryFilter && regionFilter  && cityFilter;
+                console.log(
+                    `Item: ${item.desertionNo}, split_1: ${sidoSplit}, split_2: ${siGunguSplit},
+                     split_result_1: ${sidoReplacements}, split_result_2: ${siGunguResult}, Category: ${categoryFilter},
+                     Region: ${regionFilter}, City: ${cityFilter}, Result: ${result}`
+                    )
+                return result;
             });
         }
-        
     };
-
+        
     useEffect(() => {
         window.scrollTo(0,0);
         let isMounted = true;
@@ -439,24 +965,25 @@ const PetList = () => {
             const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPage}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
     
             let categoryFilter = '';
-            if (category === '개&upkind=417000'){
+            if (category === '개'){
                 categoryFilter =`&upkind=417000`; 
                 return `${encoded}&upkind=417000`;
             }
-            else if (category === '고양이&upkind=422400'){
+            else if (category === '고양이'){
                 categoryFilter = `&upkind=422400`;
                 return `${encoded}&upkind=422400`;
             } 
-            else if (category === '기타축종&upkind=429900'){
+            else if (category === '기타축종'){
                 categoryFilter = `&upkind=429900`;
                 return `${encoded}&upkind=429900`;
             }
-            
+            // 시도
             let regionFilter = '';
             if (regionCode) {
                 regionFilter=`&upr_cd=${regionCode}`;
+                // console.log('rrrrrrrrrrr', regionFilter);
             }
-
+            // 시군구
             let cityFilter = '';
             if (cityCode) {
                 cityFilter = `&org_cd=${cityCode}`;
