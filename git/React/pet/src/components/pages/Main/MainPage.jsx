@@ -51,7 +51,9 @@ const MainPage = () => {
                 </div>
             </div>
             {/* <PetSlider /> */}
+            <a href='https://AlwayWithAnimalmbti.waveon.io'>나와 잘 맞는 반려동물 찾기</a>
         </div>
+       
     );
 };
 
