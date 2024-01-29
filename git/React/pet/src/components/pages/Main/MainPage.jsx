@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../../styles/Main.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -77,7 +77,7 @@ const MainPage = ({bests}) => {
             </div>
             <div className='testbtns'>
                 <button className='testbtn1' onClick={() => window.open('https://AlwayWithAnimalmbti.waveon.io', '_blank')}>
-                    <img src='../img/mbtitest.png' style={{width:'100%', height:'100%'}}/>
+                    <img alt='테스트' src='../img/mbtitest.png' style={{width:'100%', height:'100%'}}/>
                 </button>
                 <button className='testbtn2'>
                     To be continued

@@ -1,6 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import '../../styles/Navigation.css';
-import { useEffect } from 'react';
 import logo from '../../assets/logo.png';
 
 const Navigation = ({isLogin,setIsLogin}) => {

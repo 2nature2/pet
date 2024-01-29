@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
 import WritePage from "./components/pages/Community/WritePage";
 import ViewPage from "./components/pages/Community/ViewPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -38,6 +37,7 @@ function App() {
     b_content: '',
     b_writer: '',
   })
+    // eslint-disable-next-line
   const [page, setPage] = useState(0);
     // eslint-disable-next-line
   const [totalPages, setTotalPages] = useState(0);
