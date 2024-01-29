@@ -9,6 +9,7 @@ import '../../styles/MemberList.css';
 const MemberList = ()=>{
     const[memberList, setMemberList]= useState([]);
     const[page,setPage]=useState(0);
+    // eslint-disable-next-line
     const [totalPages,setTotalPages]=useState(0);
     const[totalElements,setTotalElements]=useState(0);
 
@@ -42,6 +43,7 @@ const MemberList = ()=>{
  
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line
     }, [page, searching, searchOption, userInput]);
 
     const fetchData = async () => {
@@ -79,7 +81,7 @@ const MemberList = ()=>{
         setSearching(true);
          //search(0);
     };
-
+// eslint-disable-next-line
     const search = async(selectedPage) => {
         try {
             const currentPage = selectedPage;

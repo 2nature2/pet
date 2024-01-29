@@ -121,3 +121,21 @@
     display: flex;
     align-items: center;
 }
+
+.noSearch {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.noSearch img {
+    margin-top: 5%;
+}
+
+.noSearch p {
+    margin-top: 5%;
+}
+
+.loading img {
+    margin-top: 20%;
+}
