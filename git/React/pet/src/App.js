@@ -181,37 +181,13 @@ function App() {
     })
   },[]);
 
-  //로그아웃
- 
-  const handleLogout = async () => {
-    try {
-      console.log("로그아웃")
-      const response = await fetch('/logout', {
-        method: 'POST',
-      });
+
   
-      if (response.ok) {
-        console.log('로그아웃 성공');
-  
-        //로컬 스토리지에서 토큰 제거
-       sessionStorage.clear();
-       setIsLogin(false);
-  
-        // navigate("/");
-        window.location.href("/")
-      } else {
-        console.error('로그아웃 실패');
-      }
-    } catch (error) {
-      console.error('로그아웃 중 오류 발생', error);
-    }
-  };
-        
 
 
   return (
     <BrowserRouter>
-      <Navigation isLogin={isLogin} handleLogout={handleLogout} />
+      <Navigation isLogin={isLogin} setIsLogin={setIsLogin} />
       <Routes>
         <Route path="/" element={<MainPage/>} />
             <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} setTotalElements={setTotalElements}/>} />

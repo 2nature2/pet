@@ -2,15 +2,34 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import '../../styles/Navigation.css';
 import { useEffect, useState } from 'react';
 
-const Navigation = ({isLogin,handleLogout}) => {
+const Navigation = ({isLogin,setIsLogin}) => {
    
 const navigate = useNavigate();
 
-const Logout=()=>{
-  handleLogout();
-}
+const handleLogout = async () => {
+  try {
+    console.log("로그아웃")
+    const response = await fetch('/logout', {
+      method: 'POST',
+    });
 
+    if (response.ok) {
+      console.log('로그아웃 성공');
 
+      //로컬 스토리지에서 토큰 제거
+     sessionStorage.clear();
+     setIsLogin(false);
+
+       navigate("/");
+      //window.location.href("/")
+    } else {
+      console.error('로그아웃 실패');
+    }
+  } catch (error) {
+    console.error('로그아웃 중 오류 발생', error);
+  }
+};
+      
 
     return(
 
@@ -33,7 +52,7 @@ const Logout=()=>{
               <NavLink className='navmenu' to="/member/mypage">MY-PAGE</NavLink>
 
             )}
-            <NavLink className='navmenu' to="#" onClick={Logout}>LOGOUT</NavLink>
+            <NavLink className='navmenu' to="#" onClick={handleLogout}>LOGOUT</NavLink>
           </>
         )}
       </div>
