@@ -4,6 +4,7 @@ import '../../styles/Pet.css';
 import Kakao from "./Kakao.jsx";
 import { Button, FormGroup, Modal, Container } from "react-bootstrap";
 
+
 const CallButton = ({ phoneNumber }) => {
     const handleCall = () => {
         // const phoneNumberWithoutDash = phoneNumber.replace(/-/g, '');
@@ -13,9 +14,11 @@ const CallButton = ({ phoneNumber }) => {
     };
   
     return (
-      <Button onClick={handleCall}>
-        전화 걸기
-      </Button>
+        <div>
+      <button onClick={handleCall} className="callbtn">
+        <img src="../../img/call.png" style={{width:'30px', height:'30px'}}/>
+      </button>
+      </div>
     );
   };
   
@@ -44,7 +47,6 @@ const PetDetail = () => {
                 <div className="flex-detail-img">
                 <img src={goAnimal.popfile} alt="animal_img"></img>
                 </div>
-
                 <div className="flex-detail-item">
                 <h3>1.동물정보</h3>
                 <p>공고번호 : {goAnimal.noticeNo}</p>
@@ -61,15 +63,15 @@ const PetDetail = () => {
                 <br />
                 <h3>3. 동물보호센터 안내</h3>
                 <p>관할보호센터명 : {goAnimal.careNm}</p>
-                <Button variant="secondary"  onClick={() => adoptionOpen()}>관할센터 문의하기</Button>
+                <button type="button" className="detailbtn" variant="secondary"  onClick={() => adoptionOpen()}>관할센터 문의하기</button>
                 </div>
 
             </div>
             {/* <Kakao /> */}
             <br/>
         </div>
-        <div>
-        <Modal show={adoptionShow} onHide={adoptionClose} >
+        <div >
+        <Modal className='custom-modal' show={adoptionShow} onHide={adoptionClose} >
                         <Modal.Header closeButton>
                             <Modal.Title>관할센터 문의하기</Modal.Title>
                         </Modal.Header>
@@ -82,7 +84,7 @@ const PetDetail = () => {
                              <Kakao />
                             </div>
                             
-                            <h6>🌟센터 연락처 :{goAnimal.careTel} </h6>
+                            <h6>🌟센터 연락처 : {goAnimal.careTel} </h6>
                             <CallButton phoneNumber={goAnimal.careTel} />
                            
                             </FormGroup>
