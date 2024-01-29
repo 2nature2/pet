@@ -71,12 +71,14 @@ const MemberList = ()=>{
            
             if (searching) {
               endpoint = `/admin/member/search?page=${page}&field=${searchOption}&word=${userInput}`;
+              //setSearching(false);
             }
             const loadMemberList = await fetch(endpoint);
             const Data = await loadMemberList.json();
             setMemberList(Data.content);
             setTotalPages(Data.totalPages);
             setTotalElements(Data.totalElements);
+            
           } catch (error) {
             console.error('데이터 가져오기 오류:', error);
             Swal.fire({
@@ -89,6 +91,7 @@ const MemberList = ()=>{
           }
         };
         fetchData();
+       
       }, [page, searching, searchOption, userInput]);
 
       const handlePageChange = async(selectedPage) => {

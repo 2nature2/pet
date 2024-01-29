@@ -48,3 +48,14 @@
 #emj {
     font-family: 'YClover-Bold';
 }
+
+.testbtn{
+    margin-left: 90px;
+    margin-top: 20px;
+    width: 400px;
+    height: 270px;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+}
