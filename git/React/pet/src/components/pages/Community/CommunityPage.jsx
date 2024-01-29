@@ -41,7 +41,6 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
     
     useEffect(()=> {
         setSearchLists(lists);
-        console.log("sessionStorage", sessionStorage);
     }, [lists]);
 
     const handlePageChange = async(selectedPage) => {
@@ -80,7 +79,6 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
             const currentPage = selectedPage -1;
             const response = await axios.get(`/community/search?&size=20&page=${currentPage}&field=${searchOption}&word=${userInput}`);
             const notices = await axios.get(`/community/search?&size=20&field=${"b_category"}&word=${"공지사항"}`);
-            console.log("notices", notices);
             setNoticeList(notices.data.content);
             setCommunityList(response.data.content);
             setTotalElements(response.data.totalElements);
@@ -111,6 +109,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                             <option>질문</option>
                             <option>정보</option>
                             <option>후기</option>
+                            <option>자랑</option>
                             <option>삽니다</option>
                             <option>팝니다</option>
                             <option>기타</option>
@@ -136,7 +135,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                                     <tr className='tblData' key={index}>
                                         <th style={{backgroundColor:"#E9F5FF"}}><img src={notice} alt='notice'/></th>
                                         <th style={{backgroundColor:"#E9F5FF"}}>{list.b_category}</th>
-                                        <th style={{textAlign: 'justify', backgroundColor:"#E9F5FF"}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>[{list.b_comments}]</span></a></th>
+                                        <th style={{textAlign: 'justify', backgroundColor:"#E9F5FF"}}><a href={`/community/view/${list.bnum}`}>{list.b_title} <span style={{color:'gray'}}>{`\n`}[{list.b_comments}]</span></a></th>
                                         <th style={{backgroundColor:"#E9F5FF"}}>{list.b_writer}</th>
                                         <th style={{backgroundColor:"#E9F5FF"}}>{list.b_date}</th>
                                         <th style={{backgroundColor:"#E9F5FF"}}>{list.b_like}</th>
@@ -153,7 +152,7 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
                                 <tr className='tblData' style={{fontWeight: 'normal'}} key={index}>
                                     <td>{list.bnum}</td>
                                     <td>{list.b_category}</td>
-                                    <td><a href={`/community/view/${list.bnum}`}>{list.b_title}<span style={{color:'gray'}}>[{list.b_comments}]</span></a></td>
+                                    <td><a href={`/community/view/${list.bnum}`}>{list.b_title}<span style={{color:'gray'}}>{`\n`}[{list.b_comments}]</span></a></td>
                                     <td>{list.b_writer}</td>
                                     <td>{list.b_date}</td>
                                     <td>{list.b_like}</td>
