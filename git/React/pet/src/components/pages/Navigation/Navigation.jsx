@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import '../../styles/Navigation.css';
 import { useEffect } from 'react';
+import logo from '../../assets/logo.png';
 
 const Navigation = ({isLogin}) => {
    
@@ -34,11 +35,13 @@ const handleLogout = async () => {
 };
       
     return(
-
       <div className='nav'>
-      <NavLink className='navmenu' to="/">MAIN</NavLink>
-      <NavLink className='navmenu' to="/pet">PET</NavLink>
-      <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
+        <div className='nav-left'>
+        <NavLink className='navmenu' to="/">MAIN</NavLink>
+        <NavLink className='navmenu' to="/pet">PET</NavLink>
+        <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
+        </div>
+      <img id='logo' alt='logo' src={logo}/>
       <div className="nav-right">
         {sessionStorage.getItem("name") == null ? (
           <>
