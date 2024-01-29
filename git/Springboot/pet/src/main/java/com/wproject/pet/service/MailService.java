@@ -39,13 +39,13 @@ public class MailService {
 				makeRandomNumber();
 				String setFrom = "kimdahyeon32@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
 				String toMail = email;
-				String title = "PET 비밀번호 찾기 인증 이메일 입니다."; // 이메일 제목 
+				String title = "Always With Animal 임시비밀번호 발송 이메일 입니다."; // 이메일 제목 
 				String content = 
 						"홈페이지를 방문해주셔서 감사합니다." + 	//html 형식으로 작성 ! 
 		                "<br><br>" + 
-					    "인증 번호는 " + authNumber + "입니다." + 
+					    "임시 비밀번호는 " + authNumber + "입니다." + 
 					    "<br>" + 
-					    "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용 삽입
+					    "임시 비밀번호로 로그인후 마이페이지에서 비밀번호 변경을 해주세요."; //이메일 내용 삽입
 				mailSend(setFrom, toMail, title, content);
 				Member member = memberRepository.findByUserid(userid);
 				 String encPassword = encoder.encode(Integer.toString(authNumber));
