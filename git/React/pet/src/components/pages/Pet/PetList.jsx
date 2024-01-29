@@ -905,13 +905,15 @@ const PetList = () => {
                     </div>
                 )}
             </Row>
+            <div className='div'>
             <Stack direction='row' spacing={2} justifyContent='center' marginTop={5} marginBottom={5}>
-                <Pagination color='primary'
+                <Pagination 
                     count={totalPages}
                     page={currentPage}
                     onChange={(event, page) => navigateToPage(page)}
                 />
             </Stack>
+            </div>
         </div>
     );
 }
