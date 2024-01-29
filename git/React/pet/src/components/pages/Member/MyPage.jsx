@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button, Container, Form, Row, Col, Modal  } from 'react-bootstrap';
 import Navigation from "../Navigation/Navigation.jsx";
 import { useNavigate } from 'react-router-dom';
+import '../../styles/MyPage.css';
 
 
 

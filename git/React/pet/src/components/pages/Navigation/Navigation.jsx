@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import '../../styles/Navigation.css';
 import logo from '../../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 const Navigation = ({isLogin,setIsLogin}) => {
    
@@ -38,7 +39,9 @@ const handleLogout = async () => {
         <NavLink className='navmenu' to="/pet">PET</NavLink>
         <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
         </div>
+        <Link to="/">
       <img id='logo' alt='logo' src={logo}/>
+      </Link>
       <div className="nav-right">
         {!isLogin ? (
           <>
