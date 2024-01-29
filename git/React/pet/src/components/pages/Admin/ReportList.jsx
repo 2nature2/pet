@@ -27,7 +27,8 @@ const ReportList = () => {
     b_reporter: '',
     b_reason: '',
     community: '',
-    reportStatus: ''
+    reportStatus: '',
+    reportDate: ''
   })
   const [commentReport, setCommentReport] = useState({
     crid: '',
@@ -35,7 +36,8 @@ const ReportList = () => {
     c_reason: '',
     community: '',
     comment: '',
-    reportStatus: ''
+    reportStatus: '',
+    reportDate: ''
   })
 
   const handleLogout = async () => {
@@ -150,7 +152,8 @@ const ReportList = () => {
         b_reporter: data.boardReport.b_reporter,
         b_reason: data.boardReport.b_reason,
         community: data.boardReport.community,
-        reportStatus: data.boardReport.reportStatus
+        reportStatus: data.boardReport.reportStatus,
+        reportDate: data.boardReport.reportDate
       }));
     })
   }
@@ -190,7 +193,8 @@ const ReportList = () => {
         c_reason: data.commentReport.c_reason,
         community: data.commentReport.community,
         comment: data.commentReport.comment,
-        reportStatus: data.commentReport.reportStatus
+        reportStatus: data.commentReport.reportStatus,
+        reportDate: data.commentReport.reportDate
       }));
     })
   }
@@ -241,6 +245,7 @@ const ReportList = () => {
                       <th>신고번호</th>
                       <th>신고자</th>
                       <th>신고사유</th>
+                      <th>신고일시</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -257,6 +262,7 @@ const ReportList = () => {
                               <td>{report.br_id}</td>
                               <td>{report.b_reporter}</td>
                               <td onClick={()=>reportOpen(report.br_id)}>{report.b_reason}</td>
+                              <td>{new Date(report.reportDate).toLocaleString()}</td>
                             </tr>
                             ))
                         }
@@ -272,6 +278,7 @@ const ReportList = () => {
                               <td>{report.br_id}</td>
                               <td>{report.b_reporter}</td>
                               <td onClick={()=>reportOpen(report.br_id)}>{report.b_reason}</td>
+                              <td>{new Date(report.reportDate).toLocaleString()}</td>
                             </tr>
                             ))
                         }
@@ -289,6 +296,7 @@ const ReportList = () => {
                       <th>신고번호</th>
                       <th>신고자</th>
                       <th>신고사유</th>
+                      <th>신고일시</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -305,6 +313,7 @@ const ReportList = () => {
                               <td>{report.cr_id}</td>
                               <td>{report.c_reporter}</td>
                               <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
+                              <td>{new Date(report.reportDate).toLocaleString()}</td>
                             </tr>
                           ))
                         }
@@ -320,6 +329,7 @@ const ReportList = () => {
                               <td>{report.cr_id}</td>
                               <td>{report.c_reporter}</td>
                               <td onClick={()=>reportOpen(report.cr_id)}>{report.c_reason}</td>
+                              <td>{new Date(report.reportDate).toLocaleString()}</td>
                             </tr>
                           ))
                         }
@@ -350,6 +360,7 @@ const ReportList = () => {
                       <FormGroup className="reportView">
                         <FormControl type="text" plaintext readOnly value={boardReport.b_reporter} style={{ fontWeight: "bold" }}/>
                         <FormControl as="textarea" plaintext readOnly value={boardReport.b_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
+                        <FormControl type="text" plaintext readOnly value={new Date(boardReport.reportDate).toLocaleString()} style={{ color: 'gray'}}/>
                       </FormGroup>
                     </div>
                   </Modal.Body>
@@ -373,12 +384,14 @@ const ReportList = () => {
                     <FormGroup style={{border:'1px solid #d9d9d9', borderRadius:'5px', padding: '15px' ,resize: "none"}}>
                       <FormControl type="text" plaintext readOnly value={commentReport.comment.c_writer} style={{ fontWeight: "bold" }}/>
                       <FormControl as="textarea" plaintext readOnly value={commentReport.comment.c_content} style={{ resize: "none" }}/>
+                      <FormControl type="text" plaintext readOnly value={new Date(commentReport.reportDate).toLocaleString()} style={{ color: 'gray'}}/>
                     </FormGroup>
                     <div className="reportContainer">
                       <FormControl className="arrow" type="text" plaintext readOnly value={"↳"}/>
                       <FormGroup className="reportView">
                         <FormControl type="text" plaintext readOnly value={commentReport.c_reporter} style={{ fontWeight: 'bold' }}/>
                         <FormControl as="textarea" plaintext readOnly value={commentReport.c_reason} style={{ resize: "none" }} rows={5} minLength={10}/>
+                        <FormControl type="text" plaintext readOnly value={new Date(commentReport.reportDate).toLocaleString()} style={{ color: 'gray'}}/>
                       </FormGroup>
                     </div>
                   </Modal.Body>

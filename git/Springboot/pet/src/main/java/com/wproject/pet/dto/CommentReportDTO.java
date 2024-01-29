@@ -1,5 +1,7 @@
 package com.wproject.pet.dto;
 
+import java.util.Date;
+
 import com.wproject.pet.entity.Comment;
 import com.wproject.pet.entity.Community;
 
@@ -13,6 +15,7 @@ public class CommentReportDTO {
 	private String c_reason;
 	private String c_reporter;
 	private String reportStatus;
+	private Date reportDate;
 	private Community community;
 	private Comment comment;
 

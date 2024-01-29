@@ -1,5 +1,7 @@
 package com.wproject.pet.dto;
 
+import java.util.Date;
+
 import com.wproject.pet.entity.Community;
 
 import lombok.AllArgsConstructor;
@@ -12,6 +14,7 @@ public class BoardReportDTO {
 	private String b_reason;
 	private String b_reporter;
 	private String reportStatus;
+	private Date reportDate;
 	private Community community;
 	
 }
