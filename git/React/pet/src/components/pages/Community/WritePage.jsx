@@ -89,6 +89,7 @@ const WritePage = ({ insertCommunity }) => {
                         <option>질문</option>
                         <option>정보</option>
                         <option>후기</option>
+                        <option>자랑</option>
                         <option>삽니다</option>
                         <option>팝니다</option>
                         <option>기타</option>
