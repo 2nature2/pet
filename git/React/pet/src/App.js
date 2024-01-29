@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import WritePage from "./components/pages/Community/WritePage";
 import ViewPage from "./components/pages/Community/ViewPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -25,6 +26,8 @@ import AdminPage from './components/pages/Admin/AdminPage';
 import MemberList from './components/pages/Admin/MemberList';
 import ReportList from './components/pages/Admin/ReportList';
 import Find from './components/pages/Member/Find';
+
+
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -178,11 +181,37 @@ function App() {
     })
   },[]);
 
+  //로그아웃
+ 
+  const handleLogout = async () => {
+    try {
+      console.log("로그아웃")
+      const response = await fetch('/logout', {
+        method: 'POST',
+      });
+  
+      if (response.ok) {
+        console.log('로그아웃 성공');
+  
+        //로컬 스토리지에서 토큰 제거
+       sessionStorage.clear();
+       setIsLogin(false);
+  
+        // navigate("/");
+        window.location.href("/")
+      } else {
+        console.error('로그아웃 실패');
+      }
+    } catch (error) {
+      console.error('로그아웃 중 오류 발생', error);
+    }
+  };
+        
 
 
   return (
     <BrowserRouter>
-      <Navigation isLogin={isLogin} />
+      <Navigation isLogin={isLogin} handleLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<MainPage/>} />
             <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} setTotalElements={setTotalElements}/>} />
