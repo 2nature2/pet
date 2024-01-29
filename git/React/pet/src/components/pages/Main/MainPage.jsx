@@ -49,9 +49,14 @@ const MainPage = () => {
                         }
                     </Slider>
                 </div>
+               
             </div>
             {/* <PetSlider /> */}
-            <a href='https://AlwayWithAnimalmbti.waveon.io'>나와 잘 맞는 반려동물 찾기</a>
+            
+            <button className='testbtn' onClick={() => window.open('https://AlwayWithAnimalmbti.waveon.io', '_blank')}>
+                <img src='../img/mbtitest.png' style={{width:'100%', height:'100%'}}/>
+            </button>
+
         </div>
        
     );
