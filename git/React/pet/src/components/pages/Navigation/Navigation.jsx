@@ -3,13 +3,9 @@ import '../../styles/Navigation.css';
 import { useEffect } from 'react';
 import logo from '../../assets/logo.png';
 
-const Navigation = ({isLogin}) => {
+const Navigation = ({isLogin,setIsLogin}) => {
    
 const navigate = useNavigate();
-
-useEffect(() => {
-  console.log("세션 role:", sessionStorage.getItem("role"))
-}, [])
 
 const handleLogout = async () => {
   try {
@@ -23,9 +19,10 @@ const handleLogout = async () => {
 
       //로컬 스토리지에서 토큰 제거
      sessionStorage.clear();
+     setIsLogin(false);
 
-      navigate("/");
-     // window.location.href("/")
+       navigate("/");
+      //window.location.href("/")
     } else {
       console.error('로그아웃 실패');
     }
@@ -34,6 +31,7 @@ const handleLogout = async () => {
   }
 };
       
+
     return(
       <div className='nav'>
         <div className='nav-left'>
@@ -43,7 +41,7 @@ const handleLogout = async () => {
         </div>
       <img id='logo' alt='logo' src={logo}/>
       <div className="nav-right">
-        {sessionStorage.getItem("name") == null ? (
+        {!isLogin ? (
           <>
             <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
             <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>

@@ -93,3 +93,31 @@
 .card-button-container button {
     margin-bottom: 20px;
 }
+
+.detailbtn{
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 5px 20px;
+    border-radius: 15px;
+    font-family: "omyu-pretty";
+    font-weight: 700;
+    height: auto;
+    background-color: rgb(245, 210, 239);
+    color: rgb(147, 141, 249);
+}
+
+.custom-modal{
+    font-family: "omyu-pretty";
+}
+
+.callbtn{
+    
+    margin-top: 20px;
+    width: auto; 
+    height: auto;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+}

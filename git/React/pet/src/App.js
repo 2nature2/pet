@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import WritePage from "./components/pages/Community/WritePage";
 import ViewPage from "./components/pages/Community/ViewPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -25,6 +26,8 @@ import AdminPage from './components/pages/Admin/AdminPage';
 import MemberList from './components/pages/Admin/MemberList';
 import ReportList from './components/pages/Admin/ReportList';
 import Find from './components/pages/Member/Find';
+
+
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
@@ -62,7 +65,7 @@ function App() {
       console.error('Error fetching data:', error);
     }
   }
-
+  
   useEffect(() => {
     const fetchData = async () => {
       await loadCommunityList(page);
@@ -162,6 +165,7 @@ function App() {
       });
   };
   //로그인이 되어있는지 없는지 확인
+  const [isLogin,setIsLogin]=useState(false);
   useEffect(()=>{
     console.log("세션 값 확인");
 
@@ -176,9 +180,11 @@ function App() {
         sessionStorage.setItem("tel",response.data.tel)
         sessionStorage.setItem("role",response.data.role)
         sessionStorage.setItem("nickname",response.data.nickname)
+        setIsLogin(true);
       }
       else{
         sessionStorage.setItem("name",null)
+        
       }
     })
     .catch((error) => {
@@ -187,10 +193,12 @@ function App() {
   },[]);
 
 
+  
+
 
   return (
     <BrowserRouter>
-      <Navigation />
+      <Navigation isLogin={isLogin} setIsLogin={setIsLogin} />
       <Routes>
         <Route path="/" element={<MainPage bests={bestCommunity}/>} />
             <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} setTotalElements={setTotalElements}/>} />
