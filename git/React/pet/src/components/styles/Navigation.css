@@ -33,7 +33,8 @@
   color: #1098f7;
 }
 
-#logo {
+.logo {
+  margin-right: 5%;
   margin-left: auto;
   -webkit-user-select: none;
   -moz-user-select: none;

@@ -39,9 +39,9 @@ const handleLogout = async () => {
         <NavLink className='navmenu' to="/pet">PET</NavLink>
         <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
         </div>
-        <Link to="/">
-      <img id='logo' alt='logo' src={logo}/>
-      </Link>
+        <Link className='logo' to="/">
+          <img alt='logo' src={logo}></img>
+        </Link>
       <div className="nav-right">
         {!isLogin ? (
           <>
