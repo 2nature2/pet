@@ -30,6 +30,7 @@ public class CommentReportService {
 						report.getC_reason(),
 						report.getC_reporter(),
 						report.getReportStatus(),
+						report.getReportDate(),
 						report.getCommunity(),
 						report.getComment()
 						))
@@ -56,6 +57,7 @@ public class CommentReportService {
 				commentReport.getC_reason(),
 				commentReport.getC_reporter(),
 				commentReport.getReportStatus(),
+				commentReport.getReportDate(),
 				commentReport.getCommunity(),
 				commentReport.getComment()
 				);

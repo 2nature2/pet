@@ -31,6 +31,7 @@ public class BoardReportService {
 							report.getB_reason(),
 							report.getB_reporter(),
 							report.getReportStatus(),
+							report.getReportDate(),
 							report.getCommunity()
 							))
 					.collect(Collectors.toList()),
@@ -55,6 +56,7 @@ public class BoardReportService {
 				boardReport.getB_reason(),
 				boardReport.getB_reporter(),
 				boardReport.getReportStatus(),
+				boardReport.getReportDate(),
 				boardReport.getCommunity()
 				);
 	}
