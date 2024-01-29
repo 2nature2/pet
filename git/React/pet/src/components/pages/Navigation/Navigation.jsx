@@ -1,14 +1,13 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import '../../styles/Navigation.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Navigation = ({isLogin}) => {
    
 const navigate = useNavigate();
 
-useEffect(() => {
-  console.log("세션 role:", sessionStorage.getItem("role"))
-}, [])
+
+
 
 const handleLogout = async () => {
   try {
@@ -40,7 +39,7 @@ const handleLogout = async () => {
       <NavLink className='navmenu' to="/pet">PET</NavLink>
       <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
       <div className="nav-right">
-        {sessionStorage.getItem("name") == null ? (
+        {!isLogin ? (
           <>
             <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
             <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>
