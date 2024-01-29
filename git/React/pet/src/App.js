@@ -51,6 +51,8 @@ function App() {
     }
   }
 
+  
+
   useEffect(() => {
     const fetchData = async () => {
       await loadCommunityList(page);
@@ -149,6 +151,7 @@ function App() {
       });
   };
   //로그인이 되어있는지 없는지 확인
+  const [isLogin,setIsLogin]=useState(false);
   useEffect(()=>{
     console.log("세션 값 확인");
 
@@ -163,9 +166,11 @@ function App() {
         sessionStorage.setItem("tel",response.data.tel)
         sessionStorage.setItem("role",response.data.role)
         sessionStorage.setItem("nickname",response.data.nickname)
+        setIsLogin(true);
       }
       else{
         sessionStorage.setItem("name",null)
+        
       }
     })
     .catch((error) => {
@@ -177,7 +182,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navigation />
+      <Navigation isLogin={isLogin} />
       <Routes>
         <Route path="/" element={<MainPage/>} />
             <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} setTotalElements={setTotalElements}/>} />
