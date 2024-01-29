@@ -419,7 +419,7 @@ const PetList = () => {
         } else {
             return data.response.body.items.item.filter(item => {
                 const categoryFilter =
-                    category === '기타축종'
+                    category === '[기타축종]'
                         ? !item.kindCd.includes('[개]') && !item.kindCd.includes('[고양이]')
                         : !item.kindCd.includes(`[${category}]`);
         
@@ -451,35 +451,35 @@ const PetList = () => {
                         return "6119999"
                     } else if (sidoReplacements === "6110000" && siGunguSplit === "강남구") {
                         return "3220000"
-                    } else if (sidoReplacements === "3240000" && siGunguSplit === "강동구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "강동구") {
                         return "3240000"
-                    } else if (sidoReplacements === "3080000" && siGunguSplit === "강북구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "강북구") {
                         return "3080000"
-                    } else if (sidoReplacements === "3150000" && siGunguSplit === "강서구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "강서구") {
                         return "3150000"
-                    } else if (sidoReplacements === "3200000" && siGunguSplit === "관악구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "관악구") {
                         return "3200000"
-                    } else if (sidoReplacements === "3040000" && siGunguSplit === "광진구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "광진구") {
                         return "3040000"
-                    } else if (sidoReplacements === "3160000" && siGunguSplit === "구로구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "구로구") {
                         return "3160000"
-                    } else if (sidoReplacements === "3170000" && siGunguSplit === "금천구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "금천구") {
                         return "3170000"
-                    } else if (sidoReplacements === "3100000" && siGunguSplit === "노원구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "노원구") {
                         return "3100000"
-                    } else if (sidoReplacements === "3090000" && siGunguSplit === "도봉구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "도봉구") {
                         return "3090000"
-                    } else if (sidoReplacements === "3050000" && siGunguSplit === "동대문구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "동대문구") {
                         return "3050000"
-                    } else if (sidoReplacements === "3190000" && siGunguSplit === "동작구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "동작구") {
                         return "3190000"
-                    } else if (sidoReplacements === "3130000" && siGunguSplit === "마포구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "마포구") {
                         return "3130000"
-                    } else if (sidoReplacements === "3120000" && siGunguSplit === "서대문구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "서대문구") {
                         return "3120000"
-                    } else if (sidoReplacements === "6119998" && siGunguSplit === "서울특별시") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "서울특별시") {
                         return "6119998"
-                    } else if (sidoReplacements === "3210000" && siGunguSplit === "서초구") {
+                    } else if (sidoReplacements === "6110000" && siGunguSplit === "서초구") {
                         return "3210000"
                     } else if (sidoReplacements === "6110000" && siGunguSplit === "성동구") {
                         return "3030000"
@@ -937,10 +937,9 @@ const PetList = () => {
                     } else if (sidoReplacements === "6500000" && siGunguSplit === "제주특별자치도") {
                         return "6500000"
                     };
-
-
                 };
-                const siGunguResult = siGunguReplacements;
+
+                const siGunguResult = siGunguReplacements(sidoReplacements, siGunguSplit);
 
                 const regionFilter = !regionCode || sidoReplacements === regionCode;
                 const cityFilter = !cityCode || siGunguResult === cityCode;
@@ -965,17 +964,12 @@ const PetList = () => {
             const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPage}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
     
             let categoryFilter = '';
-            if (category === '개'){
+            if (category === '[개]'){
                 categoryFilter =`&upkind=417000`; 
-                return `${encoded}&upkind=417000`;
-            }
-            else if (category === '고양이'){
+            } else if (category === '[고양이]'){
                 categoryFilter = `&upkind=422400`;
-                return `${encoded}&upkind=422400`;
-            } 
-            else if (category === '기타축종'){
+            } else if (category === '[기타축종]'){
                 categoryFilter = `&upkind=429900`;
-                return `${encoded}&upkind=429900`;
             }
             // 시도
             let regionFilter = '';
@@ -989,12 +983,11 @@ const PetList = () => {
                 cityFilter = `&org_cd=${cityCode}`;
             }
             
-            if(cityCode===''){
+            if(cityCode ===''){
                 return `${encoded}${categoryFilter}${regionFilter}`;
-            }else{
+            } else {
                 return `${encoded}${categoryFilter}${regionFilter}${cityFilter}`;
             }
-            // return `${encoded}${categoryFilter}${regionFilter}${cityFilter}`;
 
         };
 
@@ -1071,13 +1064,13 @@ const PetList = () => {
             {/* 카테고리 선택 UI */}
             <div className='card-button-container'>
                 <button onClick={() => setSelectedCategory(null)}><img alt='all' src={process.env.PUBLIC_URL + '/img/all_50.png'} /></button>
-                <button onClick={() => setSelectedCategory('개')}><img alt='puppy' src={process.env.PUBLIC_URL + '/img/puppy_50.png'} /></button>
-                <button onClick={() => setSelectedCategory('고양이')}><img alt='cat' src={process.env.PUBLIC_URL + '/img/cat_50.png'} /></button>
-                <button onClick={() => setSelectedCategory('기타축종')}><img alt='etc' src={process.env.PUBLIC_URL + '/img/etc_64.png'} /></button>
+                <button onClick={() => setSelectedCategory('[개]')}><img alt='puppy' src={process.env.PUBLIC_URL + '/img/puppy_50.png'} /></button>
+                <button onClick={() => setSelectedCategory('[고양이]')}><img alt='cat' src={process.env.PUBLIC_URL + '/img/cat_50.png'} /></button>
+                <button onClick={() => setSelectedCategory('[기타축종]')}><img alt='etc' src={process.env.PUBLIC_URL + '/img/etc_64.png'} /></button>
             </div>
             <Row xs={1} md={3} className='g-4'>
                 {
-                    // filterDataByCategory(selectedCategory, selectedSido, selectedCity) !== null &&
+                    filterDataByCategory(selectedCategory, selectedSido, selectedCity) !== null &&
                         filterDataByCategory(selectedCategory, selectedSido, selectedCity).length > 0 ? (
                             filterDataByCategory(selectedCategory, selectedSido, selectedCity).map((animal) => (
                                 <Col key={animal.desertionNo}>
