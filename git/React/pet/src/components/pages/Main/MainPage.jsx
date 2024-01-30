@@ -85,7 +85,6 @@ const MainPage = ({bests}) => {
             </div>
             </div>
         </div>
-       
     );
 };
 

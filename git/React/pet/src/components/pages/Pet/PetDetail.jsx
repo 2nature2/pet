@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import '../../styles/Pet.css';
 import Kakao from "./Kakao.jsx";
-import { Button, FormGroup, Modal, Container } from "react-bootstrap";
+import { FormGroup, Modal, Container } from "react-bootstrap";
 
 
 const CallButton = ({ phoneNumber }) => {
