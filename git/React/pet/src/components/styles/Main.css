@@ -23,16 +23,35 @@
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
+.second-container {
+    display: inline-flex;
+    margin-inline: 5%;
+}
+
+.contest {
+    align-self: center;
+}
+
 .contestTxt {
     text-align: center;
     margin-top: 5%;
-    margin-bottom: -4%;
+    margin-left: 5%;
+    width: 50vw;
     font-size: 32px;
-    /* font-family: 'Y_Spotlight'; */
     font-family: 'YClover-Regular';
 }
 
+.contestSubTxt {
+    margin-left: 5%;
+    width: 50vw;
+    text-align: center;
+    color: gray;
+    font-size: 15px;
+    font-weight: 600;
+}
+
 .constestImgs {
+    width: 50vw;
     margin-top: 5%;
     margin-inline: 5%;
     padding-top: 5px;
@@ -45,17 +64,55 @@
     outline: none;
 }
 
-#emj {
+.emj {
     font-family: 'YClover-Bold';
 }
 
-.testbtn{
-    margin-left: 90px;
-    margin-top: 20px;
-    width: 400px;
-    height: 270px;
+.bestCommunity {
+    width: 20vw;
+    margin-top: 5%;
+}
+
+.sub {
+    font-weight: 600;
+    padding-inline: 10px;
+    font-size: 20px;
+    padding-bottom: 3px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    background-color: #b80042;
+    color: white;
+    display: flex;
+}
+
+.best a {
+    text-decoration: none;
+    color: black;
+}
+
+.testbtns {
+    display: inline;
+    margin-left: 5%;
+    width: 20vw;
+    margin-top: 5%;
+}
+
+.testbtn1{
     background-color: transparent;
     border: none;
     display: flex;
+    width: 20vw;
     align-items: center;
+}
+
+.testbtn2{
+    background-color: transparent;
+    border:none ;
+    width: 20vw;
+    height: 20vh;
+    margin-top: 5%;
+    margin-left: 5%;
+    
 }

@@ -5,6 +5,8 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Card, Col, Row, ListGroup } from 'react-bootstrap';
 import '../../styles/Pet.css';
+import loading from '../../assets/loading.png';
+import notfound from '../../assets/notfound.png';
 
 const PetList = () => {
 
@@ -825,8 +827,8 @@ const PetList = () => {
         };
     }, [currentPage, selectedCategory, selectedSido, selectedCity]);
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (isLoading) return <div className='loading'><img src={loading} alt='Loading...'/></div>;
+    if (error) return <div>Error: {error.message}</div> ;
     if (!data || !data.response || !data.response.body || !data.response.body.items) {
         return <div>No data available</div>;
     }
@@ -896,16 +898,21 @@ const PetList = () => {
                                 </Col>
                     ))
                 ) : (
-                    <p>해당 지역에는 아이들이 없습니다.</p>
+                    <div className='noSearch'>
+                        <img src={notfound} alt='not found'/>
+                        <p>해당 지역에는 아이들이 없습니다.</p>
+                    </div>
                 )}
             </Row>
+            <div className='div'>
             <Stack direction='row' spacing={2} justifyContent='center' marginTop={5} marginBottom={5}>
-                <Pagination color='primary'
+                <Pagination 
                     count={totalPages}
                     page={currentPage}
                     onChange={(event, page) => navigateToPage(page)}
                 />
             </Stack>
+            </div>
         </div>
     );
 }

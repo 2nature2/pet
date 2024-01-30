@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
 import WritePage from "./components/pages/Community/WritePage";
 import ViewPage from "./components/pages/Community/ViewPage";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -32,14 +31,16 @@ import PetSlider from './components/pages/Pet/PetSlider';
 
 function App() {
   const [communityList, setCommunityList] = useState([]);
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   const [formContent, setFormContent] = useState({
     b_category: '',
     b_title: '',
     b_content: '',
     b_writer: '',
   })
+    // eslint-disable-next-line
   const [page, setPage] = useState(0);
+    // eslint-disable-next-line
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
 
@@ -55,13 +56,23 @@ function App() {
     }
   }
 
+  const [bestCommunity, setBestCommunity] = useState([]);
+  const getBestCommunity = async() => {
+    try {
+      const response = await axios.get(`/community/search?`);
+      setBestCommunity(response.data.content.sort((a, b) => b.b_like - a.b_like).slice(0,10));
+      // console.log('bestCommunity',bestCommunity);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
   
-
   useEffect(() => {
     const fetchData = async () => {
       await loadCommunityList(page);
     };
     fetchData();
+    getBestCommunity();
     // eslint-disable-next-line
   }, [page]);
 
@@ -190,7 +201,7 @@ function App() {
     <BrowserRouter>
       <Navigation isLogin={isLogin} setIsLogin={setIsLogin} />
       <Routes>
-        <Route path="/" element={<MainPage/>} />
+        <Route path="/" element={<MainPage bests={bestCommunity}/>} />
             <Route path="/community" element={<CommunityPage lists={communityList} loadCommunityList={loadCommunityList} setCommunityList={setCommunityList} totalElements={totalElements} setTotalElements={setTotalElements}/>} />
             <Route path="/community/write" element={<WritePage insertCommunity={insertCommunity}/>} />
             <Route path="/community/view/:bnum" element={<ViewPage lists={communityList}/>} />

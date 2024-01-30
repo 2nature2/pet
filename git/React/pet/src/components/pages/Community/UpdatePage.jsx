@@ -82,10 +82,15 @@ const UpdatePage = () => {
                             <Form.Label>분류</Form.Label>
                             <Form.Select name="b_category" defaultValue={viewData.b_category} onChange={getValue}>
                                 <option disabled defaultValue>==선택==</option>
-                                <option disabled>공지사항</option>
+                                {
+                                    sessionStorage.getItem("role") === "ROLE_ADMIN"
+                                    ?<option>공지사항</option>
+                                    :<option style={{ display:'none'}}>공지사항</option>
+                                }
                                 <option>질문</option>
                                 <option>정보</option>
                                 <option>후기</option>
+                                <option>자랑</option>
                                 <option>삽니다</option>
                                 <option>팝니다</option>
                                 <option>기타</option>

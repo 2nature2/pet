@@ -8,7 +8,6 @@
 }
 
 .rboard{
-    /* display: flex; */
     margin-top: 3%;
     margin-bottom: 3%;
     width: 100%;
@@ -51,11 +50,16 @@
 
 .bReport th:nth-child(3), .cReport th:nth-child(3),
 .bReport td:nth-child(3), .cReport td:nth-child(3) {
-    width: 70%;
+    width: 55%;
     overflow: hidden;
     word-wrap: nowrap;
     text-overflow: ellipsis;
     cursor: pointer;
+}
+
+.bReport th:nth-child(4), .cReport th:nth-child(4),
+.bReport td:nth-child(4), .cReport td:nth-child(4) {
+    width: 15%;
 }
 
 .bReport th, .cReport th {
