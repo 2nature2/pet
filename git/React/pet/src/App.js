@@ -26,6 +26,7 @@ import AdminPage from './components/pages/Admin/AdminPage';
 import MemberList from './components/pages/Admin/MemberList';
 import ReportList from './components/pages/Admin/ReportList';
 import Find from './components/pages/Member/Find';
+import PetSlider from './components/pages/Pet/PetSlider';
 
 
 

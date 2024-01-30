@@ -759,9 +759,9 @@ const PetList = () => {
         let isMounted = true;
 
         const allEncodedUrl = (category, regionCode, cityCode) => {
-            const currentPageCategory = 1; // 카테고리 로딩 시 항상 첫번째 page 로 가도록.
+            // const currentPageCategory = 1; // 카테고리 로딩 시 항상 첫번째 page 로 가도록.
 
-            const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPageCategory}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+            const encoded = `${URL}?numOfRows=${itemsPerPage}&pageNo=${currentPage}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
     
             let categoryFilter = '';
             if (category === '[개]'){
@@ -836,7 +836,6 @@ const PetList = () => {
 
     return (
         <div className='card-list-container'>
-            {/* <h2>아이들이 당신을 기다리고 있어요!</h2> */}
             {/* 지역 선택 UI */}
             <div>
                 <select value={selectedSido} onChange={handleSidoChange}>
