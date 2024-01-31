@@ -11,8 +11,9 @@ export default function PetSlider() {
 
     const [ data, setData ] = useState([]);
     const navigate = useNavigate();
-    const [endAnimal, setEndAnimal] = useState(null);
+    const [endAnimal, setEndAnimal] = useState([]);
     const [URL, setURL] = useState("");
+    const [totalCount, setTotalCount] = ("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -26,13 +27,17 @@ export default function PetSlider() {
                 const endAnimal = formatDate(endDay);
                 setEndAnimal(endAnimal);
 
-                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?&pageNo=1&numOfRows=20&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
                 setURL(generatedURL);
 
                 const response = await axios.get(generatedURL);
-                setData(response.data.response.body.items.item);
-                console.log("종료일로부터 -14일 항목 : ", startAnimal);
-                console.log("오늘로 부터 종료일 하루 전 항목 : ", endAnimal);
+                setTotalCount(response.data.response.body.totalCount);
+                // const filteredData = response.data.response.body.items.item
+                // console.log("filteredData", filteredData);
+                // setData(response.data.response.body.items.item);
+                // console.log("종료일로부터 -14일 항목 : ", startAnimal);
+                // console.log("오늘로 부터 종료일 하루 전 항목 : ", endAnimal);
+
 
             } catch (error) {
                 console.error("Error fetching data: ", error);
@@ -43,6 +48,9 @@ export default function PetSlider() {
     }, []);
 
     // const endAnimalFilteredData = data.filter(animal => animal.noticeEdt === endAnimal);
+    // const filteredData = data.filter((animal)=> animal.noticeEdt === endAnimal);
+
+    // console.log('filteredData', filteredData);
 
     console.log('url 확인: ', URL);
 
