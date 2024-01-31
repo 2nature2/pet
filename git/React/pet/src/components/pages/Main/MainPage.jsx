@@ -37,7 +37,7 @@ const MainPage = ({bests}) => {
     return (
         <div className='mainBoard'>
             <div className='first-container'>
-            {/* <PetSlider /> */}
+             <PetSlider />
             </div>
             <div className='second-container'>
             <div className='bestCommunity'>
