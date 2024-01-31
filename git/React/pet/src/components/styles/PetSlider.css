@@ -13,11 +13,11 @@
 }
 
 .card-img {
-    width: 300px;
-    height: 300px;
+    width: 98%;
+    height: 35vh;
     object-fit: cover;
 }
-
+/* style={{height: '35vh', width:'98%', objectFit:'cover'}} */
 /* styles/SliderStyles.css */
 .Div {
     width: 30px;
@@ -61,5 +61,7 @@
 }
 
 .StyledContainer {
-    margin: 25px;
+    margin: 120px;
+    /* display: inline-flex;*/
+    /* margin-inline: 20%; */
 }

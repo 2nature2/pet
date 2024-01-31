@@ -76,44 +76,6 @@ export default function PetSlider() {
         });
     };
 
-    const Div = styled.div`
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        right: 16px;
-        z-index: 99;
-        text-align: right;
-        line-height: 30px;
-    `;
-    const DivPre = styled.div`
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        left: 16px;
-        z-index: 99;
-        text-align: left;
-        line-height: 30px;
-    `;
-    const StyledSlider = styled(Slider)`
-        height: 250px;
-        width: 100%;
-        position: relative;
-        .slick-prev::before,
-        .slick-next::before{
-            opacity:0;
-            display:none;
-        }
-        .slick-slide div{
-            cursor:pointer;
-        }
-    `;
-    const StyledCol = styled(Col)`
-        padding: 0 5px;
-        box-sizing: border-box;
-    `;
-    const StyledContainer = styled.div`
-        margin: 25px;
-    `;
     const settings = {
         dots:false,
         infinite:true,
@@ -122,14 +84,10 @@ export default function PetSlider() {
         speed:1000,
         arrows:true,
         nextArrow:(
-            <Div>
-                <img src={process.env.PUBLIC_URL + '/img/arrow_40_r.png'} alt="right" />
-            </Div>
+            <img className="Div" src={process.env.PUBLIC_URL + '/img/arrow_40_r.png'} alt="right" />
         ),
         prevArrow:(
-            <DivPre>
-                <img src={process.env.PUBLIC_URL + '/img/arrow_40_l.png'} alt="left" />
-            </DivPre>
+            <img className="DivPre" src={process.env.PUBLIC_URL + '/img/arrow_40_l.png'} alt="left" />
         ),
         autoplay:true,
         autoplaySpeed:4000,
@@ -137,13 +95,13 @@ export default function PetSlider() {
     };
 
     return (
-        <StyledContainer className='card-list-container'>
+        <div className='StyledContainer'>
             <h2>공고기간이 하루 남은 아이들이에요!</h2>
-            <div >
-                <StyledSlider {...settings}>
+            <div>
+                <Slider className="StyledSlider" {...settings}>
                     {
                         data.map((animal) => (
-                            <StyledCol key={animal.desertionNo}>
+                            <Col className="StyledCol " key={animal.desertionNo}>
                                 <Card border='warning'>
                                     <a href={`/pet/detail/${animal.desertionNo}`}>
                                     <Card.Img className='card-img' 
@@ -161,11 +119,11 @@ export default function PetSlider() {
                                         <ListGroup.Item>보호센터 : {animal.careNm}</ListGroup.Item>
                                     </ListGroup>
                                 </Card>
-                            </StyledCol>
+                            </Col>
                         ))
                     }
-                </StyledSlider>    
+                </Slider>    
             </div> 
-        </StyledContainer>
+        </div>
     );
 };
