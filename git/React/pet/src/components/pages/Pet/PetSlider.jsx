@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { formatDate } from '../../../util/DateFormat';
-import styled from "styled-components";
 import Slider from "react-slick";
 import '../../styles/PetSlider.css';
 import { Card, Col, ListGroup } from 'react-bootstrap';
@@ -11,9 +10,9 @@ export default function PetSlider() {
 
     const [ data, setData ] = useState([]);
     const navigate = useNavigate();
-    const [endAnimal, setEndAnimal] = useState([]);
+    const [endAnimal, setEndAnimal] = useState("");
     const [URL, setURL] = useState("");
-    const [totalCount, setTotalCount] = ("");
+    const [totalCount, setTotalCount] = useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,32 +26,31 @@ export default function PetSlider() {
                 const endAnimal = formatDate(endDay);
                 setEndAnimal(endAnimal);
 
-                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?&bgnde=20240118&endde=20240118&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
                 setURL(generatedURL);
 
                 const response = await axios.get(generatedURL);
                 setTotalCount(response.data.response.body.totalCount);
-                // const filteredData = response.data.response.body.items.item
-                // console.log("filteredData", filteredData);
-                // setData(response.data.response.body.items.item);
-                // console.log("종료일로부터 -14일 항목 : ", startAnimal);
-                // console.log("오늘로 부터 종료일 하루 전 항목 : ", endAnimal);
-
 
             } catch (error) {
                 console.error("Error fetching data: ", error);
             }
         };
-
         fetchData();
     }, []);
 
-    // const endAnimalFilteredData = data.filter(animal => animal.noticeEdt === endAnimal);
-    // const filteredData = data.filter((animal)=> animal.noticeEdt === endAnimal);
-
-    // console.log('filteredData', filteredData);
-
-    console.log('url 확인: ', URL);
+    useEffect(()=> {
+        const fetchData = async() => {
+            const response = await axios.get(`http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?numOfRows=${totalCount}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`);
+            const responseData = response.data.response.body.items.item;
+            const filteredData = responseData.filter((item)=> item.noticeEdt === "20240213");
+            console.log('response',response);
+            console.log('responseData', responseData);
+            console.log('filteredData',filteredData);
+            setData(filteredData);
+        }
+        fetchData();
+    }, []);
 
     const goAnimal = (animal) => {
         navigate(`/pet/detail/${animal.desertionNo}`, {
