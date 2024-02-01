@@ -26,6 +26,8 @@ import MemberList from './components/pages/Admin/MemberList';
 import ReportList from './components/pages/Admin/ReportList';
 import Find from './components/pages/Member/Find';
 import PetSlider from './components/pages/Pet/PetSlider';
+import Enjoy from './components/pages/Enjoy/Enjoy';
+import ShootingGame from './components/pages/Enjoy/ShootingGame';
 
 
 
@@ -217,11 +219,11 @@ function App() {
             <Route path="/admin/adminPage/memberList" element={<MemberList/>}/>
             <Route path="/admin/adminPage/report" element={<ReportList/>}/>
             <Route path="/member/find" element={<Find/>}/>
-            <Route
-    path="/login/oauth2/callback/kakao" //redirect_url
-    element={<LoginHandeler/>} //당신이 redirect_url에 맞춰 꾸밀 컴포넌트
-  />
+            <Route path="/enjoy" element={<Enjoy/>}/>
+            <Route path="/enjoy/shooting" element={<ShootingGame/>}/>
+       
       </Routes>
+  
     </BrowserRouter>
   )
 }
