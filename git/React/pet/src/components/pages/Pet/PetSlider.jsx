@@ -1,60 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { formatDate } from '../../../util/DateFormat';
 import Slider from "react-slick";
 import '../../styles/PetSlider.css';
 import { Card, Col, ListGroup } from 'react-bootstrap';
+import { shuffle } from "lodash";
 
 export default function PetSlider() {
 
     const [ data, setData ] = useState([]);
     const navigate = useNavigate();
-    const [endAnimal, setEndAnimal] = useState("");
     const [URL, setURL] = useState("");
-    const [totalCount, setTotalCount] = useState("");
+    const [randomItems, setRandomItems] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const today = new Date();
-                const startDay = new Date(today);
-                startDay.setDate(today.getDate() - 13);
-                const endDay = new Date(today);
-                endDay.setDate(today.getDate() + 1);
-                const startAnimal = formatDate(startDay);
-                const endAnimal = formatDate(endDay);
-                setEndAnimal(endAnimal);
+                const URL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?numOfRows=500&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+                setURL(URL);
 
-                console.log('startAnimal', startAnimal);
+                const response = await axios.get(URL);
+                const items = response.data.response.body.items.item;
 
-                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?bgnde=20240101&endde=20240115&state=notice&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
-                setURL(generatedURL);
+                const shuffledItems = shuffle(items);
+                console.log("shuffle 확인:", shuffledItems);
+                const randomItems = shuffledItems.slice(0, 10);
 
-                console.log('url', URL);
-                const response = await axios.get(generatedURL);
-                setTotalCount(response.data.response.body.totalCount);
+                setData(items);
+                setRandomItems(randomItems);
 
             } catch (error) {
                 console.error("Error fetching data: ", error);
             }
         };
+
         fetchData();
-       
     }, []);
 
-    useEffect(()=> {
-        const fetchData = async() => {
-            const response = await axios.get(`http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?bgnde=20240101&endde=20240115&state=notice&numOfRows=${totalCount}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`);
-            const responseData = response.data.response.body.items.item;
-            const filteredData = responseData.filter((item)=> item.noticeEdt === "20240201");
-            console.log('response',response);
-            console.log('responseData', responseData);
-            console.log('filteredData',filteredData);
-            setData(filteredData);
-        }
-        fetchData();
-    }, []);
+    console.log('url 확인: ', URL);
+    console.log('random 확인: ', randomItems);
 
     const goAnimal = (animal) => {
         navigate(`/pet/detail/${animal.desertionNo}`, {
@@ -98,11 +82,11 @@ export default function PetSlider() {
 
     return (
         <div className='StyledContainer'>
-            <h2>공고기간이 하루 남은 아이들이에요!</h2>
+            <h2>아이들이 여러분을 기다리고 있어요!</h2>
             <div>
                 <Slider className="StyledSlider" {...settings}>
                     {
-                        data.map((animal) => (
+                        randomItems.map((animal) => (
                             <Col className="StyledCol " key={animal.desertionNo}>
                                 <Card border='warning'>
                                     <a href={`/pet/detail/${animal.desertionNo}`}>
@@ -124,7 +108,7 @@ export default function PetSlider() {
                             </Col>
                         ))
                     }
-                </Slider>    
+                </Slider>
             </div> 
         </div>
     );
