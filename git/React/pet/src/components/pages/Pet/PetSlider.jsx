@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { formatDate } from '../../../util/DateFormat';
-import styled from "styled-components";
 import Slider from "react-slick";
 import '../../styles/PetSlider.css';
 import { Card, Col, ListGroup } from 'react-bootstrap';
+import { shuffle } from "lodash";
 
 export default function PetSlider() {
 
     const [ data, setData ] = useState([]);
     const navigate = useNavigate();
-    const [endAnimal, setEndAnimal] = useState(null);
     const [URL, setURL] = useState("");
+    const [randomItems, setRandomItems] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const today = new Date();
-                const startDay = new Date(today);
-                startDay.setDate(today.getDate() - 13);
-                const endDay = new Date(today);
-                endDay.setDate(today.getDate() + 1);
-                const startAnimal = formatDate(startDay);
-                const endAnimal = formatDate(endDay);
-                setEndAnimal(endAnimal);
+                const URL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?numOfRows=500&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+                setURL(URL);
 
-                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?&pageNo=1&numOfRows=20&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
-                setURL(generatedURL);
+                const response = await axios.get(URL);
+                const items = response.data.response.body.items.item;
 
-                const response = await axios.get(generatedURL);
-                setData(response.data.response.body.items.item);
-                console.log("종료일로부터 -14일 항목 : ", startAnimal);
-                console.log("오늘로 부터 종료일 하루 전 항목 : ", endAnimal);
+                const shuffledItems = shuffle(items);
+                console.log("shuffle 확인:", shuffledItems);
+                const randomItems = shuffledItems.slice(0, 10);
+
+                setData(items);
+                setRandomItems(randomItems);
 
             } catch (error) {
                 console.error("Error fetching data: ", error);
@@ -42,9 +37,8 @@ export default function PetSlider() {
         fetchData();
     }, []);
 
-    // const endAnimalFilteredData = data.filter(animal => animal.noticeEdt === endAnimal);
-
     console.log('url 확인: ', URL);
+    console.log('random 확인: ', randomItems);
 
     const goAnimal = (animal) => {
         navigate(`/pet/detail/${animal.desertionNo}`, {
@@ -88,11 +82,11 @@ export default function PetSlider() {
 
     return (
         <div className='StyledContainer'>
-            <h2>공고기간이 하루 남은 아이들이에요!</h2>
+            <h2>아이들이 여러분을 기다리고 있어요!</h2>
             <div>
                 <Slider className="StyledSlider" {...settings}>
                     {
-                        data.map((animal) => (
+                        randomItems.map((animal) => (
                             <Col className="StyledCol " key={animal.desertionNo}>
                                 <Card border='warning'>
                                     <a href={`/pet/detail/${animal.desertionNo}`}>
@@ -114,7 +108,7 @@ export default function PetSlider() {
                             </Col>
                         ))
                     }
-                </Slider>    
+                </Slider>
             </div> 
         </div>
     );

@@ -889,7 +889,8 @@ const PetList = () => {
                                                 <Card.Title>{animal.processState}</Card.Title>
                                                 <Card.Text>
                                                     {animal.kindCd }<br />
-                                                    {animal.sexCd === 'F' ? '여아' : '남아'} · {animal.neuterYn === 'Y' ? '중성화 완료' : '중성화 미완료'}
+                                                    {animal.sexCd === 'F' ? '여아' : '남아'} · {animal.neuterYn === 'Y' ? '중성화 완료' : '중성화 미완료'}<br />
+                                                    {animal.desertionNo}
                                                 </Card.Text>
                                             </Card.Body>
                                             <ListGroup className="list-group-flush">
