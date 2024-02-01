@@ -5,8 +5,8 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { Card, Col, Row, ListGroup } from 'react-bootstrap';
 import '../../styles/Pet.css';
-import loading from '../../assets/loading.png';
-import notfound from '../../assets/notfound.png';
+import loading from '../../assets/Loading.png';
+import notfound from '../../assets/NOTFOUND.png';
 
 const PetList = () => {
 
