@@ -28,7 +28,7 @@ import Find from './components/pages/Member/Find';
 import PetSlider from './components/pages/Pet/PetSlider';
 import Enjoy from './components/pages/Enjoy/Enjoy';
 import ShootingGame from './components/pages/Enjoy/ShootingGame';
-
+import MergeGame from'./components/pages/Enjoy/MergeGame';
 
 
 function App() {
@@ -195,10 +195,6 @@ function App() {
     })
   },[]);
 
-
-  
-
-
   return (
     <BrowserRouter>
       <Navigation isLogin={isLogin} setIsLogin={setIsLogin} />
@@ -221,6 +217,7 @@ function App() {
             <Route path="/member/find" element={<Find/>}/>
             <Route path="/enjoy" element={<Enjoy/>}/>
             <Route path="/enjoy/shooting" element={<ShootingGame/>}/>
+            <Route path="/enjoy/merge" element={<MergeGame/>}/>
        
       </Routes>
   
