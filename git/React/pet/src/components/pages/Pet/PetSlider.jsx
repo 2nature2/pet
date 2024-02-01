@@ -26,9 +26,12 @@ export default function PetSlider() {
                 const endAnimal = formatDate(endDay);
                 setEndAnimal(endAnimal);
 
-                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?&bgnde=20240118&endde=20240118&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
+                console.log('startAnimal', startAnimal);
+
+                const generatedURL = `http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?bgnde=20240101&endde=20240115&state=notice&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`;
                 setURL(generatedURL);
 
+                console.log('url', URL);
                 const response = await axios.get(generatedURL);
                 setTotalCount(response.data.response.body.totalCount);
 
@@ -37,13 +40,14 @@ export default function PetSlider() {
             }
         };
         fetchData();
+       
     }, []);
 
     useEffect(()=> {
         const fetchData = async() => {
-            const response = await axios.get(`http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?numOfRows=${totalCount}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`);
+            const response = await axios.get(`http://apis.data.go.kr/1543061/abandonmentPublicSrvc/abandonmentPublic?bgnde=20240101&endde=20240115&state=notice&numOfRows=${totalCount}&_type=json&serviceKey=${process.env.REACT_APP_API_KEY}`);
             const responseData = response.data.response.body.items.item;
-            const filteredData = responseData.filter((item)=> item.noticeEdt === "20240213");
+            const filteredData = responseData.filter((item)=> item.noticeEdt === "20240201");
             console.log('response',response);
             console.log('responseData', responseData);
             console.log('filteredData',filteredData);
