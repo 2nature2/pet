@@ -220,9 +220,10 @@ function App() {
             <Route path="/admin/adminPage/report" element={<ReportList/>}/>
             <Route path="/member/find" element={<Find/>}/>
             <Route path="/enjoy" element={<Enjoy/>}/>
+            <Route path="/enjoy/shooting" element={<ShootingGame/>}/>
        
       </Routes>
-
+  
     </BrowserRouter>
   )
 }
