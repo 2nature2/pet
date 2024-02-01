@@ -1,3 +1,4 @@
+import { margin } from '@mui/system';
 import React, { useEffect } from 'react';
 
 const ShootingGame = () => {
@@ -7,6 +8,9 @@ const ShootingGame = () => {
         const ctx = canvas.getContext("2d");
         canvas.width = 400;
         canvas.height = 500;
+
+        
+
 
         // 이미지 로드
         const loadImage = (src) => {
@@ -179,23 +183,53 @@ const ShootingGame = () => {
         createEnemy();
         main();
 
+        const text = document.createElement("div"); 
+
+        // 텍스트 내용 설정
+        text.innerHTML = `
+        <p>🌟게임 방법🌟</p>
+        <ul>
+            <li>방향키로 강아지를 이동하세요!</li>
+            <li>space키를 눌러 뼈다귀로 내려오는 💩을 없애주세요</li>
+            <li>💩이 강아지나 바닥에 닿으면 game over😵</li>
+        </ul>
+    `;
+        text.style.marginLeft = "50px"; 
+        text.style.fontFamily = "omyu-pretty";
+        text.style.fontSize = "18px";
+        
+
+
         // 캔버스를 가운데로 정렬하기 위한 스타일 적용
         const container = document.createElement("div");
         container.style.display = "flex";
         container.style.justifyContent = "center";
         container.style.alignItems = "center";
-        container.style.width = "100vw";
+        container.style.width = "90vw";
         container.style.height = "100vh";
         container.appendChild(canvas);
+        container.appendChild(text);
         document.body.appendChild(container);
 
+
         return () => {
-            // 메모리 누수 방지를 위해 이펙트 클리어
             document.body.removeChild(container);
+            
         };
     }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 설정
 
-    return null; // ShootingGame 컴포넌트 자체는 아무것도 렌더링하지 않음
+    return (
+    //     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+    //     <div style={{ marginLeft: '20px' }}>
+    //         <p>게임 방법</p>
+    //         <p>- 방향키로 강아지를 이동하세요! </p>
+    //         <p>- space키를 눌러 뼈다귀로 내려오는 💩을 없애주세요 </p>
+    //         <p>- 💩이 강아지나 바닥에 닿으면 game over! </p>
+    //     </div>
+        
+    // </div>
+    <></>
+    );
 };
 
 export default ShootingGame;
