@@ -828,7 +828,6 @@ const PetList = () => {
     }, [currentPage, selectedCategory, selectedSido, selectedCity]);
 
     if (isLoading) return <div className='loading'><img src={loading} alt='Loading...'/></div>;
-    // if (isLoading) return <div className='loading'>로딩중</div>;
     if (error) return <div>Error: {error.message}</div> ;
     if (!data || !data.response || !data.response.body || !data.response.body.items) {
         return <div>No data available</div>;
@@ -890,7 +889,6 @@ const PetList = () => {
                                                 <Card.Text>
                                                     {animal.kindCd }<br />
                                                     {animal.sexCd === 'F' ? '여아' : '남아'} · {animal.neuterYn === 'Y' ? '중성화 완료' : '중성화 미완료'}<br />
-                                                    {animal.desertionNo}
                                                 </Card.Text>
                                             </Card.Body>
                                             <ListGroup className="list-group-flush">
