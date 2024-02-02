@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Engine, Render, Runner, World, Bodies, Body, Events } from "matter-js";
 import { MERGES } from './merge';
 import Swal from "sweetalert2";
 
 const MergeGame = () => {
+
+  const [totalScore, setTotalScore] = useState(0);
+
   useEffect(() => {
     const gameContainer = document.createElement("div");
     document.body.appendChild(gameContainer);
@@ -13,6 +16,7 @@ const MergeGame = () => {
     gameContainer.style.height = "80vh";
     gameContainer.style.width = "100vw";
     gameContainer.style.transform = "scale(0.7)";
+    gameContainer.style.marginTop = "-5%";
 
     const engine = Engine.create();
     const render = Render.create({
@@ -20,7 +24,7 @@ const MergeGame = () => {
       element: gameContainer,
       options: {
         wireframes: false,
-        background: "#ffffff",
+        background: "#ffffff80",
         width: 620,
         height: 850,
       },
@@ -47,7 +51,7 @@ const MergeGame = () => {
       name: "topLine",
       isStatic: true,
       isSensor: true,
-      render: { fillStyle: "#B80042" },
+      render: { fillStyle: "#1098F7" },
     });
 
     World.add(world, [leftWall, rightWall, ground, topLine]);
@@ -68,7 +72,7 @@ const MergeGame = () => {
       World.clear(world, false);
       Engine.clear(engine);
       Render.world(render);
-
+      setTotalScore(0);
       World.add(world, [leftWall, rightWall, ground, topLine]);
 
       currentBody = null;
@@ -125,8 +129,12 @@ const MergeGame = () => {
         confirmButtonColor: "#1098F7",
         cancelButtonText: "New Game",
         cancelButtonColor: "#B80042",
+        html:'<img src="/merge/win.png" style="width:300px; height:300px;" />'
       }).then((result) => {
         if (result.isConfirmed) {
+          if(!currentBody){
+            addImg();
+          }
         } else {
           resetGame();
         }
@@ -139,7 +147,7 @@ const MergeGame = () => {
       }
 
       switch (event.code) {
-        case "KeyA":
+        case "ArrowLeft":
           if (interval) return;
 
           interval = setInterval(() => {
@@ -151,7 +159,7 @@ const MergeGame = () => {
           }, 5);
           break;
 
-        case "KeyD":
+        case "ArrowRight":
           if (interval) return;
 
           interval = setInterval(() => {
@@ -163,7 +171,7 @@ const MergeGame = () => {
           }, 5);
           break;
 
-        case "KeyS":
+        case "ArrowDown":
           disableAction = true;
           currentBody.isSleeping = false;
 
@@ -176,8 +184,8 @@ const MergeGame = () => {
 
     window.onkeyup = (event) => {
       switch (event.code) {
-        case "KeyA":
-        case "KeyD":
+        case "ArrowLeft":
+        case "ArrowRight":
           clearInterval(interval);
           interval = null;
       }
@@ -196,7 +204,8 @@ const MergeGame = () => {
           }
 
           const newImg = MERGES[index + 1];
-
+          const newScore = newImg.score;
+          setTotalScore((prevScore)=> prevScore+newScore);
           const newBody = Bodies.circle(
             collision.collision.supports[0].x,
             collision.collision.supports[0].y,
@@ -210,6 +219,7 @@ const MergeGame = () => {
           );
 
           World.add(world, newBody);
+          console.log("Total Score:", totalScore);
         }
 
         if (
@@ -223,6 +233,7 @@ const MergeGame = () => {
             showCancelButton: true,
             confirmButtonText: "New Game",
             confirmButtonColor: "#1098F7",
+            html:'<img src="/merge/over.png" style="width:300px; height:200px;" />'
           }).then((result) => {
             if (result.isConfirmed) {
               resetGame();
@@ -234,7 +245,6 @@ const MergeGame = () => {
 
     addImg();
 
-    // Clean up the Matter.js engine and render when the component unmounts
     return () => {
       Render.stop(render);
       Engine.clear(engine);
@@ -243,7 +253,9 @@ const MergeGame = () => {
     };
   }, []); 
 
-  return <div/>; // This can be adjusted based on your component structure
+  return (
+      <div style={{textAlign:'center', marginBottom:'-5%', paddingTop:'2%'}}>Score: {totalScore}</div>
+    ); 
 };
 
 export default MergeGame;
