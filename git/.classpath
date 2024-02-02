@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="React/pet/node_modules/react-native/ReactAndroid/src/main/java"/>
+	<classpathentry kind="src" path="Springboot/pet/src/main/java"/>
+	<classpathentry kind="src" path="Springboot/pet/src/test/java"/>
+	<classpathentry kind="lib" path="React/pet/node_modules/@react-native/gradle-plugin/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="React/pet/node_modules/react-native/template/android/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="Springboot/pet/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="lib" path="Springboot/pet/bin/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="output" path="Springboot/pet/target/classes"/>
+</classpath>
