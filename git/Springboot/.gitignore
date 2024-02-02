@@ -34,3 +34,6 @@ build/
 
 ### MAC OS ###
 .DS_Store
+
+### KEY INFO ###
+application-mail.properties
