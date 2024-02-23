@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Form, Row, Col, Modal  } from 'react-bootstrap';
+import { Container, Form, Row, Col, Modal  } from 'react-bootstrap';
 import axios from 'axios';
 import DaumPostcode from 'react-daum-postcode';
 import '../../styles/Join.css';
@@ -44,7 +44,7 @@ const JoinForm = ({ join }) => {
       clickButton: async () => {
         // 서버로 중복확인 요청 보내기
         try {
-          const response = await axios.post('/member/checkId', {
+          const response = await axios.post('/api/member/checkId', {
             userid: joinContent.userid,
           });
   
@@ -69,7 +69,7 @@ const JoinForm = ({ join }) => {
       clickButtonNickname: async () => {
         // 서버로 중복확인 요청 보내기
         try {
-          const response = await axios.post('/member/checkNickname', {
+          const response = await axios.post('/api/member/checkNickname', {
             nickname: joinContent.nickname,
           });
   

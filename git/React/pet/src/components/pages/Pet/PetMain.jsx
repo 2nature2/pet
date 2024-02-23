@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React from 'react';
 import '../../styles/Community.css';
 import PetList from './PetList.jsx';
 

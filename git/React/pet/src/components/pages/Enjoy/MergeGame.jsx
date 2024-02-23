@@ -219,7 +219,6 @@ const MergeGame = () => {
           );
 
           World.add(world, newBody);
-          console.log("Total Score:", totalScore);
         }
 
         if (

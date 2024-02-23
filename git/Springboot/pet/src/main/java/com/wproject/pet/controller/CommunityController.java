@@ -30,7 +30,7 @@ import com.wproject.pet.service.CommunityService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/community")
+@RequestMapping("/api/community")
 @RequiredArgsConstructor
 public class CommunityController {
 	private final CommunityService communityService;

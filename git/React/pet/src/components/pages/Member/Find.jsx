@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "react-bootstrap";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-
 import '../../styles/Find.css';
-import { getValue } from '@testing-library/user-event/dist/utils';
 
 const Find = () =>{
     const navigate = useNavigate();
@@ -38,7 +35,7 @@ const Find = () =>{
 
     const findId= async ()=>{
         try{
-            const response = await axios.post(`/member/idfind`,{
+            const response = await axios.post(`/api/member/idfind`,{
                 name: idContent.name,
                 tel: idContent.tel
             })
@@ -54,7 +51,7 @@ const Find = () =>{
             alert("전화번호 양식이 맞지 않습니다.")
             return;
            }
-           if(response.data!="fail"){
+           if(response.data!=="fail"){
             alert("회원님의 아이디는 '"+response.data+"' 입니다.");
         }
         else{
@@ -72,7 +69,7 @@ const Find = () =>{
     const findPw = async () => {
         setLoading(true);
         try{
-            const response = await axios.post(`/member/pwfind`,{
+            const response = await axios.post(`/api/member/pwfind`,{
                 userid:pwContent.userid,
                 email:pwContent.email
             })
@@ -88,7 +85,7 @@ const Find = () =>{
                 alert("이메일 양식이 맞지 않습니다.")
                 return;
             }
-            if(response.data=="success"){
+            if(response.data==="success"){
                 setLoading(false);
                 alert("메일로 발송된 임시비밀번호로 로그인후 마이페이지에서 변경해주세요");
                 navigate("/member/login")

@@ -23,7 +23,7 @@ export default function PetSlider() {
                 const items = response.data.response.body.items.item;
 
                 const shuffledItems = shuffle(items);
-                console.log("shuffle 확인:", shuffledItems);
+                // console.log("shuffle 확인:", shuffledItems);
                 const randomItems = shuffledItems.slice(0, 10);
 
                 setData(items);
@@ -37,7 +37,7 @@ export default function PetSlider() {
         fetchData();
     }, []);
 
-    console.log('url 확인: ', URL);
+    // console.log('url 확인: ', URL);
     console.log('random 확인: ', randomItems);
 
     const goAnimal = (animal) => {
@@ -66,7 +66,7 @@ export default function PetSlider() {
         dots:false,
         infinite:true,
         slidesToShow:4,
-        slideToScroll:1,
+        slidesToScroll:1,
         speed:1000,
         arrows:true,
         nextArrow:(

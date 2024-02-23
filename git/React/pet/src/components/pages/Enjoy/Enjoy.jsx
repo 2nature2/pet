@@ -9,11 +9,11 @@ const Enjoy=()=>{
         <Container className='enjoyTap'>
           <div className='game'>
             <a href='/enjoy/shooting'>
-            <img src='../../gameimg/shooting.png' style={{width:'100%', height:'100%'}}/>
+            <img src='../../gameimg/shooting.png' style={{width:'100%', height:'100%'}} alt='SHOOTING GAME'/>
             <span>SHOOTING 게임 하러가기</span>
             </a>
             <a href='/enjoy/merge'>
-            <img src='../../merge/catcatmerge.png' style={{width:'100%', height:'100%', backgroundColor:'white'}}/>
+            <img src='../../merge/catcatmerge.png' style={{width:'100%', height:'100%', backgroundColor:'white'}} alt='MERGE GAME'/>
             <span>CAT CAT MERGE 하러가기</span>
             </a>
           </div>

@@ -37,7 +37,7 @@ const MyPage=()=>{
       checkId: async () => {
         // 서버로 중복확인 요청 보내기
         try {
-          const response = await axios.post('/member/checkId', {
+          const response = await axios.post('/api/member/checkId', {
             userid: formData.userid,
           });
   
@@ -61,7 +61,7 @@ const MyPage=()=>{
       checkNickname: async () => {
         // 서버로 중복확인 요청 보내기
         try {
-          const response = await axios.post('/member/checkNickname', {
+          const response = await axios.post('/api/member/checkNickname', {
             nickname: formData.nickname,
           });
   
@@ -152,7 +152,7 @@ const MyPage=()=>{
       alert("이메일 양식이 맞지않습니다.")
       return;
     }
-    axios.post("/member/memberupdate", formData)
+    axios.post("/api/member/memberupdate", formData)
     .then((response)=>{
       if(response.data==="success"){
         alert("회원정보 수정 완료")
@@ -176,7 +176,7 @@ const MyPage=()=>{
 
   const withdrawbtn=()=>{
 
-    fetch(`/member/withdraw/${userid}`, {
+    fetch(`/api/member/withdraw/${userid}`, {
       method: 'DELETE',
   })
       .then(() => {

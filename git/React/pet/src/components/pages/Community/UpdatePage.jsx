@@ -30,7 +30,7 @@ const UpdatePage = () => {
     }
 
     const bupdate = () => {
-        fetch(`/community/update/${viewData.bnum}`,{
+        fetch(`/api/community/update/${viewData.bnum}`,{
             method: 'PUT',
             headers: {
                 'Content-type' : 'application/json',

@@ -6,8 +6,48 @@ const { kakao } = window;
 const Kakao = () => {
     const location = useLocation();
     const goAnimal = location.state;
-
+    // const kakaoMapKey = process.env.REACT_APP_KAKAO_MAP_KEY;
     // console.log("gggggg", goAnimal);
+
+    // useEffect(() => {
+    //     const script = document.createElement("script");
+    //     script.async = true;
+    //     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMapKey}&libraries=services,clusterer,drawing`;
+    //     document.head.appendChild(script);
+
+    //     script.onload = () => {
+    //         if (window.kakao) {
+    //             const mapContainer = document.getElementById('map');
+    //             const mapOptions = {
+    //                 center: new window.kakao.maps.LatLng(33.450701, 126.570667),
+    //                 level: 3
+    //             };
+                
+    //             const map = new window.kakao.maps.Map(mapContainer, mapOptions);
+
+    //             const geocoder = new window.kakao.maps.services.Geocoder();
+
+    //             geocoder.addressSearch(`${goAnimal.careAddr}`, function(result, status){
+    //                 if (status === window.kakao.maps.services.Status.OK){
+    //                     var coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+    //                     var marker = new window.kakao.maps.Marker({
+    //                         map: map,
+    //                         position: coords
+    //                     });
+    //                     var infowindow = new window.kakao.maps.InfoWindow({
+    //                         content: `<div style="width:150px;text-align:center;padding:6px 0;">${goAnimal.careNm}</div>`
+    //                     });
+    //                     infowindow.open(map, marker);
+    //                     map.setCenter(coords);
+    //                 }
+    //             });
+    //         }
+    //     };
+
+    //     return () => {
+    //         document.head.removeChild(script);
+    //     };
+    // }, [kakaoMapKey, goAnimal]);
 
     useEffect(() => {
         const mapContainer = document.getElementById('map'); // 지도를 표시할 div

@@ -77,8 +77,8 @@ const CommunityPage = ({lists, loadCommunityList, setCommunityList, totalElement
     const search = async(selectedPage) => {
         try{
             const currentPage = selectedPage -1;
-            const response = await axios.get(`/community/search?&size=20&page=${currentPage}&field=${searchOption}&word=${userInput}`);
-            const notices = await axios.get(`/community/search?&size=20&field=${"b_category"}&word=${"공지사항"}`);
+            const response = await axios.get(`/api/community/search?&size=20&page=${currentPage}&field=${searchOption}&word=${userInput}`);
+            const notices = await axios.get(`/api/community/search?&size=20&field=${"b_category"}&word=${"공지사항"}`);
             setNoticeList(notices.data.content);
             setCommunityList(response.data.content);
             setTotalElements(response.data.totalElements);

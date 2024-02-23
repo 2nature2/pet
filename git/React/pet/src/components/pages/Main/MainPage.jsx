@@ -48,12 +48,12 @@ const MainPage = ({bests}) => {
                             bests.map((best, index)=> (
                                 index%2 === 0 
                                 ?
-                                <tr>
-                                    <td style={{borderBottomColor:'#b80042'}} key={index}><span className='emj'>덍 </span><a href={`/community/view/${best.bnum}`}><span>[{best.b_category}] </span>{best.b_title} <span style={{color:'gray'}}>{`\n`}[{best.b_comments}]</span></a></td>
+                                <tr key={index}>
+                                    <td style={{borderBottomColor:'#b80042'}}><span className='emj'>덍 </span><a href={`/community/view/${best.bnum}`}><span>[{best.b_category}] </span>{best.b_title} <span style={{color:'gray'}}>{`\n`}[{best.b_comments}]</span></a></td>
                                 </tr>
                                 :
-                                <tr>
-                                    <td style={{borderBottomColor:'#b80042'}} key={index}><span className='emj'>넁 </span><a href={`/community/view/${best.bnum}`}><span>[{best.b_category}] </span>{best.b_title} <span style={{color:'gray'}}>{`\n`}[{best.b_comments}]</span></a></td>
+                                <tr key={index}>
+                                    <td style={{borderBottomColor:'#b80042'}}><span className='emj'>넁 </span><a href={`/community/view/${best.bnum}`}><span>[{best.b_category}] </span>{best.b_title} <span style={{color:'gray'}}>{`\n`}[{best.b_comments}]</span></a></td>
                                 </tr>
                             ))
                         }

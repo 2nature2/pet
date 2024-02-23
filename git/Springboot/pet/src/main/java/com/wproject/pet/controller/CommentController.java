@@ -15,7 +15,7 @@ import com.wproject.pet.service.CommentService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/api/comment")
 @RequiredArgsConstructor
 public class CommentController {
 	private final CommentService commentService;

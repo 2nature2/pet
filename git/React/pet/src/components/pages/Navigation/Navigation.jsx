@@ -9,9 +9,11 @@ const navigate = useNavigate();
 
 const handleLogout = async () => {
   try {
-    console.log("로그아웃")
+    console.log("로그아웃");
+  
     const response = await fetch('/logout', {
       method: 'POST',
+      credentials: 'include',
     });
 
     if (response.ok) {
@@ -20,9 +22,8 @@ const handleLogout = async () => {
       //로컬 스토리지에서 토큰 제거
      sessionStorage.clear();
      setIsLogin(false);
-
-       navigate("/");
-      //window.location.href("/")
+     navigate("/");
+      // window.location.href("/")
     } else {
       console.error('로그아웃 실패');
     }
@@ -32,39 +33,39 @@ const handleLogout = async () => {
 };
       
 
-    return(
-      <div className='nav'>
-        <div className='nav-left'>
-        <NavLink className='navmenu' to="/">MAIN</NavLink>
-        <NavLink className='navmenu' to="/pet">PET</NavLink>
-        <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
-        <NavLink className='navmenu' to="/enjoy">ENJOY</NavLink>
-        </div>
-        <Link className='logo' to="/">
-          <img alt='logo' src={logo}></img>
-        </Link>
-      <div className="nav-right">
-        {!isLogin ? (
-          <>
-            <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
-            <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>
-          </>
-
-        ) : (
-          <>
-            {sessionStorage.getItem("role") === "ROLE_ADMIN" ? (
-              <NavLink className='navmenu' to="/admin/adminpage/memberlist">ADMIN</NavLink>
-            ) : (
-              <NavLink className='navmenu' to="/member/mypage">MY-PAGE</NavLink>
-
-            )}
-            <NavLink className='navmenu' to="#" onClick={handleLogout}>LOGOUT</NavLink>
-          </>
-        )}
+  return(
+    <div className='nav'>
+      <div className='nav-left'>
+      <NavLink className='navmenu' to="/">MAIN</NavLink>
+      <NavLink className='navmenu' to="/pet">PET</NavLink>
+      <NavLink className='navmenu' to="/community">COMMUNITY</NavLink>
+      <NavLink className='navmenu' to="/enjoy">ENJOY</NavLink>
       </div>
-    </div>
+      <Link className='logo' to="/">
+        <img alt='logo' src={logo}></img>
+      </Link>
+    <div className="nav-right">
+      {!isLogin ? (
+        <>
+          <NavLink className='navmenu' to="/member/join">SIGN-UP</NavLink>
+          <NavLink className='navmenu' to="/member/login">SIGN-IN</NavLink>
+        </>
 
-    );
+      ) : (
+        <>
+          {sessionStorage.getItem("role") === "ROLE_ADMIN" ? (
+            <NavLink className='navmenu' to="/admin/adminpage/memberlist">ADMIN</NavLink>
+          ) : (
+            <NavLink className='navmenu' to="/member/mypage">MY-PAGE</NavLink>
+
+          )}
+          <NavLink className='navmenu' to="#" onClick={handleLogout}>LOGOUT</NavLink>
+        </>
+      )}
+    </div>
+  </div>
+
+  );
 };
 
 export default Navigation;

@@ -13,7 +13,9 @@ const ReportList = () => {
   const [commentReports, setCommentReports] = useState([]);
   const [bPage, setBPage] = useState(1);
   const [cPage, setCPage] = useState(1);
+  // eslint-disable-next-line
   const [bTotalPages, setBTotalPages] = useState(0);
+  // eslint-disable-next-line
   const [cTotalPages, setCTotalPages] = useState(0);
   const [bTotalElements, setBTotalElements] = useState(0);
   const [cTotalElements, setCTotalElements] = useState(0);
@@ -60,8 +62,8 @@ const ReportList = () => {
 
   const fetchData = async() => {
     try {
-      const bResponse = await fetch('/admin/boardReport');
-      const cResponse = await fetch('/admin/commentReport');
+      const bResponse = await fetch('/api/admin/boardReport');
+      const cResponse = await fetch('/api/admin/commentReport');
       const bData = await bResponse.json();
       const cData = await cResponse.json();
       
@@ -130,10 +132,10 @@ const ReportList = () => {
     setShow(true);
   }
   const reportClose = () => setShow(false);
-
+  // eslint-disable-next-line
   const { brid } = useParams();
   const viewBoardReport = (brid) => {
-    fetch(`/admin/boardReport/view/${brid}`, {
+    fetch(`/api/admin/boardReport/view/${brid}`, {
       method: 'GET',
       headers: {
         'Content-type' : 'application/json'
@@ -159,7 +161,7 @@ const ReportList = () => {
   }
   
   const boardStausChange = (brid) => {
-   fetch(`/admin/boardReport/status/${brid}`, {
+   fetch(`/api/admin/boardReport/status/${brid}`, {
     method: 'PUT',
     headers: {
       'Content-type' : 'application/json'
@@ -170,10 +172,10 @@ const ReportList = () => {
     window.location.reload();
    })
   }
-
-  const { crid } = useParams(); //필요여부 확인
+  // eslint-disable-next-line 
+  const { crid } = useParams();
   const viewCommentReport = (crid) => {
-    fetch(`/admin/commentReport/view/${crid}`, {
+    fetch(`/api/admin/commentReport/view/${crid}`, {
       method: 'GET',
       headers: {
         'Content-type' : 'application/json'
@@ -200,7 +202,7 @@ const ReportList = () => {
   }
   
   const commentStausChange = (crid) => {
-   fetch(`/admin/commentReport/status/${crid}`, {
+   fetch(`/api/admin/commentReport/status/${crid}`, {
     method: 'PUT',
     headers: {
       'Content-type' : 'application/json'

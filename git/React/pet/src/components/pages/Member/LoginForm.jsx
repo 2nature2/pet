@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import styles from "../../styles/Login.css";
-import Navigation from "../Navigation/Navigation.jsx";
 
 const CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
 const REDIRECT_URI = process.env.REACT_APP_KAKAO_REDIRECT_URI;

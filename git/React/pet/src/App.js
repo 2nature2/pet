@@ -14,24 +14,23 @@ import PetMain from './components/pages/Pet/PetMain';
 
 import Adoption from './components/pages/Pet/Adoption';
 import LoginFail from './components/pages/Member/LoginFail';
-// import Logout from './components/pages/Member/Logout';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import PetDetail from './components/pages/Pet/PetDetail';
 import MyPage from './components/pages/Member/MyPage';
-import LoginHandeler from './components/pages/Member/LoginHandeler';
 
 import AdminPage from './components/pages/Admin/AdminPage';
 import MemberList from './components/pages/Admin/MemberList';
 import ReportList from './components/pages/Admin/ReportList';
 import Find from './components/pages/Member/Find';
-import PetSlider from './components/pages/Pet/PetSlider';
 import Enjoy from './components/pages/Enjoy/Enjoy';
 import ShootingGame from './components/pages/Enjoy/ShootingGame';
 import MergeGame from'./components/pages/Enjoy/MergeGame';
+import AnimalRun from './components/pages/Enjoy/AnimalRun';
 
 
 function App() {
+  
   const [communityList, setCommunityList] = useState([]);
     // eslint-disable-next-line
   const [formContent, setFormContent] = useState({
@@ -48,7 +47,7 @@ function App() {
 
   const loadCommunityList = async () => {
     try {
-      const response = await axios.get(`/community/?page=${page}`);
+      const response = await axios.get(`/api/community/?page=${page}`);
       setCommunityList(response.data.content);
       setTotalPages(response.data.totalPages);
       setTotalElements(response.data.totalElements);
@@ -61,7 +60,7 @@ function App() {
   const [bestCommunity, setBestCommunity] = useState([]);
   const getBestCommunity = async() => {
     try {
-      const response = await axios.get(`/community/search?`);
+      const response = await axios.get(`/api/community/search?`);
       setBestCommunity(response.data.content.sort((a, b) => b.b_like - a.b_like).slice(0,10));
       // console.log('bestCommunity',bestCommunity);
     } catch (error) {
@@ -79,7 +78,7 @@ function App() {
   }, [page]);
 
   const insertCommunity = (communityDTO) => {
-    fetch('/community/insert', {
+    fetch('/api/community/insert', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json'
@@ -130,7 +129,7 @@ function App() {
   // 회원가입
   const join = (member) => {
 
-    fetch('/member/join', {
+    fetch('/api/member/join', {
       method: 'post',
       headers: {
         'Content-type': 'application/json',
@@ -172,11 +171,13 @@ function App() {
   useEffect(()=>{
     console.log("세션 값 확인");
 
-    axios.get("/member/api/user")
+    axios.get("/api/member/user")
     .then((response) => {
+      console.log("서버 응답:", response);
       // 서버 응답에서 사용자 정보를 가져와서 업데이트
       console.log("세션 내용", response.data)
-      if(response.data!=null){
+
+      if(response.data!==null){
         sessionStorage.setItem("name",response.data.name)
         sessionStorage.setItem("userid",response.data.userid)
         sessionStorage.setItem("email",response.data.email)
@@ -187,7 +188,6 @@ function App() {
       }
       else{
         sessionStorage.setItem("name",null)
-        
       }
     })
     .catch((error) => {
@@ -218,7 +218,7 @@ function App() {
             <Route path="/enjoy" element={<Enjoy/>}/>
             <Route path="/enjoy/shooting" element={<ShootingGame/>}/>
             <Route path="/enjoy/merge" element={<MergeGame/>}/>
-       
+            <Route path="/enjoy/animalRun" element={<AnimalRun/>}/>
       </Routes>
   
     </BrowserRouter>

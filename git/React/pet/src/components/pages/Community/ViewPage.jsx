@@ -32,9 +32,10 @@ const ViewPage = () => {
     const [commentList, setCommentList] = useState([]);
     
     useEffect(() => {
+        console.log('session', sessionStorage);
         console.log("localStorage", localStorage);
         const viewList = () => {
-            fetch(`/community/view/${bnum}`, {
+            fetch(`/api/community/view/${bnum}`, {
                 method: 'GET',
                 headers: {
                     'Content-type': 'application/json'
@@ -78,10 +79,11 @@ const ViewPage = () => {
             viewList();
             prevBnum.current = bnum;
         }
+    // eslint-disable-next-line
     }, [bnum]);
 
     const deleteBoard = () => {
-        fetch(`/community/delete/${bnum}`, {
+        fetch(`/api/community/delete/${bnum}`, {
             method: 'DELETE',
         })
             .then(() => {
@@ -96,7 +98,7 @@ const ViewPage = () => {
     );
 
     const blike = () => {
-        fetch(`/community/like/${bnum}`, {
+        fetch(`/api/community/like/${bnum}`, {
             method: 'GET'
         })
             .then(() => {
@@ -145,7 +147,7 @@ const ViewPage = () => {
                 confirmButtonColor:"#b80042"
             })
         }else{
-            fetch(`/community/report/${view.bnum}`, {
+            fetch(`/api/community/report/${view.bnum}`, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -204,7 +206,7 @@ const ViewPage = () => {
                 c_content: formComment.c_content,
                 b_id: bnum
             }
-            fetch(`/comment/insert/${view.bnum}`, {
+            fetch(`/api/comment/insert/${view.bnum}`, {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -231,7 +233,7 @@ const ViewPage = () => {
     });
 
     const clike = (c_id, index) => {
-        fetch(`/comment/like/${c_id}`, {
+        fetch(`/api/comment/like/${c_id}`, {
             method: 'GET'
         })
             .then(() => {
@@ -257,7 +259,7 @@ const ViewPage = () => {
     }
 
     const deleteComment = (c_id) => {
-        fetch(`/comment/delete/${c_id}`, {
+        fetch(`/api/comment/delete/${c_id}`, {
             method: 'DELETE',
         })
         .then(() => {
@@ -294,7 +296,7 @@ const ViewPage = () => {
             c_reason: cmtReport.c_reason,
             c_id: cmtReport.c_id
         };
-        fetch(`/comment/report/${cmtReport.c_id}`, {
+        fetch(`/api/comment/report/${cmtReport.c_id}`, {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json'
@@ -361,10 +363,16 @@ const ViewPage = () => {
                                 : <Button id="bLike" onClick={()=>blike()} >♥ 좋아요({view.b_like})</Button>
                         }
                         {
-                            sessionStorage.length === 0 || view.b_category === "공지사항"
-                            ?<Button id="lBtn2" style={{visibility:"hidden"}}>신고</Button>
-                            :<Button id="lBtn2" onClick={reportOpen}>신고</Button>
-                        }        
+                            (sessionStorage.length === 0 || view.b_category === "공지사항") ? (
+                                <Button id="lBtn2" style={{ visibility: "hidden" }}>신고</Button>
+                            ) : (
+                                (sessionStorage.getItem("nickname") === view.b_writer) ? (
+                                <Button id="lBtn2" style={{ visibility: "hidden" }}>신고</Button>
+                                ) : (
+                                <Button id="lBtn2" onClick={reportOpen}>신고</Button>
+                                )
+                            )
+                        }      
                     </div>
                     <div className="rBtn">
                         {
@@ -419,10 +427,15 @@ const ViewPage = () => {
                                                 : <Button key={index} variant={cmtLikeStates[index] ? "dark" : "outline-dark"} size="sm" onClick={() => clike(comment.c_id, index)} style={{ marginRight: '5px' }}>♥ 좋아요({comment.c_like})</Button>
                                                 }
                                         {
-                                            sessionStorage.length === 0
-                                            ?<Button style={{visibility: "hidden"}}>신고</Button>
-                                            :<Button variant="outline-warning" size="sm" onClick={() => cReportOpen(comment.c_id)} style={{ marginRight: '5px' }}>신고</Button>
+                                            sessionStorage.length === 0 
+                                                ? <Button style={{ visibility: "hidden" }}>신고</Button>
+                                                : (
+                                                comment.c_writer === sessionStorage.getItem("nickname") 
+                                                    ? <Button style={{ display: "none" }}>신고</Button>
+                                                    : <Button variant="outline-warning" size="sm" onClick={() => cReportOpen(comment.c_id)} style={{ marginRight: '5px' }}>신고</Button>
+                                                )
                                         }
+
                                         {
                                             sessionStorage.getItem("nickname")===comment.c_writer || sessionStorage.getItem("role")==="ROLE_ADMIN"
                                             ?<Button variant="outline-danger" size="sm" onClick={() => deleteComment(comment.c_id)}>삭제</Button>

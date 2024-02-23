@@ -1,17 +1,10 @@
 package com.wproject.pet.controller;
 
-import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,17 +13,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wproject.pet.config.auth.PrincipalDetail;
 import com.wproject.pet.config.auth.PrincipalUser;
-import com.wproject.pet.dto.CommunityDTO;
 import com.wproject.pet.dto.MemberDTO;
 import com.wproject.pet.entity.Member;
 import com.wproject.pet.entity.Role;
@@ -42,7 +31,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/member/*")
+@RequestMapping("/api/member/*")
 @CrossOrigin(origins = "http://localhost:3000") 
 public class MemberController {
 	private final MemberService memberService;
@@ -109,8 +98,11 @@ public class MemberController {
 	
 	
 	//회원정보
-	@GetMapping("/api/user")
-	public Map<String, Object> userInfo(@AuthenticationPrincipal PrincipalUser principaluser){
+	@GetMapping("/user")
+	public ResponseEntity<Map<String, Object>> userInfo(@AuthenticationPrincipal PrincipalUser principaluser){
+		if(principaluser == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Collections.singletonMap("message", "로그인이 필요합니다."));
+		}
 		System.out.println("회원정보 : "+ principaluser.getUsername() );
 		Member member = principaluser.getMember();
 		String name = member.getName();
@@ -119,6 +111,7 @@ public class MemberController {
 		String userid = member.getUserid();
 		Role role = member.getRole();
 		String tel = member.getTel();
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("name",name );
 		map.put("nickname",nickname );
@@ -129,7 +122,7 @@ public class MemberController {
 		if(name==null) {
 			name="null";
 		}
-		return map;
+		return ResponseEntity.ok(map);
 	}
 	
 	//회원정보 수정

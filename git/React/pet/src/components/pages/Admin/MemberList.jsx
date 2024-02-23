@@ -48,10 +48,10 @@ const MemberList = ()=>{
 
     const fetchData = async () => {
         try {
-            let endpoint = `/admin/memberList?page=${page}`;
+            let endpoint = `/api/admin/memberList?page=${page}`;
 
             if (searching) {
-                endpoint = `/admin/member/search?page=${page}&field=${searchOption}&word=${userInput}`;
+                endpoint = `/api/admin/member/search?page=${page}&field=${searchOption}&word=${userInput}`;
             }
 
             const loadMemberList = await fetch(endpoint);
@@ -85,7 +85,7 @@ const MemberList = ()=>{
     const search = async(selectedPage) => {
         try {
             const currentPage = selectedPage;
-            const endpoint = `/admin/member/search?page=${currentPage}&field=${searchOption}&word=${userInput}`;
+            const endpoint = `/api/admin/member/search?page=${currentPage}&field=${searchOption}&word=${userInput}`;
             const response = await axios.get(endpoint);
     
             setMemberList(response.data.content);
@@ -99,7 +99,7 @@ const MemberList = ()=>{
 
     const handleWithdraw =  () => {
         
-        fetch(`/admin/withdraw/${userid}`, {
+        fetch(`/api/admin/withdraw/${userid}`, {
             method: 'DELETE',
         })
             .then(() => {
